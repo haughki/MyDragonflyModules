@@ -1,0 +1,235 @@
+#
+# This is a config file for Dragonfly's _multiedit.py command-module.
+#  To use this config, you must rename this file to _multiedit.txt and
+#  place it in the same directory as the _multiedit.py file.
+#
+
+# Pull in all of Dragonfly's action objects so that we can use them here.
+
+from dragonfly import *
+
+
+#---------------------------------------------------------------------------
+# Here we define the release action which releases all modifier-keys used within this grammar.  It is defined here
+#  because this functionality is used in many different places. Note that it is harmless to release ("...:up") a key multiple
+#  times or when that key is not held down at all.
+
+release = Key("shift:up, ctrl:up, alt:up")
+
+
+#---------------------------------------------------------------------------
+# Here we define the single-action commands.  These can be spoken
+#  in series so as to execute multiple actions within a single utterance.
+
+cmd.map = {
+        # Spoken-form    ->    ->    ->     Action object
+
+        #### Dragon
+        "Snork": Key("npadd/10,npadd"),  # turn mic on and off
+        "sleep": Key("npdiv"),
+
+        #### Cursor manipulation
+        "cup [<n>]": Key("up:%(n)d"),
+        "down [<n>]": Key("down:%(n)d"),
+        "left [<n>]": Key("left:%(n)d"),
+        "right [<n>]": Key("right:%(n)d"),
+        "tope [<n>]": Key("pgup:%(n)d"),
+        "drop [<n>]": Key("pgdown:%(n)d"),
+        "port [<n>]": Key("c-left:%(n)d"),
+        "yope [<n>]": Key("c-right:%(n)d"),
+        "home": Key("home"),
+        "kick": Key("end"),
+        "top": Key("c-home"),
+        "toe": Key("c-end"),
+
+        #### Various keys
+        "space [<n>]": Key("space:%(n)d"),
+        "punch [<n>]": Key("tab:%(n)d"),
+        "funch [<n>]": Key("s-tab:%(n)d"),
+        "slap [<n>]": Key("enter:%(n)d"),
+        "chuck [<n>]": Key("del:%(n)d"),
+        "back [<n>]": Key("backspace:%(n)d"),
+        "fly": Key("escape"),
+
+        "amp [<n>]": Key("ampersand:%(n)d"),
+        "bing [<n>]": Key("apostrophe:%(n)d"),
+        "star [<n>]": Key("asterisk:%(n)d"),
+        "lat [<n>]": Key("at:%(n)d"),
+        "slosh [<n>]": Key("backslash:%(n)d"),
+        "backtick [<n>]": Key("backtick:%(n)d"),
+        "bar [<n>]": Key("bar:%(n)d"),
+        "hat [<n>]": Key("caret:%(n)d"),
+        "coal [<n>]": Key("colon:%(n)d"),
+        "dash [<n>]": Key("hyphen:%(n)d"),
+        "drip [<n>]": Key("comma:%(n)d"),
+        "doll [<n>]": Key("dollar:%(n)d"),
+        "dot [<n>]": Key("dot:%(n)d"),
+        "quote [<n>]": Key("dquote:%(n)d"),
+        "chud [<n>]": Key("equal:%(n)d"),
+        "bang [<n>]": Key("exclamation:%(n)d"),
+        "hash [<n>]": Key("hash:%(n)d"),
+        "per [<n>]": Key("percent:%(n)d"),
+        "plus [<n>]": Key("plus:%(n)d"),
+        "quest [<n>]": Key("question:%(n)d"),
+        "flash [<n>]": Key("slash:%(n)d"),
+        "smote [<n>]": Key("squote:%(n)d"),
+        "till [<n>]": Key("tilde:%(n)d"),
+        "ray [<n>]": Key("underscore:%(n)d"),
+        "Shem [<n>]": Key("semicolon:%(n)d"),
+        "lang [<n>]": Key("langle:%(n)d"),
+        "rang [<n>]": Key("rangle:%(n)d"),
+        "lace [<n>]": Key("lbrace:%(n)d"),
+        "race [<n>]": Key("rbrace:%(n)d"),
+        "lack [<n>]": Key("lbracket:%(n)d"),
+        "rack [<n>]": Key("rbracket:%(n)d"),
+        "(laip | lipe) [<n>]": Key("lparen:%(n)d"),
+        "hype [<n>]": Key("rparen:%(n)d"),
+
+        ### Letters
+        "Aff [<n>]": Key("a:%(n)d"),
+        "Braa [<n>]": Key("b:%(n)d"),
+        "Sow [<n>]": Key("c:%(n)d"),
+        "Doy [<n>]": Key("d:%(n)d"),
+        "Eve [<n>]": Key("e:%(n)d"),
+        "Fay [<n>]": Key("f:%(n)d"),
+        "Gee [<n>]": Key("g:%(n)d"),
+        "Hoe [<n>]": Key("h:%(n)d"),
+        "Ish [<n>]": Key("i:%(n)d"),
+        "Jaa [<n>]": Key("j:%(n)d"),
+        "Koi [<n>]": Key("k:%(n)d"),
+        "Lee [<n>]": Key("l:%(n)d"),
+        "Mao [<n>]": Key("m:%(n)d"),
+        "Noy [<n>]": Key("n:%(n)d"),
+        "Ole [<n>]": Key("o:%(n)d"),
+        "Poe [<n>]": Key("p:%(n)d"),
+        "Quinn [<n>]": Key("q:%(n)d"),
+        "Ree [<n>]": Key("r:%(n)d"),
+        "Soy [<n>]": Key("s:%(n)d"),
+        "Tay [<n>]": Key("t:%(n)d"),
+        "Oot [<n>]": Key("u:%(n)d"),
+        "Vye [<n>]": Key("v:%(n)d"),
+        "Wes [<n>]": Key("w:%(n)d"),
+        "Ecks [<n>]": Key("x:%(n)d"),
+        "Yaa [<n>]": Key("y:%(n)d"),
+        "Zoo [<n>]": Key("z:%(n)d"),
+
+        ### Special Strings
+        "gets": Key("space, equal, space"),
+        "eeks": Key("space, equal, equal, space"),
+
+        ### Lines
+        "wipe [<n>]": release + Key("home, s-down:%(n)d, del"), # del lines down
+        "weiss [<n>]": release + Key("home, s-up:%(n)d, s-home, del"), # del lines up
+        "strip": release + Key("s-end, del"), # del from cursor to line end
+        "strop": release + Key("s-end, c-c"), # copy from cursor to line end
+        "stroop": release + Key("s-end, c-x"), # cut from cursor to line end
+        "striss": release + Key("s-home, del"), # del from cursor to line home
+        "driss": release + Key("s-home, c-c"), # copy from cursor to line home
+        "priss": release + Key("s-home, c-x"), # cut from cursor to line home
+        "nab [<n>]": release + Key("home, s-down:%(n)d, c-c, right"), # copy lines down
+        "swipe [<n>]": release + Key("home, s-down:%(n)d, c-x, right"), # cut lines down
+        "trance [<n>]": release + Key("home, s-down:%(n)d, s-home, c-c, home, c-v"), # duplicate lines down
+
+        ### words
+        "bump [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, del"), # del words right
+        "swat [<n>]": release + Key("left, c-right, cs-left:%(n)d, del"), # del words left
+        "yose [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-c, right"), # copy words right
+        "porche [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-c, left"), # copy words left
+        "grab [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-x, right"), # cut words right
+        "haul [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-x, left"), # cut words left
+
+        ### copy/paste
+        "pace": release + Key("c-v"), # paste
+        "dupe <n>": release + Key("c-c, c-v:%(n)d"), # copy/paste
+        "(copy | goop)": release + Key("c-c"), # copy
+        "cut": release + Key("c-x"), # cut
+        "(select all | gob)": release + Key("c-a"), # select all
+
+        "mash": Key("shift:down"),
+        "mark": Key("shift:down"),
+        "mark up": Key("shift:up"),
+        "wave": Key("shift:up, right"),
+        #        "boss": Key("ctrl:down"),
+        #        "shun": Key("ctrl:up"),
+        "release": release,
+
+        ### other
+        "switch": release + Key("ctrl:down, tab"),
+        "show apps": release + Key("alt:down, tab"),
+        "say <text>": release + Text("%(text)s"),
+        "mimic <text>": release + Mimic(extra="text"),
+        "pop": Key("apps"), # right click
+        "close tab [<n>]": Key("c-w/10:%(n)d"),
+        "new (thing | file)": Key("c-n"),
+        "save it": Key("c-s"),
+        "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
+}
+
+#---------------------------------------------------------------------------
+# Here we define various functions for formatting text.
+# Each of these functions must have a docstring which defines its
+#  spoken-form.  This docstring must include the "<dictation>" extra.
+#  See below for various examples.
+
+# Format: some_words
+def format_score(dictation):          # Function name must start with "format_".
+    """ score <dictation> """         # Docstring defining spoken-form.
+    text = str(dictation)             # Get written-form of dictated text.
+    words = [word.lower() for word in text.split(" ")]
+    return "_".join(words)            # Put underscores between words.
+
+# Format: some_words()
+def format_score_function(dictation):
+    """ score funk <dictation> """
+    text = str(dictation)
+    words = [word.lower() for word in text.split(" ")]
+    return "_".join(words) + "()"
+
+# Format: SOME_WORDS
+def format_upper_score(dictation):
+    """ score up <dictation> """
+    text = str(dictation)
+    words = [word.upper() for word in text.split(" ")]
+    return "_".join(words)
+
+# Format: somewords
+def format_one_word(dictation):
+    """ squash <dictation> """
+    text = str(dictation)
+    words = [word.lower() for word in text.split(" ")]
+    return "".join(words)
+
+# Format: SOMEWORDS
+def format_upper_word(dictation):
+    """ squash up <dictation> """
+    text = str(dictation)
+    words = [word.upper() for word in text.split(" ")]
+    return "".join(words)
+
+# Format: SomeWords
+def format_pascal(dictation):
+    """ stud <dictation> """
+    text = str(dictation)
+    words = [word.capitalize() for word in text.split(" ")]
+    return "".join(words)
+
+# Format: SomeWords()
+def format_pascal_function(dictation):
+    """ stud funk <dictation> """
+    text = str(dictation)
+    words = [word.capitalize() for word in text.split(" ")]
+    return "".join(words) + "()"
+
+# Format: someWords
+def format_camel(dictation):
+    """ hum <dictation> """
+    text = str(dictation)
+    words = text.split(" ")
+    return words[0] + "".join(w.capitalize() for w in words[1:])
+
+# Format: someWords()
+def format_camel_function(dictation):
+    """ hum funk<dictation> """
+    text = str(dictation)
+    words = text.split(" ")
+    return words[0] + "".join(w.capitalize() for w in words[1:]) + "()"
