@@ -84,6 +84,7 @@ cmd.map = {
         "rack [<n>]": Key("rbracket:%(n)d"),
         "(laip | lipe) [<n>]": Key("lparen:%(n)d"),
         "hype [<n>]": Key("rparen:%(n)d"),
+        "test": Key("d"),
 
         ### Letters
         "Aff [<n>]": Key("a:%(n)d"),
