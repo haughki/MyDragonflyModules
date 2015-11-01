@@ -18,12 +18,32 @@ from dragonfly import *
 # grammar.add_rule(ExampleMapping())
 
 
+# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+
+
+import logging
+
+from dragonfly import log
+
+log.setup_log()
+# log.setup_tracing()
 
 class ExampleRule(CompoundRule):
     spec = "Dirk"                  # Spoken form of command.
 
     def _process_recognition(self, node, extras):   # Callback when command is spoken.
+        print 'found Dirk'
         print node.words()
+        _log = logging.getLogger("dfly.test")
+        _log.debug("Dirk, daggnabbit!")
+
+        engine_log = logging.getLogger("engine")
+        engine_log.info("The file log should see this, but not stdout.")
+        engine_log.warning("Both logs should see this.")
+
 
 
 #Create a grammar which contains and loads the command rule.

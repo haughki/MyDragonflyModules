@@ -23,6 +23,7 @@ class FocusMimics(MappingRule):
         "focus evernote": Mimic("switch", "to", "evernote"),
         "focus fire": Mimic("switch", "to", "Firefox"),
         "focus idea": Mimic("switch", "to", "IntelliJ IDEA 14.1.5"),
+        "focus plore": Mimic("switch", "to", "Windows Explorer"),
     }
 
 

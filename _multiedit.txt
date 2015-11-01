@@ -26,6 +26,7 @@ cmd.map = {
 
         #### Dragon
         "Snork": Key("npadd/10,npadd"),  # turn mic on and off
+        "(Mike | mic) off": Key("npadd"),  # turn mic on and off
         "sleep": Key("npdiv"),
 
         #### Cursor manipulation
@@ -84,7 +85,6 @@ cmd.map = {
         "rack [<n>]": Key("rbracket:%(n)d"),
         "(laip | lipe) [<n>]": Key("lparen:%(n)d"),
         "hype [<n>]": Key("rparen:%(n)d"),
-        "test": Key("d"),
 
         ### Letters
         "Aff [<n>]": Key("a:%(n)d"),
@@ -162,7 +162,7 @@ cmd.map = {
         "pop": Key("apps"), # right click
         "close tab [<n>]": Key("c-w/10:%(n)d"),
         "new (thing | file)": Key("c-n"),
-        "save it": Key("c-s"),
+        "file save": Key("c-s"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
 }
 
