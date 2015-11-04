@@ -92,6 +92,7 @@ config.settings.defaults   = Item({
                                     "idea": ("idea", None),
                                     "studio": ("devenv", None),
                                    }, doc="Default window names.  Maps spoken-forms to (executable, title) pairs.")
+config.settings.mimics     = Item({}, doc="Similar to the other focus rule ('defaults'), but mimics DNS's 'switch to' command.  Use <command>:<win title>")
 #config.generate_config_file()
 config.load()
 
@@ -224,6 +225,18 @@ class FocusWinRule(CompoundRule):
                 break
 
 grammar.add_rule(FocusWinRule())
+
+#---------------------------------------------------------------------------
+# Exported window focusing rule; brings named windows to the foreground.
+# Mimics the "switch to" command from DNS, but still uses "focus" as the driver.
+
+class FocusMimics(MappingRule):
+    mimics = config.settings.mimics
+    mapping = {}
+    for k, v in mimics.iteritems():
+        mapping["focus " + k] = Mimic("switch", "to", v)
+
+grammar.add_rule(FocusMimics())
 
 
 #---------------------------------------------------------------------------
@@ -362,7 +375,7 @@ class ResizeRule(CompoundRule):
         if len(horizontals) == 1:
             horizontals.extend([pos.x1, pos.x2])
         elif len(horizontals) != 2:
-            self._log.error("%s: Internal error."  % self)
+            self._log.error("%s: Internal error."  % self, exc_info=True)
             return
         x1, x2 = min(horizontals), max(horizontals)
 
@@ -372,7 +385,7 @@ class ResizeRule(CompoundRule):
         if len(verticals) == 1:
             verticals.extend([pos.y1, pos.y2])
         elif len(verticals) != 2:
-            self._log.error("%s: Internal error."  % self)
+            self._log.error("%s: Internal error."  % self, exc_info=True)
             return
         y1, y2 = min(verticals), max(verticals)
 

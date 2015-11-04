@@ -8,18 +8,18 @@
 Command-module for managing **Dragonfly**
 ============================================================================
 
-This module manages the configuration files used by other 
-active Dragonfly command-modules.  It implements a command 
-for easy opening and editing of the configuration files. 
-It also monitors the files for modifications, and causes 
+This module manages the configuration files used by other
+active Dragonfly command-modules.  It implements a command
+for easy opening and editing of the configuration files.
+It also monitors the files for modifications, and causes
 the associated command-module to be reloaded if necessary.
 
 
 Installation
 ----------------------------------------------------------------------------
 
-If you are using DNS and Natlink, simply place this file in you Natlink 
-macros directory.  It will then be automatically loaded by Natlink when 
+If you are using DNS and Natlink, simply place this file in you Natlink
+macros directory.  It will then be automatically loaded by Natlink when
 you next toggle your microphone or restart Natlink.
 
 
@@ -143,8 +143,7 @@ class EditConfigRule(CompoundRule):
             try:
                 config_instance.generate_config_file(path)
             except Exception, e:
-                self._log.warning("Failed to create new config file %r: %s"
-                                  % (path, e))
+                self._log.warning("Failed to create new config file %r: %s" % (path, e))
                 return
         os.startfile(path)
 

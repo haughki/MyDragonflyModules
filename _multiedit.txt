@@ -87,28 +87,28 @@ cmd.map = {
         "hype [<n>]": Key("rparen:%(n)d"),
 
         ### Letters
-        "Aff [<n>]": Key("a:%(n)d"),
+        "Al [<n>]": Key("a:%(n)d"),
         "Braa [<n>]": Key("b:%(n)d"),
         "Sow [<n>]": Key("c:%(n)d"),
         "Doy [<n>]": Key("d:%(n)d"),
         "Eve [<n>]": Key("e:%(n)d"),
         "Fay [<n>]": Key("f:%(n)d"),
-        "Gee [<n>]": Key("g:%(n)d"),
+        "Gao [<n>]": Key("g:%(n)d"),
         "Hoe [<n>]": Key("h:%(n)d"),
-        "Ish [<n>]": Key("i:%(n)d"),
+        "Ick [<n>]": Key("i:%(n)d"),
         "Jaa [<n>]": Key("j:%(n)d"),
         "Koi [<n>]": Key("k:%(n)d"),
         "Lee [<n>]": Key("l:%(n)d"),
         "Mao [<n>]": Key("m:%(n)d"),
         "Noy [<n>]": Key("n:%(n)d"),
-        "Ole [<n>]": Key("o:%(n)d"),
+        "Oak [<n>]": Key("o:%(n)d"),
         "Poe [<n>]": Key("p:%(n)d"),
         "Quinn [<n>]": Key("q:%(n)d"),
         "Ree [<n>]": Key("r:%(n)d"),
         "Soy [<n>]": Key("s:%(n)d"),
         "Tay [<n>]": Key("t:%(n)d"),
-        "Oot [<n>]": Key("u:%(n)d"),
-        "Vye [<n>]": Key("v:%(n)d"),
+        "Ugh [<n>]": Key("u:%(n)d"),
+        "Vote [<n>]": Key("v:%(n)d"),
         "Wes [<n>]": Key("w:%(n)d"),
         "Ecks [<n>]": Key("x:%(n)d"),
         "Yaa [<n>]": Key("y:%(n)d"),
@@ -120,10 +120,10 @@ cmd.map = {
 
         ### Lines
         "wipe [<n>]": release + Key("home, s-down:%(n)d, del"), # del lines down
-        "weiss [<n>]": release + Key("home, s-up:%(n)d, s-home, del"), # del lines up
+        "wipe up [<n>]": release + Key("home, s-up:%(n)d, s-home, del"), # del lines up
         "strip": release + Key("s-end, del"), # del from cursor to line end
         "strop": release + Key("s-end, c-c"), # copy from cursor to line end
-        "stroop": release + Key("s-end, c-x"), # cut from cursor to line end
+        "cut end": release + Key("s-end, c-x"), # cut from cursor to line end
         "striss": release + Key("s-home, del"), # del from cursor to line home
         "driss": release + Key("s-home, c-c"), # copy from cursor to line home
         "priss": release + Key("s-home, c-x"), # cut from cursor to line home
@@ -155,6 +155,7 @@ cmd.map = {
         "release": release,
 
         ### other
+        "undo": Key("c-z"),
         "switch": release + Key("ctrl:down, tab"),
         "show apps": release + Key("alt:down, tab"),
         "say <text>": release + Text("%(text)s"),
