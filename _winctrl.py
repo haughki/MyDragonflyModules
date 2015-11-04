@@ -212,14 +212,14 @@ class FocusWinRule(CompoundRule):
     def _process_recognition(self, node, extras):
         window = extras["win_selector"]
         if not window:
-            self._log.warning("No window with that name found.")
+            self._log.warning("No window with that name found.", exc_info=True)
             return
         self._log.debug("%s: bringing window '%s' to the foreground." % (self, window))
         for attempt in range(4):
             try:
                 window.set_foreground()
             except Exception, e:
-                self._log.warning("%s: set_foreground() failed: %s." % (self, e))
+                self._log.warning("%s: set_foreground() failed: %s." % (self, e), exc_info=True)
                 time.sleep(0.2)
             else:
                 break
@@ -253,7 +253,7 @@ class FocusTitleRule(CompoundRule):
         try:
             action.execute()
         except ActionError:
-            self._log.warning("No window with that name found.")
+            self._log.warning("No window with that name found.", exc_info=True)
 
 grammar.add_rule(FocusTitleRule())
 

@@ -143,7 +143,7 @@ class EditConfigRule(CompoundRule):
             try:
                 config_instance.generate_config_file(path)
             except Exception, e:
-                self._log.warning("Failed to create new config file %r: %s" % (path, e))
+                self._log.warning("Failed to create new config file %r: %s" % (path, e), exc_info=True)
                 return
         os.startfile(path)
 

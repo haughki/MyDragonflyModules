@@ -399,9 +399,9 @@ Please try to correct this by running the NatLink Config Program (with administr
         if wantedPyd != originalPyd:
             if not fromConfig:
                 if not originalPyd:
-                    self.warning('originalPyd setting is missing in natlinkstatus.ini')
+                    self.warning('originalPyd setting is missing in natlinkstatus.ini', exc_info=True)
                 else:
-                    self.warning('incorrect originalPyd (from natlinkstatus.ini): %s, wanted: %s'% (originalPyd, wantedPyd))
+                    self.warning('incorrect originalPyd (from natlinkstatus.ini): %s, wanted: %s'% (originalPyd, wantedPyd), exc_info=True)
             return
         # now check for updates:
         timeWantedPyd = getFileDate(wantedPydPath)
@@ -411,7 +411,7 @@ Please try to correct this by running the NatLink Config Program (with administr
         if timeCurrentPyd or timeWantedPyd:
             if timeWantedPyd > timeCurrentPyd:
                 if not fromConfig:
-                    self.warning('Current pyd file (%s) out of date, compared with\n%s'% (currentPydPath, wantedPydPath))
+                    self.warning('Current pyd file (%s) out of date, compared with\n%s'% (currentPydPath, wantedPydPath), exc_info=True)
                 return
         
         # all well
@@ -792,18 +792,18 @@ Please try to correct this by running the NatLink Config Program (with administr
                       '    section: %s, key: %s, value: %s'% (self.section2, self.key2, actual2),
                       '    should have value: %s'% self.value2]
                 if not silent:
-                    self.warning(mess)
+                    self.warning(mess, exc_info=True)
                 return None # error!
         elif actual1:
             if not silent:
-                self.warning("unexpected value of nssystem.ini value: %s"% actual1)
+                self.warning("unexpected value of nssystem.ini value: %s"% actual1, exc_info=True)
             # unexpected value, but not enabled:
             return 0
         else:
             # GUID in nsapps may be defined, natspeak first checks nssystem.ini
             # so NatLink NOT enabled
             return 0
-        self.warning("unexpected, natlinkstatus should not come here!")
+        self.warning("unexpected, natlinkstatus should not come here!", exc_info=True)
         return None
 
 
