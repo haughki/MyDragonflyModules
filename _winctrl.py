@@ -8,7 +8,7 @@
 Command-module for moving and controlling **windows**
 =====================================================
 
-This command-module offers commands for naming windows, bringing 
+This command-module offers commands for naming windows, bringing
 named windows to the foreground, and positioning and resizing
 windows.
 
@@ -46,9 +46,10 @@ Usage examples
 import pkg_resources
 pkg_resources.require("dragonfly >= 0.6.5beta1.dev-r76")
 
-import time
+import time, logging
 from dragonfly import *
 
+rule_log = logging.getLogger("rule")
 
 #---------------------------------------------------------------------------
 # Set up this module's configuration.
@@ -132,9 +133,11 @@ def get_default_window(name):
     for window in windows:
         if not window.is_visible:
             continue
-        elif executable and window.executable.lower().find(executable) == -1:
+        rule_log.debug("{} : {}".format(executable, window.executable.lower()))
+        if executable and window.executable.lower().find(executable) == -1:
             continue
-        elif title and window.title.lower().find(title) == -1:
+        rule_log.debug("{} : {}".format(title, window.title.lower()))
+        if title and window.title.lower().find(title) == -1:
             continue
         window.name = name
         win_names[name] = window
@@ -210,14 +213,12 @@ class FocusWinRule(CompoundRule):
         if not window:
             self._log.warning("No window with that name found.")
             return
-        self._log.debug("%s: bringing window '%s' to the foreground."
-                        % (self, window))
+        self._log.debug("%s: bringing window '%s' to the foreground." % (self, window))
         for attempt in range(4):
             try:
                 window.set_foreground()
             except Exception, e:
-                self._log.warning("%s: set_foreground() failed: %s."
-                                  % (self, e))
+                self._log.warning("%s: set_foreground() failed: %s." % (self, e))
                 time.sleep(0.2)
             else:
                 break

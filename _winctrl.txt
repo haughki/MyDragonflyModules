@@ -1,0 +1,16 @@
+# tries to match windows using "focus" <command> : { <process name>, <window title> }.  You can leave off either <process name>
+# or <window title>; if you do, just replace with empty quotes "".  To see the current windows according to Python,
+# try "print windows".
+
+settings.defaults = {
+        "NatLink": ("natspeak", "messages from Natlink"),
+        "idea": ("idea", ""),
+        "studio": ("devenv", ""),
+        "chrome": ("chrome", "Google Chrome"),
+        "note": ("notepad++", "notepad++"),
+        "word": ("winword", "word"),
+        "evernote": ("evernote", "evernote"),
+        "fire": ("firefox", "Firefox"),
+        "plore": ("explorer", "Windows Explorer"),
+        "task manager": ("", "Windows Task Manager"),
+    }
