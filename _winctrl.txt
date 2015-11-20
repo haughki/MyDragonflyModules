@@ -10,7 +10,6 @@ settings.defaults = {
         "studio": ("devenv", ""),
         "chrome": ("chrome", "Google Chrome"),
         "note": ("notepad++", "notepad++"),
-        "word": ("winword", "word"),
         "evernote": ("evernote", "evernote"),
         "fire": ("firefox", "Firefox"),
         "task manager": ("", "Windows Task Manager"),
@@ -20,5 +19,6 @@ settings.defaults = {
 # This one just takes <command> : <window title>.  Uses DNS's "switch to" command under the hood.  Works in certain cases
 # where _wincrtl doesn't find the window (but DNS does)
 settings.mimics = {
-        "plore": "Windows Explorer"
+        "plore": "Windows Explorer",
+        "word": "Microsoft Word"
     }

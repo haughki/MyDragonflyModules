@@ -15,13 +15,15 @@ class CommandRule(MappingRule):
         "find in files": Key("cs-f"),
 
         # Code.
-        "[go to | show] line <n>": Key("c-g/25") + Text("%(n)d") + Key("enter"),
-        #"(full-screen | full screen)": Key("cs-x"),
-
+        "(shoreline | [go to | show] line) <n>": Key("c-g/25") + Text("%(n)d") + Key("enter"),
+        "show white space": Key("cs-w"),
+        
         # Window handling.
+        "new tab": Key("c-n"),
         "next tab [<t>]": Key("c-tab:%(t)d"),
         "(preev | previous) tab [<t>]": Key("cs-tab:%(t)d"),
         "close tab": Key("c-w"),
+        "(full-screen | full screen)": Key("f11"),
     }
     extras = [
         Integer("t", 1, 50),

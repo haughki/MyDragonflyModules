@@ -20,7 +20,7 @@ class GlobalChromeMappings(MappingRule):
         'bookmark page': Key('c-d'),
         'open': Key('f'),                         # vimium
         'tabs': Key('s-f'),                       # vimium
-        '(go | choose) <number>': Text('%(number)d'),        # vimium
+        '(go | launch | visit | lunch | goat | goke | choose) <number>': Text('%(number)d'),        # vimium
         '(duplicate | dupe) tab': Key('y/25,t'),  # vimium
     }
     extras=[
@@ -41,9 +41,10 @@ class GmailMappings(MappingRule):
         '[go to] inbox': Key('g,i'),
         "(delete | trash)": Key("hash"),
         "line trash": Key("x/5,hash"),
+        "send [and] archive": Mimic("click", "send", "and", "archive"),
         "send it": Key("c-enter"),
         'reply': Key('r'),
-        'reply all': Key('a'),
+        'reply [to] all': Key('a'),
         'forward': Key('f'),
         'select': Key('x'),
         "move": Key('v'),
@@ -80,6 +81,39 @@ class OpenGmailLineRule(CompoundRule):
         Mimic("choose", "2").execute()
 
 
+# the following is too brittle because the open command
+# doesn't reliably produce the same numbers for each execution.
+# but, it was an interesting idea...
+# class NavigateCalendarWeeks(CompoundRule):
+#     """ Mimics the Dragon builtin command ("click <subject>") to open a Gmail line item.
+#     Always "chooses 2" to bypass that step.
+#     """
+#     spec = "(next | preev) week"
+#     # extras = [
+#     #     Dictation("text"),
+#     # ]
+# 
+#     def _process_recognition(self, node, extras):
+#         print node.words()
+#         words = node.words()
+#         if len(words) >= 2:
+#             if words[0] == "next":
+#                 print "next"
+#                 Mimic("open").execute()
+#                 Pause("20").execute()
+#                 Key("3,9").execute()
+#             elif (words[0] == "preev") | (words[0] == "previous"):
+#                 print "preev"
+#                 Mimic("open").execute()
+#                 Pause("20").execute()
+#                 Key("8,8").execute()
+#             else:
+#                 print "Commmand had incorrect word: " + words[0]
+#         else:
+#             print "Wrong number of words in command: " + words
+# 
+
+
 #gmail_context = AppContext(executable='chrome', title='Gmail')
 
 context = AppContext(executable='chrome')
@@ -87,6 +121,7 @@ grammar = Grammar('Google Chrome', context=context)
 grammar.add_rule(GlobalChromeMappings())
 grammar.add_rule(GmailMappings())
 grammar.add_rule(OpenGmailLineRule())
+# grammar.add_rule(NavigateCalendarWeeks())
 grammar.load()
 
 def unload():

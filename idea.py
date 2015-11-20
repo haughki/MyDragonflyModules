@@ -28,13 +28,14 @@ class CommandRule(MappingRule):
         "[go to | show] implementation": Key("ca-b"),
         "[go to | show] super": Key("c-u"),
         "[go to | show] (class|test)": Key("cs-t"),
+        "[go to | show] [file] structure": Key("c-f12"),
         # "go back": Key("ca-left"), Key("as-left"),
 
         # Project settings.
         "[go to | show] project window": Key("a-1"),
         "[go to | show] module settings": Key("f4"),
         "[go to | show] [project] settings": Key("ca-s"),
-        "synchronize files": Key("ca-y"),
+        #"synchronize files": Key("ca-y"),
 
         # Terminal.
         "run terminal": Key("a-f12"),
@@ -53,9 +54,10 @@ class CommandRule(MappingRule):
         "override method": Key("c-o"),
 
         # Edit
-        "[go to | show] line <n>": Key("c-g/25") + Text("%(n)d") + Key("enter"),
+        "(shoreline | [go to | show] line) <n>": Key("c-g/25") + Text("%(n)d") + Key("enter"),
         "(full-screen | full screen)": Key("cs-x"),
         "comment [line | that | it]": Key("c-slash"),
+        "show white space": Key("cs-w"),
 
         # Window handling.
         "next tab [<t>]": Key("a-right/5:%(t)d"),
