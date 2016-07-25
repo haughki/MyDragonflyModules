@@ -48,7 +48,8 @@ class GmailMappings(MappingRule):
         'forward': Key('f'),
         'select': Key('x'),
         "move": Key('v'),
-        "[move to] receipts": Key('x,v/20') + Text("receipts") + Key('enter'),
+        "[to] receipts": Key('x,v/20') + Text("aa_receipts") + Key('enter'),
+        'move to <text>': Key("x,v/20") + Text("%(text)s") + Key('enter'),
         "send archive": Mimic("click", "send", "and", "archive"),
     }
 

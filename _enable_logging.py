@@ -1,4 +1,3 @@
-# from dragonfly import *
 import logging
 from dragonfly import log, CompoundRule, Grammar
 
@@ -19,14 +18,10 @@ class LoggingRule(CompoundRule):
         engine_log.info("The file log should see this, but not stdout.")
         engine_log.warning("Both file and stdout logs should see this.")
 
-
-
 #Create a grammar which contains and loads the command rule.
-dirk_rule = LoggingRule()
+logging_rule = LoggingRule()
 grammar = Grammar("example grammar")
-grammar.add_rule(dirk_rule)
-
-
+grammar.add_rule(logging_rule)
 grammar.load()
 
 def unload():

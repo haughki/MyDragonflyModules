@@ -37,13 +37,9 @@ class ExampleRule(CompoundRule):
     def _process_recognition(self, node, extras):   # Callback when command is spoken.
         print 'found Dirk'
         print node.words()
-        _log = logging.getLogger("dfly.test")
-        _log.debug("Dirk, daggnabbit!")
 
-        engine_log = logging.getLogger("engine")
-        engine_log.info("The file log should see this, but not stdout.")
-        engine_log.warning("Both logs should see this.")
-
+        focusIdea = FocusWindow("idea")
+        focusIdea.execute()
 
 
 #Create a grammar which contains and loads the command rule.
