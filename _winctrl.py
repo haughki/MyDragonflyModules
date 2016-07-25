@@ -141,7 +141,10 @@ def get_default_window(name):
         if title and window.title.lower().find(title) == -1:
             continue
         window.name = name
-        win_names[name] = window
+        # Commenting out the following line forces the WinSelectorRule to call this function every time it searches
+        # for a window.  This fixes a bug in which the WinSelector was failing because an app window handle had
+        # changed: the stored Window object (in win_names) was no longer the correct Window.
+        #win_names[name] = window
         return window
     return None
 
@@ -158,7 +161,7 @@ class WinSelectorRule(CompoundRule):
     def value(self, node):
         if node.has_child_with_name("win_names"):
             window = node.get_child_by_name("win_names").value()
-            if not isinstance(window, Window):
+            if not isinstance(window, Window):  # The change I made to get_default_window @ l. 147 means this will never be true
                 window = get_default_window(window)
             return window
         return Window.get_foreground()
