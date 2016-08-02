@@ -15,3 +15,17 @@ def getClassFields(aClass):
                 classFields.append(classMember[0])
 
     return classFields
+
+
+def windowIsValid(window):
+    if not window.is_visible:
+        return False
+    if not window.executable:
+        return False
+    if not window.title:
+        return False
+    if window.title == "Start":
+        return False
+    if window.title == "Program Manager":
+        return False
+    return True

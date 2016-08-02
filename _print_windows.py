@@ -1,15 +1,24 @@
-from dragonfly import CompoundRule, Grammar, Window
+# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
+
+from dragonfly import CompoundRule, Grammar, Window
+from hawk import hawkutils
 
 class PrintWindowsRule(CompoundRule):
     spec = "print Windows"  # Spoken form of command.
 
     def _process_recognition(self, node, extras):  # Callback when command is spoken.
         print node.words()
-
-        for window in Window.get_all_windows():
-            if window.is_visible:
-                print '{:75} : {}'.format(unicode(window.executable.lower()), unicode(window.title.lower()))
+        windows = Window.get_all_windows()
+        windows.sort(key=lambda x: x.executable)
+        for window in windows:
+            if hawkutils.windowIsValid(window):
+                executable = unicode(window.executable, errors='ignore').lower()
+                title = unicode(window.title, errors='ignore').lower()
+                print "{:6} : {:75} : {}".format(window.handle, executable, title)
 
 
 # window.executable.lower()

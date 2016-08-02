@@ -1,24 +1,19 @@
-# override just to make things crystal clear
-lang.focus_win      = "focus <win_selector>"
-
-# tries to match windows using "focus" <command> : { <process name>, <window title> }.  You can leave off either <process name>
-# or <window title>; if you do, just replace with empty quotes "".  To see the current windows according to Python,
-# try "print windows".
+# tries to match windows using "focus" <app_name> [<title_fragment>].  The dict below correlates the spoken app_name key
+# with an (<exe name>, <window title hint>).  The hint is hard-coded, whereas the title_fragment is dictation, dictation
+# which let's you choose, in real-time, between multiple windows with the same process name.  If you app_name command
+# is the same as the exe_name, ou can leave off either 
+# <process name> or ; if you do, just replace with empty quotes "".  To see data about the current
+# available windows, try "print windows".
 settings.defaults = {
         "NatLink": ("natspeak", "messages from Natlink"),
-        "idea": ("idea", ""),
+        "idea": ("", ""),
         "studio": ("devenv", ""),
-        "chrome": ("chrome", "Google Chrome"),
+        "chrome": ("", "Google Chrome"),
         "note": ("notepad++", "notepad++"),
         "evernote": ("evernote", "evernote"),
         "fire": ("firefox", "Firefox"),
-        "task manager": ("", "Windows Task Manager"),
-        "command": ("", "command prompt"),
-    }
-
-# This one just takes <command> : <window title>.  Uses DNS's "switch to" command under the hood.  Works in certain cases
-# where _wincrtl doesn't find the window (but DNS does)
-settings.mimics = {
-        "plore": "Windows Explorer",
-        "word": "Microsoft Word"
+        "task manager": ("taskmgr", "Windows Task Manager"),
+        "command": ("cmd", "command prompt"),
+        "explore": ("explorer", ""),
+        "word": ("winword", ""),
     }
