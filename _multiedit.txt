@@ -179,6 +179,7 @@ cmd.map = {
         "new (thing | file)": Key("c-n"),
         "file save": Key("c-s"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
+        "list Windows": Mimic("list", "all", "Windows"),
 }
 
 #---------------------------------------------------------------------------
