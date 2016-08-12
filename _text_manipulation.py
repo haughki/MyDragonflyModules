@@ -26,11 +26,6 @@ Usage examples
 
 """
 
-import sys
-sys.path.append('pycharm-debug.egg')
-import pydevd
-pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
-
 # import logging
 from dragonfly.windows.clipboard import Clipboard
 from dragonfly import Config, Section, Item, Grammar, CompoundRule, Key
