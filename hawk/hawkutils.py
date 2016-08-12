@@ -34,9 +34,11 @@ def windowIsValid(window):
     return True
 
 
-def getSelectedText(clipboard=None):
+def getSelectedText():
     Key("c-c").execute()
-    if not clipboard:
-        clipboard = Clipboard()
+    # note that trying to re-use this clipboard object after it's been
+    # modified has caused me issues in the past -- seems to hold onto old
+    # values...
+    clipboard = Clipboard()
     clipboard.copy_from_system()
     return clipboard.get_text()

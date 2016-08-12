@@ -26,6 +26,11 @@ Usage examples
 
 """
 
+import sys
+sys.path.append('pycharm-debug.egg')
+import pydevd
+pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+
 # import logging
 from dragonfly.windows.clipboard import Clipboard
 from dragonfly import Config, Section, Item, Grammar, CompoundRule, Key
@@ -70,14 +75,16 @@ grammar.add_rule(LowerRule())
 # ---------------------------------------------------------------------------
 
 def copy_modify_paste(modifying_function):
-    clipboard = Clipboard()
-    selected_text = hawkutils.getSelectedText(clipboard)
+    selected_text = hawkutils.getSelectedText()
     if not selected_text:
         print "No selected text?"
         return
     modified_text = modifying_function(str(selected_text))
-    clipboard.set_text(modified_text)
-    clipboard.copy_to_system()
+    # tried to use the original clipboard here, but couldn't get it to "clear" -- some apps would
+    # somehow get the original, unmodified text when the paste happened
+    new_clipboard = Clipboard()
+    new_clipboard.set_text(modified_text)
+    new_clipboard.copy_to_system()
     Key("c-v").execute()
 
 
