@@ -38,8 +38,8 @@ cmd.map = {
         "drop [<n>]": Key("pgdown:%(n)d"),
         "port [<n>]": Key("c-left:%(n)d"),
         "yope [<n>]": Key("c-right:%(n)d"),
-        "home": Key("home"),
-        "kick": Key("end"),
+        "home [<n>]": Key("home:%(n)d"),
+        "kick [<n>]": Key("end:%(n)d"),
         "top": Key("c-home"),
         "toe": Key("c-end"),
 
@@ -50,7 +50,7 @@ cmd.map = {
         "slap [<n>]": Key("enter:%(n)d"),
         "chuck [<n>]": Key("del:%(n)d"),
         "back [<n>]": Key("backspace:%(n)d"),
-        "fly": Key("escape"),
+        "fly [<n>]": Key("escape:%(n)d"),
 
         "amp [<n>]": Key("ampersand:%(n)d"),
         "bing [<n>]": Key("apostrophe:%(n)d"),

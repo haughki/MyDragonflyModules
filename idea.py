@@ -45,7 +45,7 @@ class CommandRule(MappingRule):
         'find next': Key('f3'),
         'find (prev | previous)': Key('s-f3'),
         "find in files": Key("cs-f"),
-        # "find usages": DynamicAction(Key("a-f7"), Key("as-7")),
+        "find usages": Key("a-f7"),
 
         # Code.
         "show intentions": Key("a-enter"),

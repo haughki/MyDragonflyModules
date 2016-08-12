@@ -4,6 +4,7 @@ from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mim
 class GlobalChromeMappings(MappingRule):
     mapping = {
         'new (thing | tab)': Key('c-t'),
+        'new window': Key('c-n'),
         'reopen tab': Key('cs-t'),
         '(next | nex) tab [<n>]': Key('c-pgdown:%(n)d'),
         '(previous | preev) tab [<n>]': Key('c-pgup:%(n)d'),
@@ -39,6 +40,8 @@ class GmailMappings(MappingRule):
         'next mail [<n>]': Key('j:%(n)d'),
         '(previous | preev) mail [<n>]': Key('k:%(n)d'),
         '[go to] inbox': Key('g,i'),
+        '[go to] sent mail': Key('g,t'),
+        '[go to] drafts': Key('g,d'),
         "(delete | trash)": Key("hash"),
         "line trash": Key("x/5,hash"),
         "send [and] archive": Mimic("click", "send", "and", "archive"),
