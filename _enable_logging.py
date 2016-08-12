@@ -8,7 +8,6 @@ class LoggingRule(CompoundRule):
     spec = "is logging enabled"                  # Spoken form of command.
 
     def _process_recognition(self, node, extras):   # Callback when command is spoken.
-        print node.words()
         print 'Yes, looging should be enabled.'
 
         testlog = logging.getLogger("dfly.test")

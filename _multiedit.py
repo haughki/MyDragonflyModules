@@ -211,7 +211,7 @@ class RepeatRule(CompoundRule):
                 if is_skip_next_action:
                     is_skip_next_action = False
                     continue
-                print node.words()
+                #print node.words()
                 commands = node.words()
                 if len(commands) > 0:
                     if commands[action_loop_count] == "mash":  # special command to uppercase individual letters

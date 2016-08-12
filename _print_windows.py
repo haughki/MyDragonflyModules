@@ -11,14 +11,13 @@ class PrintWindowsRule(CompoundRule):
     spec = "print Windows"  # Spoken form of command.
 
     def _process_recognition(self, node, extras):  # Callback when command is spoken.
-        print node.words()
         windows = Window.get_all_windows()
-        windows.sort(key=lambda x: x.executable)
+        #windows.sort(key=lambda x: x.executable)
         for window in windows:
             if hawkutils.windowIsValid(window):
                 executable = unicode(window.executable, errors='ignore').lower()
                 title = unicode(window.title, errors='ignore').lower()
-                print "{:6} : {:75} : {}".format(window.handle, executable, title)
+                print "{:7} : {:75} : {}".format(window.handle, executable, title)
 
 
 # window.executable.lower()

@@ -139,12 +139,12 @@ def get_app_window(app_name, title_fragment=None):
     best_match = None
     got_title_hint_match = False
     
-    print "exe: " + exe_name
-    print "title frag: " + title_fragment
-    print "title hint: " + title_hint
+    # print "exe: " + exe_name
+    # print "title frag: " + title_fragment
+    # print "title hint: " + title_hint
 
     windows = Window.get_all_windows()
-    windows.sort(key=lambda x: x.executable)
+    # windows.sort(key=lambda x: x.executable
     for window in windows:
         if not hawkutils.windowIsValid(window):
             continue
@@ -190,11 +190,11 @@ class WinSelectorRule(CompoundRule):
     def value(self, node):
         if node.has_child_with_name("win_names"):
             app_name = node.get_child_by_name("win_names").value()
-            print "app_name: " + str(app_name)
+            # print "app_name: " + str(app_name)
             title_fragment = ""
             if node.has_child_with_name("title_fragment"):
                 title_fragment = str(node.get_child_by_name("title_fragment").value())
-                print "title_fragment: " + title_fragment
+                # print "title_fragment: " + title_fragment
             return get_app_window(app_name, title_fragment)
         return Window.get_foreground()
 
