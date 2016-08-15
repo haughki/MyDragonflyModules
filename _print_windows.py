@@ -5,7 +5,7 @@
 
 
 from dragonfly import CompoundRule, Grammar, Window
-from hawk import hawkutils
+from hawk import utils
 
 class PrintWindowsRule(CompoundRule):
     spec = "print Windows"  # Spoken form of command.
@@ -14,7 +14,7 @@ class PrintWindowsRule(CompoundRule):
         windows = Window.get_all_windows()
         #windows.sort(key=lambda x: x.executable)
         for window in windows:
-            if hawkutils.windowIsValid(window):
+            if utils.windowIsValid(window):
                 executable = unicode(window.executable, errors='ignore').lower()
                 title = unicode(window.title, errors='ignore').lower()
                 print "{:7} : {:75} : {}".format(window.handle, executable, title)

@@ -29,7 +29,7 @@ Usage examples
 # import logging
 from dragonfly.windows.clipboard import Clipboard
 from dragonfly import Config, Section, Item, Grammar, CompoundRule, Key
-from hawk import hawkutils
+from hawk import utils
 
 # rule_log = logging.getLogger("rule")
 
@@ -70,7 +70,7 @@ grammar.add_rule(LowerRule())
 # ---------------------------------------------------------------------------
 
 def copy_modify_paste(modifying_function):
-    selected_text = hawkutils.getSelectedText()
+    selected_text = utils.getSelectedText()
     if not selected_text:
         print "No selected text?"
         return

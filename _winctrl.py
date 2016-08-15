@@ -48,7 +48,7 @@ pkg_resources.require("dragonfly >= 0.6.5beta1.dev-r76")
 
 import time, logging
 from dragonfly import *
-from hawk import hawkutils
+from hawk import utils
 
 rule_log = logging.getLogger("rule")
 
@@ -146,7 +146,7 @@ def get_app_window(app_name, title_fragment=None):
     windows = Window.get_all_windows()
     # windows.sort(key=lambda x: x.executable
     for window in windows:
-        if not hawkutils.windowIsValid(window):
+        if not utils.windowIsValid(window):
             continue
 
         rule_log.debug("wanted exe:{} actual exe:{}".format(str(exe_name), window.executable.lower()))
