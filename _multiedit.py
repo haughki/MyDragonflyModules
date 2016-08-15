@@ -214,7 +214,7 @@ class RepeatRule(CompoundRule):
                 #print node.words()
                 commands = node.words()
                 if len(commands) > 0:
-                    if commands[action_loop_count] == "mash":  # special command to uppercase individual letters
+                    if commands[action_loop_count] == "mash" or commands[action_loop_count] == "sky":  # special command to uppercase individual letters
                         if len(sequence) > 1:
                             upper_case_it = sequence[action_loop_count] + sequence[action_loop_count + 1] + release
                             upper_case_it.execute()

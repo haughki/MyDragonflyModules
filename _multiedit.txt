@@ -104,9 +104,9 @@ cmd.map = {
         "Oak [<n>]": Key("o:%(n)d"),
         "Poe [<n>]": Key("p:%(n)d"),
         "Quinn [<n>]": Key("q:%(n)d"),
-        "Ree [<n>]": Key("r:%(n)d"),
+        "Roy [<n>]": Key("r:%(n)d"),
         "Soy [<n>]": Key("s:%(n)d"),
-        "Tay [<n>]": Key("t:%(n)d"),
+        "Tao [<n>]": Key("t:%(n)d"),
         "Ugh [<n>]": Key("u:%(n)d"),
         "Vote [<n>]": Key("v:%(n)d"),
         "Wes [<n>]": Key("w:%(n)d"),
@@ -145,8 +145,10 @@ cmd.map = {
         "dupe [<n>]": release + Key("home, s-down:%(n)d, s-home, c-c, home, c-v"), # duplicate lines down
 
         ### words
-        "bump [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, del"), # del words right
-        "swat [<n>]": release + Key("left, c-right, cs-left:%(n)d, del"), # del words left
+        #"bump [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, del"), # del words right
+        "bump [<n>]": release + Key("cs-right:%(n)d, del"), # del words right
+        #"swat [<n>]": release + Key("left, c-right, cs-left:%(n)d, del"), # del words left
+        "swat [<n>]": release + Key("cs-left:%(n)d, del"), # del words left
         "(yose | copy right) [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-c, right"), # copy words right
         "(porche | copy left) [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-c, left"), # copy words left
         "slice right [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-x, right"), # cut words right
@@ -160,7 +162,7 @@ cmd.map = {
         "(select all | tarp)": release + Key("c-a"), # select all
         "copy all": release + Key("c-a, c-c"), # copy all
 
-        "mash": Key("shift:down"),
+        "(mash | sky)": Key("shift:down"),
         "mark": Key("shift:down"),
         "mark up": Key("shift:up"),
         "wave": Key("shift:up, right"),
