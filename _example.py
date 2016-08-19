@@ -25,11 +25,7 @@ from dragonfly import *
 
 
 import logging
-
-from dragonfly import log
-
-log.setup_log()
-# log.setup_tracing()
+rule_log = logging.getLogger("rule")
 
 class ExampleRule(CompoundRule):
     spec = "Dirk"                  # Spoken form of command.
@@ -38,9 +34,8 @@ class ExampleRule(CompoundRule):
         print 'found Dirk'
         print node.words()
 
-        focusIdea = FocusWindow("idea")
-        focusIdea.execute()
-
+        rule_log.debug("Testing testing")
+        rule_log.debug("testing again")
 
 #Create a grammar which contains and loads the command rule.
 dirk_rule = ExampleRule()

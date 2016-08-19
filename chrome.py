@@ -19,6 +19,7 @@ class GlobalChromeMappings(MappingRule):
         'find next': Key('enter'),
         'find (prev | previous)': Key('s-enter'),
         'bookmark page': Key('c-d'),
+        '(full-screen | full screen)': Key('f11'),
         'open': Key('f'),                         # vimium
         'tabs': Key('s-f'),                       # vimium
         '(go | launch | visit | lunch | goat | goke | choose) <number>': Text('%(number)d'),        # vimium
@@ -45,7 +46,7 @@ class GmailMappings(MappingRule):
         "(delete | trash)": Key("hash"),
         "line trash": Key("x/5,hash"),
         "send [and] archive": Mimic("click", "send", "and", "archive"),
-        "send it": Key("c-enter"),
+        "send (it | mail)": Key("c-enter"),
         'reply': Key('r'),
         'reply [to] all': Key('a'),
         'forward': Key('f'),

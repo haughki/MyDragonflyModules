@@ -13,34 +13,46 @@ class CommandRule(MappingRule):
     mapping = {
         # Code execution.
         "run app": Key("s-f10"),
+        "debug app": Key("s-f9"),
         "re-run app": Key("c-f5"),
         "run test": Key("cs-f10"),
         "stop running": Key("c-f2"),
+        "[toggle] (breakpoint | break)": Key("c-f8"),
+        "step [over]": Key("f8"),
+        "step into": Key("f11"),
+        "step out": Key("s-f8"),
+        "(keep running | resume)": Key("f9"),
 
         # Code navigation.
-        # "navigate to class <text>": Key("c-n") + Pause("30") + Function(lib.format.pascal_case_text) + Pause("30") + Key("enter"),
-        # "navigate to class chooser <text>": Key("c-n") + Pause("30") + Function(lib.format.pascal_case_text) + Pause("30"),
-        # "navigate to file <text>": Key("cs-n") + Pause("30") + Function(lib.format.camel_case_text) + Pause("30") + Key("enter"),
-        # "navigate to file chooser <text>": Key("cs-n") + Pause("30") + Function(lib.format.camel_case_text) + Pause("30"),
-        # "navigate to symbol <text>": Key("cas-n") + Pause("30") + Function(lib.format.camel_case_text) + Pause("30") + Key("enter"),
-        # "navigate to symbol chooser <text>": Key("cas-n") + Pause("30") + Function(lib.format.camel_case_text) + Pause("30"),
-        "[go to | show] declaration": Key("c-b"),
+        "[go to | show] class": Key("c-n"),
+        "[go to | show] file": Key("cs-n"),
+        "([go to | show] declaration | jump)": Key("c-b"),
         "[go to | show] implementation": Key("ca-b"),
         "[go to | show] super": Key("c-u"),
-        "[go to | show] (class|test)": Key("cs-t"),
-        "[go to | show] [file] structure": Key("c-f12"),
-        # "go back": Key("ca-left"), Key("as-left"),
+        "float [file] structure": Key("c-f12"),
+        "[go to | show] structure": Key("a-7"),
+        "[go to | show] hierarchy": Key("a-8"),
+        "[go to | show] version control": Key("a-9"),
+        "quick definition": Key("cs-i"),
+        "quick docs": Key("c-q"),
+        "toggle book": Key("f7"),
+        "next book": Key("cs-n"),
+        "(prev | previous) book": Key("cs-p"),
+        "expand": Key("c-npadd"),
+        "collapse": Key("c-npsub"),
 
         # Project settings.
-        "[go to | show] project window": Key("a-1"),
+        "[go to | show] project [window]": Key("a-1"),
         "[go to | show] module settings": Key("f4"),
-        "[go to | show] [project] settings": Key("ca-s"),
+        "[go to | show] [project] settings": Key("cas-s"),
+        "[go to | show] Global settings": Key("ca-s"),
         #"synchronize files": Key("ca-y"),
 
         # Terminal.
         "run terminal": Key("a-f12"),
 
         # Search.
+        "show find": Key("c-f"),
         'find <text>': Key("c-f/25") + Text("%(text)s"),
         'find next': Key('f3'),
         'find (prev | previous)': Key('s-f3'),
@@ -54,8 +66,10 @@ class CommandRule(MappingRule):
         "override method": Key("c-o"),
 
         # Edit
-        "(shoreline | [go to | show] line) <n>": Key("c-g/25") + Text("%(n)d") + Key("enter"),
+        "(shoreline | [go to | show] line) <n>": Key("c-g/30") + Text("%(n)d") + Key("enter"),
         "(full-screen | full screen)": Key("cs-x"),
+        "(Hide | hide | hi) bottom": Key("s-escape"),
+        # "(hide | hi) tools": Key("cas-x"), # interferes with the full-screen macro which also uses hide tools
         "comment [line | that | it]": Key("c-slash"),
         "show white space": Key("cs-w"),
 

@@ -86,7 +86,7 @@ cmd.map = {
         "(laip | lipe) [<n>]": Key("lparen:%(n)d"),
         "hype [<n>]": Key("rparen:%(n)d"),
 
-        ### Letters
+        ### Letters / Alphabet
         "Al [<n>]": Key("a:%(n)d"),
         "Braa [<n>]": Key("b:%(n)d"),
         "Chow [<n>]": Key("c:%(n)d"),
@@ -95,7 +95,8 @@ cmd.map = {
         "Fay [<n>]": Key("f:%(n)d"),
         "Gao [<n>]": Key("g:%(n)d"),
         "Hoe [<n>]": Key("h:%(n)d"),
-        "Ick [<n>]": Key("i:%(n)d"),
+        #"Ick [<n>]": Key("i:%(n)d"),
+        "(Ice | ice) [<n>]": Key("i:%(n)d"),
         "Jaa [<n>]": Key("j:%(n)d"),
         "Koi [<n>]": Key("k:%(n)d"),
         "Lee [<n>]": Key("l:%(n)d"),
@@ -142,15 +143,15 @@ cmd.map = {
         "cut head": release + Key("s-home, c-x"), # cut from cursor to line home
         "nab [<n>]": release + Key("home, s-down:%(n)d, c-c, right"), # copy lines down
         "swipe [<n>]": release + Key("home, s-down:%(n)d, c-x, right"), # cut lines down
-        "dupe [<n>]": release + Key("home, s-down:%(n)d, s-home, c-c, home, c-v"), # duplicate lines down
+        "dupe [<n>]": release + Key("home, s-down:%(n)d, s-home, c-c, home, c-v, up"), # duplicate lines down
 
         ### words
         #"bump [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, del"), # del words right
         "bump [<n>]": release + Key("cs-right:%(n)d, del"), # del words right
         #"swat [<n>]": release + Key("left, c-right, cs-left:%(n)d, del"), # del words left
         "swat [<n>]": release + Key("cs-left:%(n)d, del"), # del words left
-        "(yose | copy right) [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-c, right"), # copy words right
-        "(porche | copy left) [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-c, left"), # copy words left
+        "(yose | scoop right) [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-c, right"), # copy words right
+        "(porche | scoop left) [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-c, left"), # copy words left
         "slice right [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-x, right"), # cut words right
         "slice left [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-x, left"), # cut words left
         
@@ -182,6 +183,12 @@ cmd.map = {
         "file save": Key("c-s"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
         "list Windows": Mimic("list", "all", "Windows"),
+                
+        ### programming
+        "(integer | int)": Key("i, n, t"),
+        "(Boolean | boolean | bool)": Key("b, o, o, l"),
+        "(character | char)": Key("c, h, a, r"),
+        
 }
 
 #---------------------------------------------------------------------------
@@ -227,28 +234,28 @@ def format_upper_word(dictation):
 
 # Format: SomeWords
 def format_pascal(dictation):
-    """ stud <dictation> """
+    """ Pascal <dictation> """
     text = str(dictation)
     words = [word.capitalize() for word in text.split(" ")]
     return "".join(words)
 
 # Format: SomeWords()
 def format_pascal_function(dictation):
-    """ stud funk <dictation> """
+    """ Pascal funk <dictation> """
     text = str(dictation)
     words = [word.capitalize() for word in text.split(" ")]
     return "".join(words) + "()"
 
 # Format: someWords
 def format_camel(dictation):
-    """ hum <dictation> """
+    """ camel <dictation> """
     text = str(dictation)
     words = text.split(" ")
     return words[0] + "".join(w.capitalize() for w in words[1:])
 
 # Format: someWords()
 def format_camel_function(dictation):
-    """ hum funk<dictation> """
+    """ camel funk<dictation> """
     text = str(dictation)
     words = text.split(" ")
     return words[0] + "".join(w.capitalize() for w in words[1:]) + "()"
