@@ -1,3 +1,11 @@
+# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+
+import inspect
+from hawk.method_builder import method_builder
+from dragonfly import *
 from dragonfly.actions.action_function import Function
 from dragonfly.actions.action_key import Key
 from dragonfly.actions.action_text import Text
@@ -17,8 +25,18 @@ class ProgrammingLanguage(object):
     def goPrint(self):
         pass
 
-    def goMethod(self, modifiers):
+    def goMethod(self, modifiers=None):
         pass
+
+    def goForLoop(self):
+        Text("for (:){").execute()
+        Key("enter, up").execute()
+
+
+# This method list will be used below to auto generate and dynamically bind
+# "copies" of the methods in ProgrammingLanguage. Ultimately, we do this
+# so that we can use voice commands to invoke the desired method.
+method_list = inspect.getmembers(ProgrammingLanguage, inspect.ismethod)
 
 
 class Python(ProgrammingLanguage):
@@ -31,6 +49,10 @@ class Python(ProgrammingLanguage):
     def goMethod(self, modifiers=None):
         Text("def (self):").execute()
         Key("left:7").execute()
+
+    def goForLoop(self):
+        Text("for in :").execute()
+        Key("left:4").execute()
 
 
 class CSharp(ProgrammingLanguage):
@@ -52,10 +74,31 @@ class CSharp(ProgrammingLanguage):
             len(modifiers.split(" ")) + 1) + ", ctrl:up, del").execute()
 
 
+class Java(ProgrammingLanguage):
+    def __init__(self):
+        super(Java, self).__init__("java")
+
+    def goPrint(self):
+        Text("System.out.println(").execute()
+        # Key("left").execute()
+
+    def goMethod(self, modifiers=None):
+        print modifiers
+        if modifiers is None:
+            modifiers = "private"
+        else:
+            modifiers = str(modifiers).lower()
+
+        Text(modifiers + " void a()").execute()
+        Key("enter, lbrace, enter, up:2, ctrl:down, right:" + str(
+            len(modifiers.split(" ")) + 1) + ", ctrl:up, del").execute()
+
+
 class SupportedLanguages(object):
     def __init__(self):
         self._langList = {Python().getName(): Python(),
                           CSharp().getName(): CSharp(),
+                          Java().getName(): Java(),
                           }
 
     def getLanguageList(self):
@@ -70,11 +113,18 @@ class LanguageContext(object):
     def __init__(self, supportedLanguages):
         self._current = None
         self._supported = supportedLanguages.getLanguageList()
+        self.setCurrentLanguage("java")
 
     def getCurrentLanguage(self):
         return self._current
 
-    def setCurrentLanguage(self, lang): # lang is a Dictation object. str'ing it gets the dictation
+    def getCurrentLanguageName(self):
+        return self._current.getName()
+
+    def printCurrentLanguageName(self):
+        print self._current.getName()
+
+    def setCurrentLanguage(self, lang):  # lang is a Dictation object. str'ing it gets the dictation
         languageAsString = str(lang).lower().replace(" ", "")
         self.validateLanguage(languageAsString)
         self._current = self._supported[languageAsString]
@@ -95,51 +145,78 @@ class LanguageContext(object):
         if not isSupported:
             raise StandardError("Unsupported language: " + lang)
 
-    def goPrint(self):
-        if not self.isEnabled():
-            return
-        self._current.goPrint()
+    def addPassThroughMethods(self):
+        """ Auto generates 'mapping methods' based on all of the methods in ProgrammingLanguage. These will, 
+        in turn, map to corresponding methods in the global scope (see method_builder at global scope). Ultimately, 
+        we do all this so that we can use voice commands to invoke the desired method.  E.g., given the 
+        ProgrammingLanguage definition:
+            
+            def goPrint(self):
+            
+        The following code will dynamically add a new method to this class, defined as:
+        
+            def goPrint(self):
+                self._current.goPrint()
+        """
+        from types import MethodType  # LEAVE THIS -- used by auto-generated code
+        codelist = method_builder(method_list, "self._current", True)
+        for code in codelist:
+            exec code
 
-    def goMethod(self, modifiers):
-        if not self.isEnabled():
-            return
-        self._current.goMethod(modifiers)
+        for method in method_list:
+            if not method[0] == "__init__":
+                exec "LanguageContext." + method[0] + " = MethodType(" + method[0] + ", None, LanguageContext)"
 
 
 language = LanguageContext(SupportedLanguages())
+language.addPassThroughMethods()
 
+# Auto generates 'mapping functions' based on all of the methods in ProgrammingLanguage.  The mapping dictionary
+# within InsertCodeRule will reference these functions in its map. Originally, I had been directly referencing
+# the methods within LanguageContext from the InsertCodeRule map. This wasn't working: my sense is that the 
+# Function() methods within the InsertCodeRule map capture the state of the passed function (as a closure).  So,
+# I needed to add a level of indirection at the global scope.  E.g., given the ProgrammingLanguage definition:
+# 
+# def goPrint(self):
+# 
+# The following code will dynamically add a new function to this module, defined as:
+#
+# def goPrint():
+#    language.goPrint()
 
-def setLanguage(lang):
-    language.setCurrentLanguage(lang)
-
-
-def getLanguage():
-    print language.getCurrentLanguage()
-
-
-def goPrint():
-    language.goPrint()
-
-
-def goMethod(modifiers=None):
-    language.goMethod(modifiers)
+codelist = method_builder(method_list, "language", False)
+for code in codelist:
+    exec code
 
 
 class InsertCodeRule(MappingRule):
     mapping = {
-        "go print": Function(goPrint),
+        # "run inspector": Function(inspector),
+        "go print": Function(goPrint),  # the function referenced here (and below) are dynamically added -- hence the "error" highlighting
         "go [<modifiers>] method": Function(goMethod),
+        "go for loop": Function(goForLoop),
         # the dictation object gets passed to setLanguage as the "lang" param via extras below.  builtin to Function
-        "set language <lang>": Function(setLanguage),
-        "get current language": Function(getLanguage),
-        }
+        "set language <lang>": Function(language.setCurrentLanguage),
+        "get [current] language": Function(language.printCurrentLanguageName),
+    }
 
     extras = [
         Dictation("lang"),
         Dictation("modifiers"),
-        ]
+    ]
 
     defaults = {
         "modifiers": None,
-        }
+    }
 
+
+a_rule = InsertCodeRule()
+grammar = Grammar("example grammar")
+grammar.add_rule(a_rule)
+grammar.load()
+
+
+def unload():
+    global grammar
+    if grammar: grammar.unload()
+    grammar = None

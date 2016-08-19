@@ -3,6 +3,8 @@
 # import pydevd
 # pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
+import inspect
+from hawk.method_builder import method_builder
 from dragonfly import *
 
 import logging
@@ -39,6 +41,12 @@ class ProgrammingLanguage(object):
         Key("enter, up").execute()
 
 
+# This method list will be used below to auto generate and dynamically bind
+# "copies" of the methods in ProgrammingLanguage. Ultimately, we do this
+# so that we can use voice commands to invoke the desired method.
+method_list = inspect.getmembers(ProgrammingLanguage, inspect.ismethod)
+
+
 class Python(ProgrammingLanguage):
     def __init__(self):
         super(Python, self).__init__("python")
@@ -53,7 +61,6 @@ class Python(ProgrammingLanguage):
     def goForLoop(self):
         Text("for in :").execute()
         Key("left:4").execute()
-        
 
 
 class CSharp(ProgrammingLanguage):
@@ -93,7 +100,8 @@ class Java(ProgrammingLanguage):
         Text(modifiers + " void a()").execute()
         Key("enter, lbrace, enter, up:2, ctrl:down, right:" + str(
             len(modifiers.split(" ")) + 1) + ", ctrl:up, del").execute()
-        
+
+
 class SupportedLanguages(object):
     def __init__(self):
         self._langList = {Python().getName(): Python(),
@@ -145,132 +153,54 @@ class LanguageContext(object):
         if not isSupported:
             raise StandardError("Unsupported language: " + lang)
 
-    def goPrint(self):
-        self._current.goPrint()
+    def addPassThroughMethods(self):
+        """ Auto generates 'mapping methods' based on all of the methods in ProgrammingLanguage. These will, 
+        in turn, map to corresponding methods in the global scope (see method_builder at global scope). Ultimately, 
+        we do all this so that we can use voice commands to invoke the desired method.  E.g., given the 
+        ProgrammingLanguage definition:
+            
+            def goPrint(self):
+            
+        The following code will dynamically add a new method to this class, defined as:
+        
+            def goPrint(self):
+                self._current.goPrint()
+        """
+        from types import MethodType  # LEAVE THIS -- used by auto-generated code
+        codelist = method_builder(method_list, "self._current", True)
+        for code in codelist:
+            exec code
 
-    def goMethod(self, modifiers):
-        self._current.goMethod(modifiers)
-
-    def goForLoop(self):
-        self._current.goForLoop()
+        for method in method_list:
+            if not method[0] == "__init__":
+                exec "LanguageContext." + method[0] + " = MethodType(" + method[0] + ", None, LanguageContext)"
 
 
 language = LanguageContext(SupportedLanguages())
+language.addPassThroughMethods()
 
-# exec ("""def goPrint(): language.goPrint()""")
-
-
-# def goMethod(modifiers=None):
-#     language.goMethod(modifiers)
+# Auto generates 'mapping functions' based on all of the methods in ProgrammingLanguage.  The mapping dictionary
+# within InsertCodeRule will reference these functions in its map. Originally, I had been directly referencing
+# the methods within LanguageContext from the InsertCodeRule map. This wasn't working: my sense is that the 
+# Function() methods within the InsertCodeRule map capture the state of the passed function (as a closure).  So,
+# I needed to add a level of indirection at the global scope.  E.g., given the ProgrammingLanguage definition:
 # 
-# def goForLoop():
-#     language.goForLoop()
-
-
-
-import inspect
-from pprint import pprint
-
-method_list = inspect.getmembers(ProgrammingLanguage, inspect.ismethod)
-for method in method_list:
-    print method[0]
-    current_method_name = method[0]
-    if not current_method_name == "__init__":
-        code = "def " + current_method_name + "(): language." + current_method_name + "()"
-        argument_specification = inspect.getargspec(method[1])
-        if argument_specification.args:
-            arguments = argument_specification.args
-            arguments_with_defaults = None
-            if not (len(arguments) == 1 and arguments[0] == "self"):
-                # we have some arguments to deal with
-                print argument_specification
-                if argument_specification.defaults:
-                    defaults = argument_specification.defaults
-                    arguments_which_have_defaults = arguments[-len(defaults):]
-                    arguments_with_defaults = zip(arguments_which_have_defaults, defaults)
-                    if len(arguments) >= len(arguments_with_defaults):
-                        arguments = arguments[:-len(defaults)]  # we have some defaults, so remove those from the list of arguments -- need to deal with those separately
-
-                print arguments
-                print arguments_with_defaults
-
-                argument_list = ""
-                argument_list_with_defaults = ""
-                for argument in arguments:
-                    if argument != "self":
-                        argument_list = argument_list + argument + ", "
-
-                argument_list_with_defaults = argument_list
-                for default_argument in arguments_with_defaults:
-                    argument_list_with_defaults = argument_list_with_defaults + default_argument[0] + "=" + str(default_argument[1]) + ", "
-                    argument_list = argument_list + default_argument[0] + ", "
-
-                if argument_list[-2] == ",":
-                    argument_list = argument_list[:-2]
-                if argument_list_with_defaults[-2] == ",":
-                    argument_list_with_defaults = argument_list_with_defaults[:-2]
-
-                print argument_list
-                print argument_list_with_defaults
-                code = "def " + current_method_name + "(" + argument_list_with_defaults + "): language." + current_method_name + "(" + argument_list + ")"
-
-        print code
-        exec code
-
-# for method in method_list:
-#     # print method[0]
-#     current_method_name = method[0]
-#     if not current_method_name == "__init__":
-#         code = "def " + current_method_name + "(): language." + current_method_name + "()"
-#         # print code
-#         exec (code)
-
-
-# def inspector():
-#     method_list = inspect.getmembers(ProgrammingLanguage, inspect.ismethod)
-#     for method in method_list:
-#         print method[0]
-#         current_method_name = method[0]
-#         if not current_method_name == "__init__":
-#             code = "def " + current_method_name + "(): language." + current_method_name + "()"
-#             argument_specification = inspect.getargspec(method[1])
-#             if argument_specification.args:
-#                 arguments = argument_specification.args
-#                 arguments_with_defaults = None
-#                 if not (len(arguments) == 1 and arguments[0] == "self"):
-#                     # we have some arguments to deal with
-#                     print argument_specification
-#                     if argument_specification.defaults:
-#                         defaults = argument_specification.defaults
-#                         arguments_which_have_defaults = arguments[-len(defaults):]
-#                         arguments_with_defaults = zip(arguments_which_have_defaults, defaults)
-#                         if len(arguments) >= len(arguments_with_defaults):
-#                             arguments = arguments[:-len(defaults)]  # we have some defaults, so remove those from the list of arguments -- need to deal with those separately
+# def goPrint(self):
 # 
-#                     print arguments
-#                     print arguments_with_defaults
-#                     
-#                     argument_list = ""
-#                     for argument in arguments:
-#                         if argument != "self":
-#                             argument_list = argument_list + argument + ", "
-#                     
-#                     for default_argument in arguments_with_defaults:
-#                         argument_list = argument_list + default_argument[0] + "=" + str(default_argument[1]) + ", "
-#                         
-#                     if argument_list[-2] == ",":
-#                         argument_list = argument_list[:-2]
-#                     print argument_list
-#                     code = "def " + current_method_name + "(" + argument_list + "): language." + current_method_name + "(" + argument_list + ")"
-#                     
-#             print code
-#             # exec (code)
+# The following code will dynamically add a new function to this module, defined as:
+#
+# def goPrint():
+#    language.goPrint()
+
+codelist = method_builder(method_list, "language", False)
+for code in codelist:
+    exec code
 
 
 class InsertCodeRule(MappingRule):
     mapping = {
         # "run inspector": Function(inspector),
-        "go print": Function(goPrint),
+        "go print": Function(goPrint),  # the function referenced here (and below) are dynamically added -- hence the "error" highlighting
         "go [<modifiers>] method": Function(goMethod),
         "go for loop": Function(goForLoop),
         # the dictation object gets passed to setLanguage as the "lang" param via extras below.  builtin to Function
@@ -288,14 +218,11 @@ class InsertCodeRule(MappingRule):
     }
 
 
-
-
 a_rule = InsertCodeRule()
 grammar = Grammar("example grammar")
 grammar.add_rule(a_rule)
-
-
 grammar.load()
+
 
 def unload():
     global grammar
