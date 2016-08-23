@@ -624,15 +624,26 @@ try:
             loadModSpecific(moduleInfo, 1)  # only if changed module
         if debugTiming:
             print 'checked all grammar files: %.6f'% (time.time()-t0,)
-            
+
+
+    #
+    # Hawkeye Change:  Helper method so that I can import this functionality
+    # for "custom" reload logic. (Tries to) which (tries to) duplicate the action 
+    # of switching the mic on and off. Generally speaking, functions from this module
+    # are not imported.  This is a hack.
+    #
+    def micOnCallback():
+        moduleInfo = natlink.getCurrentModule()
+        findAndLoadFiles()
+        beginCallback(moduleInfo, checkAll=1)
+        loadModSpecific(moduleInfo)       
     #
     # This callback is called when the user changes or when the microphone
     # changes state.  We check for changes when the microphone is turned on.
     #
     # Note: getCurrentModule can raise the BadWindow except and if that happens
     # we ignore the callback.
-    #
-    
+    #    
     def changeCallback(type,args):
         global userName, DNSuserDirectory, language, BaseModel, BaseTopic, DNSmode, changeCallbackUserFirst
         if debugCallback:
@@ -640,10 +651,11 @@ try:
         if type == 'mic' and args == 'on':
             if debugCallback:
                 print 'findAndLoadFiles...'
-            moduleInfo = natlink.getCurrentModule()
-            findAndLoadFiles()
-            beginCallback(moduleInfo, checkAll=1)
-            loadModSpecific(moduleInfo)
+            micOnCallback()
+            # moduleInfo = natlink.getCurrentModule()
+            # findAndLoadFiles()
+            # beginCallback(moduleInfo, checkAll=1)
+            # loadModSpecific(moduleInfo)
         if type == 'user' and userName != args[0]:
             userName, DNSuserDirectory = args
             moduleInfo = natlink.getCurrentModule()
