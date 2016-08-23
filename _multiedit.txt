@@ -14,7 +14,8 @@ from dragonfly import *
 #  because this functionality is used in many different places. Note that it is harmless to release ("...:up") a key multiple
 #  times or when that key is not held down at all.
 
-release = Key("shift:up, ctrl:up, alt:up")
+release = Key("alt:up, shift:up, ctrl:up")
+stupid = Key("alt:up, s-down")
 
 
 #---------------------------------------------------------------------------
@@ -133,7 +134,8 @@ cmd.map = {
         "line dash": Key("space, hyphen, hyphen, space"),
 
         ### Lines
-        "wipe [<n>]": release + Key("home, s-down:%(n)d, del"), # del lines down
+        "Annie": stupid,
+        "wipe [<n>]": Key("home, s-down:%(n)d, del"), # del lines down
         "wipe up [<n>]": release + Key("home, s-up:%(n)d, s-home, del"), # del lines up
         "strip": release + Key("s-end, del"), # del from cursor to line end
         "(grab | strop)": release + Key("s-end, c-c"), # copy from cursor to line end

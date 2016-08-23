@@ -79,8 +79,7 @@ config.cmd = Section("Command section")
 config.cmd.map = Item(
     # Here we define the *default* command map.  If you would like to modify it to your personal taste, please *do not* make changes
     #  here.  Instead change the *config file* called "_multiedit.txt".
-        {
-    },
+    {},
     namespace={
         "Key": Key,
         "Text": Text,
@@ -308,6 +307,7 @@ for code in codelist:
 
 
 class InsertCodeRule(MappingRule):
+    exported = False
     mapping = {
         # "run inspector": Function(inspector),
         "go print": Function(goPrint),  # the function referenced here (and below) are dynamically added -- hence the "error" highlighting

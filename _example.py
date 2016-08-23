@@ -1,51 +1,59 @@
-from dragonfly import *
-
-
-# class ExampleMapping(MappingRule):
-#     """ This mimics the "switch to" command from DNS to use the Dragonfly "focus" command syntax.
-#     The main definitions of the Dragonfly "focus" command are in _winctrl.py.
-#     """
-#     mapping = {
-#         "web search <text>": Mimic("search", "the", "web", "for", extra="text"),
-#     }
-#     extras = [
-#         Dictation("text"),
-#     ]
-#
-#
-# # Create a grammar which contains and loads the command rule.
-# grammar = Grammar("Testing")
-# grammar.add_rule(ExampleMapping())
-
-
 # import sys
 # sys.path.append('pycharm-debug.egg')
 # import pydevd
 # pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
 
+
+from dragonfly import *
+from natlinkmain import micOnCallback
+from hawk import utils
+
+
+def reloader():
+    print "reloading..."
+    micOnCallback()
+    utils.touch("C:\\NatLink\\NatLink\MacroSystem\\_c.py")
+    micOnCallback()
+
+class ExampleMapping(MappingRule):
+    """ This mimics the "switch to" command from DNS to use the Dragonfly "focus" command syntax.
+    The main definitions of the Dragonfly "focus" command are in _winctrl.py.
+    """
+    mapping = {
+        "execute reload": Function(reloader),
+    }
+    extras = [
+        Dictation("text"),
+    ]
+
+
+
 import logging
 rule_log = logging.getLogger("rule")
 
 class ExampleRule(CompoundRule):
-    spec = "Dirk"                  # Spoken form of command.
+    spec = "silly"                  # Spoken form of command.
 
     def _process_recognition(self, node, extras):   # Callback when command is spoken.
-        print 'found Dirk'
         print node.words()
+        Key("alt:up,s-down").execute()
 
-        rule_log.debug("Testing testing")
-        rule_log.debug("testing again")
 
-#Create a grammar which contains and loads the command rule.
-dirk_rule = ExampleRule()
+
+
+
+
+
 grammar = Grammar("example grammar")
-grammar.add_rule(dirk_rule)
+grammar.add_rule(ExampleRule())
+grammar.add_rule(ExampleMapping())
 
 
 grammar.load()
 
 def unload():
+    #reload(_working)
     global grammar
     if grammar: grammar.unload()
     grammar = None
