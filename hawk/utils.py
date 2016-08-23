@@ -1,4 +1,4 @@
-import inspect
+import inspect, os
 from dragonfly.windows.clipboard import Clipboard
 from dragonfly import Key
 
@@ -42,3 +42,11 @@ def getSelectedText():
     clipboard = Clipboard()
     clipboard.copy_from_system()
     return clipboard.get_text()
+
+
+def touch(fname, times=None):
+    fhandle = open(fname, 'a')
+    try:
+        os.utime(fname, times)
+    finally:
+        fhandle.close()
