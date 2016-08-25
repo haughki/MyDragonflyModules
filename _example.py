@@ -17,16 +17,12 @@ def reloader():
     micOnCallback()
 
 class ExampleMapping(MappingRule):
-    """ This mimics the "switch to" command from DNS to use the Dragonfly "focus" command syntax.
-    The main definitions of the Dragonfly "focus" command are in _winctrl.py.
-    """
     mapping = {
         "execute reload": Function(reloader),
     }
     extras = [
         Dictation("text"),
     ]
-
 
 
 import logging
@@ -36,9 +32,8 @@ class ExampleRule(CompoundRule):
     spec = "silly"                  # Spoken form of command.
 
     def _process_recognition(self, node, extras):   # Callback when command is spoken.
-        print node.words()
         Key("alt:up,s-down").execute()
-
+        
 
 
 

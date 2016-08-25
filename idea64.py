@@ -109,7 +109,7 @@ class CommandRule(MappingRule):
     }
 
 
-context = AppContext(executable='idea')
+context = AppContext(executable='idea64')
 grammar = Grammar('IntelliJ Idea', context=context)
 
 grammar.add_rule(CommandRule())
