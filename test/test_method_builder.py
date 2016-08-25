@@ -1,6 +1,6 @@
 from unittest import TestCase
 import inspect
-from hawk.method_builder import method_builder
+from supporting.method_builder import method_builder
 
 class TestClass(object):
     def __init__(self, name):

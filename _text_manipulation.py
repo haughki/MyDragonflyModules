@@ -29,7 +29,7 @@ Usage examples
 # import logging
 from dragonfly.windows.clipboard import Clipboard
 from dragonfly import Config, Section, Item, Grammar, CompoundRule, Key
-from hawk import utils
+from supporting import utils
 
 # rule_log = logging.getLogger("rule")
 

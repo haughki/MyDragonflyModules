@@ -3,32 +3,32 @@ from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mim
 
 class GlobalChromeMappings(MappingRule):
     mapping = {
-        'new (thing | tab)': Key('c-t'),
-        'new window': Key('c-n'),
-        'reopen tab': Key('cs-t'),
-        '(next | nex) tab [<n>]': Key('c-pgdown:%(n)d'),
-        '(previous | preev) tab [<n>]': Key('c-pgup:%(n)d'),
-        'show tab <tab>': Key('c-%(tab)d'),
-        '(first | firs) tab': Key('c-1'),
-        '(last | lass | las ) tab': Key('c-9'),
-        'go back': Key('a-left'),
-        'go forward': Key('a-right'),
-        'address [bar]': Key('a-d'),
-        'refresh page': Key('f5'),
-        'find <text>': Key("c-g/25") + Text("%(text)s"),
-        'find next': Key('enter'),
-        'find (prev | previous)': Key('s-enter'),
-        'bookmark page': Key('c-d'),
-        '(full-screen | full screen)': Key('f11'),
-        'open': Key('f'),                         # vimium
-        'tabs': Key('s-f'),                       # vimium
-        '(go | launch | visit | lunch | goat | goke | choose) <number>': Text('%(number)d'),        # vimium
-        '(duplicate | dupe) tab': Key('y/25,t'),  # vimium
+        "new (thing | tab)": Key("c-t"),
+        "new window": Key("c-n"),
+        "reopen tab": Key("cs-t"),
+        "(next | nex) tab [<n>]": Key("c-pgdown:%(n)d"),
+        "(previous | preev) tab [<n>]": Key("c-pgup:%(n)d"),
+        "show tab <tab>": Key("c-%(tab)d"),
+        "(first | firs) tab": Key("c-1"),
+        "(last | lass | las ) tab": Key("c-9"),
+        "go back": Key("a-left"),
+        "go forward": Key("a-right"),
+        "address [bar]": Key("a-d"),
+        "refresh page": Key("f5"),
+        "find <text>": Key("c-g/25") + Text("%(text)s"),
+        "find next": Key("enter"),
+        "find (prev | previous)": Key("s-enter"),
+        "bookmark page": Key("c-d"),
+        "(full-screen | full screen)": Key("f11"),
+        "open": Key("f"),                         # vimium
+        "tabs": Key("s-f"),                       # vimium
+        "(go | launch | visit | lunch | goat | goke | choose) <number>": Text("%(number)d"),        # vimium
+        "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
     }
     extras=[
-        Integer('n', 1, 50),
-        Integer('tab', 1, 8),
-        Integer('number', 1, 9999),
+        Integer("n", 1, 50),
+        Integer("tab", 1, 8),
+        Integer("number", 1, 9999),
         Dictation("text"),
     ]
     defaults = {
@@ -37,29 +37,30 @@ class GlobalChromeMappings(MappingRule):
 
 class GmailMappings(MappingRule):
     mapping = {
+        "Gmail find <text>": Key("slash/25") + Text("%(text)s"),
         "compose": Key("c"),
-        'next mail [<n>]': Key('j:%(n)d'),
-        '(previous | preev) mail [<n>]': Key('k:%(n)d'),
-        '[go to] inbox': Key('g,i'),
-        '[go to] sent mail': Key('g,t'),
-        '[go to] drafts': Key('g,d'),
+        "next mail [<n>]": Key("j:%(n)d"),
+        "(previous | preev) mail [<n>]": Key("k:%(n)d"),
+        "[go to] inbox": Key("g,i"),
+        "[go to] sent mail": Key("g,t"),
+        "[go to] drafts": Key("g,d"),
         "(delete | trash)": Key("hash"),
         "line trash": Key("x/5,hash"),
         "send [and] archive": Mimic("click", "send", "and", "archive"),
         "send (it | mail)": Key("c-enter"),
-        'reply': Key('r'),
-        'reply [to] all': Key('a'),
-        'forward': Key('f'),
-        'select': Key('x'),
-        "move": Key('v'),
-        "[to] receipts": Key('x,v/20') + Text("aa_receipts") + Key('enter'),
-        'move to <text>': Key("x,v/20") + Text("%(text)s") + Key('enter'),
+        "reply": Key("r"),
+        "reply [to] all": Key("a"),
+        "forward": Key("f"),
+        "select": Key("x"),
+        "move": Key("v"),
+        "[to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
+        "move to <text>": Key("x,v/20") + Text("%(text)s") + Key("enter"),
         "send archive": Mimic("click", "send", "and", "archive"),
     }
 
     extras = [
         Dictation("text"),
-        Integer('n', 1, 50),
+        Integer("n", 1, 50),
     ]
 
     defaults = {
@@ -81,13 +82,13 @@ class OpenGmailLineRule(CompoundRule):
 
         Mimic(*dictation).execute()  # expand the list to var args
 
-        #Pause("10").execute()  # doesn't seem to need this...
+        #Pause("10").execute()  # doesn"t seem to need this...
 
         Mimic("choose", "2").execute()
 
 
 # the following is too brittle because the open command
-# doesn't reliably produce the same numbers for each execution.
+# doesn"t reliably produce the same numbers for each execution.
 # but, it was an interesting idea...
 # class NavigateCalendarWeeks(CompoundRule):
 #     """ Mimics the Dragon builtin command ("click <subject>") to open a Gmail line item.
@@ -119,10 +120,10 @@ class OpenGmailLineRule(CompoundRule):
 # 
 
 
-#gmail_context = AppContext(executable='chrome', title='Gmail')
+#gmail_context = AppContext(executable="chrome", title="Gmail")
 
-context = AppContext(executable='chrome')
-grammar = Grammar('Google Chrome', context=context)
+context = AppContext(executable="chrome")
+grammar = Grammar("Google Chrome", context=context)
 grammar.add_rule(GlobalChromeMappings())
 grammar.add_rule(GmailMappings())
 grammar.add_rule(OpenGmailLineRule())

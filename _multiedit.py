@@ -60,8 +60,8 @@ except ImportError:
     pass
 
 from dragonfly import *
-# from hawk import insertcode
-from hawk import putstringcommands
+# from supporting import insertcode
+from supporting import putstringcommands
 
 #---------------------------------------------------------------------------
 # Here we globally defined the release action which releases all modifier-keys used within this grammar.  It is defined here
@@ -127,7 +127,7 @@ else:
 # 
 
 import inspect
-from hawk.method_builder import method_builder
+from supporting.method_builder import method_builder
 # from dragonfly import *
 from dragonfly.actions.action_function import Function
 from dragonfly.actions.action_key import Key

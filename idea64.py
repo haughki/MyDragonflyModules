@@ -1,6 +1,6 @@
 """A command module for Dragonfly, for controlling IntelliJ IDEA-based IDEs.
 
-taken from nirvdrum's module at:
+taken from nirvdrum"s module at:
 https://github.com/dictation-toolbox/dragonfly-scripts/blob/master/_app_intellij.py
 -----------------------------------------------------------------------------
 Licensed under the LGPL3.
@@ -25,7 +25,9 @@ class CommandRule(MappingRule):
 
         # Code navigation.
         "[go to | show] class": Key("c-n"),
-        "[go to | show] file": Key("cs-n"),
+        "show file": Key("cas-n"),  # "Navigate > File..."
+        "get file <text>": Key("cas-n") + Text("%(text)s"),
+
         "([go to | show] declaration | jump)": Key("c-b"),
         "[go to | show] implementation": Key("ca-b"),
         "[go to | show] super": Key("c-u"),
@@ -52,10 +54,11 @@ class CommandRule(MappingRule):
         "run terminal": Key("a-f12"),
 
         # Search.
+        "replace": Key("c-r"),
         "show find": Key("c-f"),
-        'find <text>': Key("c-f/25") + Text("%(text)s"),
-        'find next': Key('f3'),
-        'find (prev | previous)': Key('s-f3'),
+        "find <text>": Key("c-f/25") + Text("%(text)s"),
+        "find next": Key("f3"),
+        "find (prev | previous)": Key("s-f3"),
         "find in files": Key("cs-f"),
         "find usages": Key("a-f7"),
 
@@ -67,12 +70,12 @@ class CommandRule(MappingRule):
 
         # Edit
         "(shoreline | [go to | show] line) <n>": Key("c-g/30") + Text("%(n)d") + Key("enter"),
-        "(full-screen | full screen)": Key("cs-x"),
-        "(Hide | hide | hi) bottom": Key("s-escape"),
-        # "(hide | hi) tools": Key("cas-x"), # interferes with the full-screen macro which also uses hide tools
+        "(full-screen | full screen)": Key("cs-x"),  # macro, combination of: "Toggle Full Screen Mode" and "Hide All Tool Windows"
+        "(Hide | hide | hi) bottom": Key("s-escape"),  # "hide active tool window"
+        "(Hide | hide | hi) side": Key("cas-c"),  # "hide side tool windows"
         "comment [line | that | it]": Key("c-slash"),
         "show white space": Key("cs-w"),
-
+        
         # Window handling.
         "next tab [<t>]": Key("a-right/5:%(t)d"),
         "(preev | previous) tab [<t>]": Key("a-left/5:%(t)d"),
@@ -97,7 +100,7 @@ class CommandRule(MappingRule):
         "(refactor|re-factor) (in line|inline)": Key("ca-n"),
 
         # Custom key mappings.
-        "(run SSH session|run SSH console|run remote terminal|run remote console)": Key("a-f11/25, enter"),
+        # "(run SSH session|run SSH console|run remote terminal|run remote console)": Key("a-f11/25, enter"),
     }
     extras = [
         Integer("t", 1, 50),
@@ -109,8 +112,8 @@ class CommandRule(MappingRule):
     }
 
 
-context = AppContext(executable='idea64')
-grammar = Grammar('IntelliJ Idea', context=context)
+context = AppContext(executable="idea64")
+grammar = Grammar("IntelliJ Idea", context=context)
 
 grammar.add_rule(CommandRule())
 grammar.load()

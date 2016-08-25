@@ -48,7 +48,7 @@ pkg_resources.require("dragonfly >= 0.6.5beta1.dev-r76")
 
 import time, logging
 from dragonfly import *
-from hawk import utils
+from supporting import utils
 
 rule_log = logging.getLogger("rule")
 

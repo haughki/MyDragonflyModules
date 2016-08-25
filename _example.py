@@ -7,7 +7,7 @@
 
 from dragonfly import *
 from natlinkmain import micOnCallback
-from hawk import utils
+from supporting import utils
 
 
 def reloader():

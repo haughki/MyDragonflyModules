@@ -5,7 +5,7 @@
 
 
 from dragonfly import CompoundRule, Grammar, Window
-from hawk import utils
+from supporting import utils
 
 class PrintWindowsRule(CompoundRule):
     spec = "print Windows"  # Spoken form of command.
