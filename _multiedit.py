@@ -146,20 +146,19 @@ class ProgrammingLanguage(object):
     def getName(self):
         return self._name
 
-    def goPrint(self):
+    def printStatement(self):
         pass
 
-    def goMethod(self, modifiers=None):
+    def defineMethod(self, modifiers=None):
         if modifiers is None:
             modifiers = "private"
         else:
             modifiers = str(modifiers).lower()
 
         Text(modifiers + " void a()").execute()
-        Key("enter, lbrace, enter, up:2, ctrl:down, right:" + str(
-            len(modifiers.split(" ")) + 1) + ", ctrl:up, del").execute()
+        Key("enter, lbrace, enter, up:2, ctrl:down, right:" + str(len(modifiers.split(" ")) + 1) + ", ctrl:up, del").execute()
 
-    def goForLoop(self):
+    def forEach(self):
         Text("for (:){").execute()
         Key("enter, up").execute()
 
@@ -170,6 +169,10 @@ class ProgrammingLanguage(object):
         Text("if (){").execute()
         Key("enter, up, right:4").execute()
 
+    def forIEquals0(self):
+        Text("if (){").execute()
+        Key("enter, up, right:4").execute()
+
 
 # This method list will be used below to auto generate and dynamically bind
 # "copies" of the methods in ProgrammingLanguage. Ultimately, we do this
@@ -177,18 +180,18 @@ class ProgrammingLanguage(object):
 method_list = inspect.getmembers(ProgrammingLanguage, inspect.ismethod)
 
 
-class Python(ProgrammingLanguage):
+class JavaScript(ProgrammingLanguage):
     def __init__(self):
-        super(Python, self).__init__("python")
+        super(JavaScript, self).__init__("javascript")
 
-    def goPrint(self):
+    def printStatement(self):
         Text("print ").execute()
 
-    def goMethod(self, modifiers=None):
+    def defineMethod(self, modifiers=None):
         Text("def (self):").execute()
         Key("left:7").execute()
 
-    def goForLoop(self):
+    def forEach(self):
         Text("for in :").execute()
         Key("left:4").execute()
 
@@ -197,7 +200,7 @@ class CSharp(ProgrammingLanguage):
     def __init__(self):
         super(CSharp, self).__init__("csharp")
 
-    def goPrint(self):
+    def printStatement(self):
         Text("Console.WriteLine()").execute()
         Key("left").execute()
 
@@ -206,7 +209,7 @@ class Java(ProgrammingLanguage):
     def __init__(self):
         super(Java, self).__init__("java")
 
-    def goPrint(self):
+    def printStatement(self):
         Text("System.out.println(").execute()
         # Key("left").execute()
 
@@ -309,13 +312,13 @@ for code in codelist:
 class InsertCodeRule(MappingRule):
     exported = False
     mapping = {
-        # "run inspector": Function(inspector),
-        "go print": Function(goPrint),  # the function referenced here (and below) are dynamically added -- hence the "error" highlighting
-        "go [<modifiers>] method": Function(goMethod),
-        "go for loop": Function(goForLoop),
+        "print statement": Function(printStatement),  # the function referenced here (and below) are dynamically added -- hence the "error" highlighting
+        # the dictation object gets passed to defineMethod as the "modifiers" param via "extras" below.  builtin to Function
+        "define [<modifiers>] method": Function(defineMethod),
+        "for each": Function(forEach),
         "line comment": Function(lineComment),
         "if then": Function(ifThen),
-        # the dictation object gets passed to setLanguage as the "lang" param via extras below.  builtin to Function
+        # the dictation object gets passed to setLanguage as the "lang" param via "extras" below.  builtin to Function
         "set language <lang>": Function(language.setCurrentLanguage),
         "get [current] language": Function(language.printCurrentLanguageName),
     }
@@ -328,7 +331,6 @@ class InsertCodeRule(MappingRule):
     defaults = {
         "modifiers": None,
     }
-
 
 
 
