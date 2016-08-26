@@ -196,6 +196,22 @@ class JavaScript(ProgrammingLanguage):
         Key("left:4").execute()
 
 
+class Python(ProgrammingLanguage):
+    def __init__(self):
+        super(Python, self).__init__("python")
+
+    def printStatement(self):
+        Text("print ").execute()
+
+    def defineMethod(self, modifiers=None):
+        Text("def (self):").execute()
+        Key("left:7").execute()
+
+    def forEach(self):
+        Text("for in :").execute()
+        Key("left:4").execute()
+
+
 class CSharp(ProgrammingLanguage):
     def __init__(self):
         super(CSharp, self).__init__("csharp")

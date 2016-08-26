@@ -14,7 +14,7 @@ from dragonfly import *
 
 class FocusMimics(MappingRule):
     """ This mimics the "switch to" command from DNS to use the Dragonfly "focus" command syntax.
-    The main definitions of the Dragonfly "focus" command are in _winctrl.py.
+    The main definitions of the Dragonfly "focus" command are in _window_control.py.
     """
     mapping = {
         "focus chrome": Mimic("switch", "to", "Google Chrome"),
