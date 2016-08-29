@@ -173,6 +173,12 @@ class ProgrammingLanguage(object):
         Text("if (){").execute()
         Key("enter, up, right:4").execute()
 
+    def variable(self):
+        Text("var ").execute()  # JavaScript
+        
+    def putNew(self):
+        Text("new ").execute()
+
 
 # This method list will be used below to auto generate and dynamically bind
 # "copies" of the methods in ProgrammingLanguage. Ultimately, we do this
@@ -185,7 +191,7 @@ class JavaScript(ProgrammingLanguage):
         super(JavaScript, self).__init__("javascript")
 
     def printStatement(self):
-        Text("print ").execute()
+        Text("console").execute()
 
     def defineMethod(self, modifiers=None):
         Text("def (self):").execute()
@@ -232,7 +238,8 @@ class Java(ProgrammingLanguage):
 
 class SupportedLanguages(object):
     def __init__(self):
-        self._langList = {Python().getName(): Python(),
+        self._langList = {JavaScript().getName(): JavaScript(),
+                          Python().getName(): Python(),
                           CSharp().getName(): CSharp(),
                           Java().getName(): Java(),
                           }
@@ -334,6 +341,8 @@ class InsertCodeRule(MappingRule):
         "for each": Function(forEach),
         "line comment": Function(lineComment),
         "if then": Function(ifThen),
+        "variable": Function(variable),
+        "new": Function(putNew),
         # the dictation object gets passed to setLanguage as the "lang" param via "extras" below.  builtin to Function
         "set language <lang>": Function(language.setCurrentLanguage),
         "get [current] language": Function(language.printCurrentLanguageName),
