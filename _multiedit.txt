@@ -131,6 +131,7 @@ cmd.map = {
         "gets": Key("space, equal, space"),
         "eeks": Key("space, equal, equal, space"),
         "line dash": Key("space, hyphen, hyphen, space"),
+        "string (add | had)": Key("space, plus, space"),
 
         ### Lines
         "wipe [<n>]": Key("home, s-down:%(n)d, del"), # del lines down

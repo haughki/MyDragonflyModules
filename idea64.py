@@ -37,8 +37,8 @@ class CommandRule(MappingRule):
         "[go to | show] version control": Key("a-9"),
         "quick definition": Key("cs-i"),
         "quick docs": Key("c-q"),
-        "toggle book": Key("f7"),
-        "next book": Key("cs-n"),
+        "toggle (book | bookmark)": Key("f7"),
+        "next (book | bookmark)": Key("cs-n"),
         "(prev | previous) book": Key("cs-p"),
         "expand": Key("c-npadd"),
         "collapse": Key("c-npsub"),
@@ -98,7 +98,7 @@ class CommandRule(MappingRule):
         "(refactor|re-factor) extract variable": Key("ca-v"),
         "(refactor|re-factor) extract method": Key("ca-m"),
         "(refactor|re-factor) (in line|inline)": Key("ca-n"),
-
+        
         # Custom key mappings.
         # "(run SSH session|run SSH console|run remote terminal|run remote console)": Key("a-f11/25, enter"),
     }
@@ -114,12 +114,13 @@ class CommandRule(MappingRule):
 
 context = AppContext(executable="idea64")
 grammar = Grammar("IntelliJ Idea", context=context)
-
 grammar.add_rule(CommandRule())
 grammar.load()
 
 # Unload function which will be called by natlink at unload time.
 def unload():
     global grammar
-    if grammar: grammar.unload()
+    if grammar:
+        print "unloading " + __name__ + "..."
+        grammar.unload()
     grammar = None
