@@ -1,3 +1,10 @@
+# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+
+
+
 #
 # Python Macro Language for Dragon NaturallySpeaking
 #   (c) Copyright 1999 by Joel Gould
@@ -371,6 +378,23 @@ try:
             sys.stderr.write( 'Error calling '+modName+'.'+funcName+'\n' )
             traceback.print_exc()
             return None
+
+
+    languagesDirectory = "\\languages"
+    def findBaseDirectoryFiles():        
+        additionalDirectories = [languagesDirectory]  # additional subdirectories that I want to search for grammars
+        allBaseDirectories = [baseDirectory]
+        for directory in additionalDirectories:
+            allBaseDirectories.append(baseDirectory + directory)
+        
+        allFiles = []
+        for d in allBaseDirectories:
+            allFiles.extend([x for x in os.listdir(d) if x.endswith('.py') and x != "__init__.py"])
+    
+        print allFiles
+        return allFiles
+    
+
     
     #
     # This routine loads two types of files.  If curModule is empty then we will
@@ -419,7 +443,8 @@ try:
                 if res: addToFilesToLoad( filesToLoad, res.group(1), userDirectory, moduleHasDot )
         # baseDirectory:
         if baseDirectory:
-            baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
+            baseDirFiles = findBaseDirectoryFiles()
+            # baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
         else:
             baseDirFiles = []
     
@@ -445,7 +470,8 @@ try:
                         del loadedFiles[x]
                         if debugLoad: print 'Vocola is disabled...'
             # repeat the base directory, as Vocola just had the chance to rebuild Python grammar files:
-            baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
+            #baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
+            baseDirFiles = findBaseDirectoryFiles()
         for x in baseDirFiles:
             res = pat.match(x)
             if res: addToFilesToLoad( filesToLoad, res.group(1), baseDirectory, moduleHasDot )
@@ -457,6 +483,7 @@ try:
         # user wishes?? _control last, _tasks first for Unimacro
         keysToLoad = reorderKeys(filesToLoad.keys())
         if debugLoad: print 'filesToLoad: %s'% keysToLoad
+        print 'filesToLoad: %s'% keysToLoad
         
         for x in keysToLoad:
             if x == doVocolaFirst:
@@ -569,6 +596,7 @@ try:
         if userDirectory != '':
             searchImportDirs.append(userDirectory)
         searchImportDirs.append(baseDirectory)
+        searchImportDirs.append(baseDirectory + languagesDirectory)
     
     
     #
