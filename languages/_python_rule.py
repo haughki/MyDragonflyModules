@@ -99,6 +99,7 @@ context = AppContext(executable="idea64") | AppContext(executable="notepad++")
 python_grammar = Grammar("Python", context=context)
 python_grammar.add_rule(PythonRule())
 python_grammar.load()
+python_grammar.disable()
 
 def unload():
     global python_grammar
