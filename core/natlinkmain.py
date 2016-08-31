@@ -379,22 +379,25 @@ try:
             traceback.print_exc()
             return None
 
-
-    languagesDirectory = "\\languages"
-    def findBaseDirectoryFiles():        
+    #
+    # Hawkeye Change: adds the ability to add additional search directories in which to look for
+    # grammar files. setSearchImportDirs() also uses information from these functions.
+    def buildBaseDirectories():
+        languagesDirectory = "\\languages"
         additionalDirectories = [languagesDirectory]  # additional subdirectories that I want to search for grammars
-        allBaseDirectories = [baseDirectory]
+        compiledDirectories = [baseDirectory]
         for directory in additionalDirectories:
-            allBaseDirectories.append(baseDirectory + directory)
-        
+            compiledDirectories.append(baseDirectory + directory)
+        return compiledDirectories
+
+    def findBaseDirectoryFiles():
+        allBaseDirectories = buildBaseDirectories()
         allFiles = []
         for d in allBaseDirectories:
             allFiles.extend([x for x in os.listdir(d) if x.endswith('.py') and x != "__init__.py"])
-    
-        print allFiles
+        # print allFiles
         return allFiles
     
-
     
     #
     # This routine loads two types of files.  If curModule is empty then we will
@@ -443,7 +446,7 @@ try:
                 if res: addToFilesToLoad( filesToLoad, res.group(1), userDirectory, moduleHasDot )
         # baseDirectory:
         if baseDirectory:
-            baseDirFiles = findBaseDirectoryFiles()
+            baseDirFiles = findBaseDirectoryFiles()  # Hawkeye Change: replaces the following line
             # baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
         else:
             baseDirFiles = []
@@ -470,8 +473,9 @@ try:
                         del loadedFiles[x]
                         if debugLoad: print 'Vocola is disabled...'
             # repeat the base directory, as Vocola just had the chance to rebuild Python grammar files:
+            baseDirFiles = findBaseDirectoryFiles()  # Hawkeye change: replaces the following line
             #baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
-            baseDirFiles = findBaseDirectoryFiles()
+
         for x in baseDirFiles:
             res = pat.match(x)
             if res: addToFilesToLoad( filesToLoad, res.group(1), baseDirectory, moduleHasDot )
@@ -483,7 +487,6 @@ try:
         # user wishes?? _control last, _tasks first for Unimacro
         keysToLoad = reorderKeys(filesToLoad.keys())
         if debugLoad: print 'filesToLoad: %s'% keysToLoad
-        print 'filesToLoad: %s'% keysToLoad
         
         for x in keysToLoad:
             if x == doVocolaFirst:
@@ -595,9 +598,10 @@ try:
         searchImportDirs = []
         if userDirectory != '':
             searchImportDirs.append(userDirectory)
-        searchImportDirs.append(baseDirectory)
-        searchImportDirs.append(baseDirectory + languagesDirectory)
-    
+        allBaseDirectories = buildBaseDirectories() # Hawkeye change: expense the search to multiple directories
+        for directory in allBaseDirectories:
+            searchImportDirs.append(directory)
+        
     
     #
     # When a new utterance begins we check all the loaded modules for changes.
