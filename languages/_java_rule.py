@@ -1,5 +1,3 @@
-from dragonfly import Key, Text, Paste, MappingRule
-
 from dragonfly import AppContext
 from dragonfly import Grammar
 from dragonfly import Key, Text, Dictation, MappingRule
