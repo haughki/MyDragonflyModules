@@ -2,9 +2,7 @@ from dragonfly import AppContext
 from dragonfly import Grammar
 from dragonfly import Key, Text, Dictation, MappingRule
 
-from languages.languages_common.specs import SymbolSpecs
-from languages.languages_common.specs import TokenSet
-
+from languages.languages_common import specs
 
 
 class PythonRule(MappingRule):
@@ -16,40 +14,40 @@ class PythonRule(MappingRule):
         "with":                         Text("with "),
         # "open file":                    Text("open('filename','r') as f:"),
         # "read lines":                   Text("content = f.readlines()"),
-        "try catch":                    Text("try:")+Key("enter:2/10, backspace")+Text("except Exception:")+Key("enter"),
+        # "try catch":                    Text("try:")+Key("enter:2/10, backspace")+Text("except Exception:")+Key("enter"),
         
-        SymbolSpecs.IF:                 Key("i,f,space,colon,left"),
-        SymbolSpecs.ELSE:               Text("else:")+Key("enter"),        
-        SymbolSpecs.BREAK:              Text("break"),
+        specs.SymbolSpecs.IF:                 Key("i,f,space,colon,left"),
+        specs.SymbolSpecs.ELSE:               Text("else:")+Key("enter"),        
+        specs.SymbolSpecs.BREAK:              Text("break"),
 
-        SymbolSpecs.FOR_EACH_LOOP:      Text("for in :") + Key("left:4"),
-        SymbolSpecs.FOR_LOOP:           Text("for i in range(0, ):")+ Key("left:2"),
-        SymbolSpecs.WHILE_LOOP:         Text("while :")+ Key("left"),
+        specs.SymbolSpecs.FOR_EACH_LOOP:      Text("for in :") + Key("left:4"),
+        specs.SymbolSpecs.FOR_LOOP:           Text("for i in range(0, ):")+ Key("left:2"),
+        specs.SymbolSpecs.WHILE_LOOP:         Text("while :")+ Key("left"),
         
-        # SymbolSpecs.TO_INTEGER:         Text("int()")+ Key("left"),
-        # SymbolSpecs.TO_FLOAT:           Text("float()")+ Key("left"),
-        # SymbolSpecs.TO_STRING:          Text("str()")+ Key("left"),
+        # specs.SymbolSpecs.TO_INTEGER:         Text("int()")+ Key("left"),
+        # specs.SymbolSpecs.TO_FLOAT:           Text("float()")+ Key("left"),
+        # specs.SymbolSpecs.TO_STRING:          Text("str()")+ Key("left"),
         # 
-        # SymbolSpecs.AND:                Text(" and "),
-        # SymbolSpecs.OR:                 Text(" or "),
-        # SymbolSpecs.NOT:                Text("!"),
+        # specs.SymbolSpecs.AND:                Text(" and "),
+        # specs.SymbolSpecs.OR:                 Text(" or "),
+        # specs.SymbolSpecs.NOT:                Text("!"),
         # 
-        # SymbolSpecs.SYSOUT:             Text("print()")+Key("left"),
+        # specs.SymbolSpecs.SYSOUT:             Text("print()")+Key("left"),
         # 
-        # SymbolSpecs.IMPORT:             Text( "import " ),
+        # specs.SymbolSpecs.IMPORT:             Text( "import " ),
         # 
-        # SymbolSpecs.FUNCTION:           Text("def "),        
-        # SymbolSpecs.CLASS:              Text("class "),
+        # specs.SymbolSpecs.FUNCTION:           Text("def "),        
+        # specs.SymbolSpecs.CLASS:              Text("class "),
         # 
-        # SymbolSpecs.COMMENT:            Text( "#" ),
-        # SymbolSpecs.LONG_COMMENT:       Text("''''''") + Key("left:3"),
+        # specs.SymbolSpecs.COMMENT:            Text( "#" ),
+        # specs.SymbolSpecs.LONG_COMMENT:       Text("''''''") + Key("left:3"),
                         
-        SymbolSpecs.NULL:               Text("None"),
-        
-        SymbolSpecs.RETURN:             Text("return "),
-        
-        SymbolSpecs.TRUE:               Text("True"),
-        SymbolSpecs.FALSE:              Text("False"),
+        # specs.SymbolSpecs.NULL:               Text("None"),
+        # 
+        # specs.SymbolSpecs.RETURN:             Text("return "),
+        # 
+        # specs.SymbolSpecs.TRUE:               Text("True"),
+        # specs.SymbolSpecs.FALSE:              Text("False"),
                 
          
         # Python specific           
@@ -82,7 +80,7 @@ class PythonRule(MappingRule):
     extras   = [Dictation("text"),]
     defaults = {}
     
-    token_set = TokenSet(["and", "del", "from", "not", "while", "as", "elif",
+    token_set = specs.TokenSet(["and", "del", "from", "not", "while", "as", "elif",
                  "global", "or", "with", "assert", "else", "if", "pass",
                  "yield", "break", "except", "import", "print", "class",
                  "exec", "in", "raise", "continue", "finally", "is",

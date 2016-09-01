@@ -1,4 +1,9 @@
-﻿#
+﻿# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+
+#
 # This file is a command-module for Dragonfly.
 # (c) Copyright 2008 by Christo Butcher
 # Licensed under the LGPL, see <http://www.gnu.org/licenses/>
@@ -60,7 +65,7 @@ except ImportError:
     pass
 
 from dragonfly import *
-# from supporting import insertcode
+
 from supporting import putstringcommands
 
 #---------------------------------------------------------------------------
@@ -122,78 +127,6 @@ else:
 
 
 #---------------------------------------------------------------------------
-# language section
-# section for defining language-specific commands and outputs
-# 
-
-from languages import _python_rule, _java_rule
-
-class SupportedLanguages(object):
-    def __init__(self):
-        self._langList = {_python_rule.PythonRule.get_name(): _python_rule.python_grammar,
-                          _java_rule.JavaRule.get_name(): _java_rule.java_grammar,
-                          }
-
-
-    def getLanguageList(self):
-        return self._langList
-
-
-class LanguageContext(object):
-    """ creates a programming language-specific context, so that the same command will insert
-    different code snippets depending on the current language context.
-    """
-
-    def __init__(self, supportedLanguages):
-        self._current = None
-        self._current_name = "No language name set!?"
-        self._supported = supportedLanguages.getLanguageList()
-        
-        # start with everything disabled
-        for k in self._supported:
-            self._supported[k].disable()
-            
-        self.setCurrentLanguage("python")
-
-    def printCurrentLanguageName(self):
-        print self._current_name
-
-    def setCurrentLanguage(self, lang):  # lang is a Dictation object. str'ing it gets the dictation
-        languageAsString = str(lang).lower().replace(" ", "")
-        self.validateLanguage(languageAsString)
-        if self._current:
-            self._current.disable()
-        self._current = self._supported[languageAsString]
-        self._current.enable()
-        self._current_name = languageAsString
-
-    def validateLanguage(self, lang):
-        isSupported = False
-        for supported in self._supported.keys():
-            if supported == lang:
-                isSupported = True
-                break
-
-        if not isSupported:
-            raise StandardError("Unsupported language: " + lang)
-
-
-language = LanguageContext(SupportedLanguages())
-
-class SwitchLanguageRule(MappingRule):
-    exported = False
-    mapping = {
-        # the dictation object gets passed to setLanguage as the "lang" param via "extras" below.  builtin to Function
-        "set language <lang>": Function(language.setCurrentLanguage),
-        "get [current] language": Function(language.printCurrentLanguageName),
-    }
-
-    extras = [
-        Dictation("lang"),
-    ]
-    
-
-#---------------------------------------------------------------------------
 # Here we define the keystroke rule.
 
 # This rule maps spoken-forms to actions.  Some of these include special elements like the number with name "n"
@@ -226,9 +159,6 @@ alternatives = []
 alternatives.append(RuleRef(rule=KeystrokeRule()))
 if FormatRule:
     alternatives.append(RuleRef(rule=FormatRule()))
-
-if SwitchLanguageRule:
-    alternatives.append(RuleRef(rule=SwitchLanguageRule()))
 
 if putstringcommands.PutStringCommandsRule:
     alternatives.append(RuleRef(rule=putstringcommands.PutStringCommandsRule()))
@@ -296,24 +226,16 @@ class RepeatRule(CompoundRule):
                     action.execute()
 
 
-class ReloadRule(CompoundRule):
-    spec = "reload code insert"                  # Spoken form of command.
-
-    def _process_recognition(self, node, extras):   # Callback when command is spoken.
-        print "reloading code insert..."
-        # reload(insertcode)
-
-
 #---------------------------------------------------------------------------
 # Create and load this module's grammar.
 
-grammar = Grammar("multi edit")   # Create this module's grammar.
-grammar.add_rule(RepeatRule())    # Add the top-level rule.
-grammar.add_rule(ReloadRule())
-grammar.load()                    # Load the grammar.
+multiedit_grammar = Grammar("multi edit")   # Create this module's grammar.
+multiedit_grammar.add_rule(RepeatRule())    # Add the top-level rule.
+multiedit_grammar.load()                    # Load the grammar.
 
-# Unload function which will be called at unload time.
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global multiedit_grammar
+    if multiedit_grammar:
+        print "unloading " + __name__ + "..."
+        multiedit_grammar.unload()
+    multiedit_grammar = None

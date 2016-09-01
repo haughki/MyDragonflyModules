@@ -6,19 +6,32 @@
 
 
 from dragonfly import *
-from natlinkmain import micOnCallback
-from supporting import utils
+import _a
+import _b
 
+def enableAlpha():
+    print "enabling alpha"
+    _a.alpha_rule.enable()
 
-def reloader():
-    print "reloading..."
-    micOnCallback()
-    utils.touch("C:\\NatLink\\NatLink\MacroSystem\\_c.py")
-    micOnCallback()
+def disableAlpha():
+    print "disabling alpha"
+    _a.alpha_rule.disable()
+
+def enableBravo():
+    print "enabling bravo"
+    _b.bravo_rule.enable()
+
+def disableBravo():
+    print "disabling bravo"
+    _b.bravo_rule.disable()
+
 
 class ExampleMapping(MappingRule):
     mapping = {
-        "execute reload": Function(reloader),
+        "enable alpaha": Function(enableAlpha),
+        "disable alpaha": Function(disableAlpha),
+        "enable bravo": Function(enableBravo),
+        "disable bravo": Function(disableBravo),
     }
     extras = [
         Dictation("text"),

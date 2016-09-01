@@ -11,7 +11,7 @@ class TokenSet(object):
         self.long_comment = long_comment
 
 class SymbolSpecs(object):
-    IF = "if then"
+    IF = "if then again"
     ELSE = "shells"
     
     SWITCH = "switch"
