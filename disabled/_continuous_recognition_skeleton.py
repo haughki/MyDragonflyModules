@@ -1,19 +1,19 @@
 from dragonfly import *
 
-import _b
+import _continuous_rec_import
 
-def printCharlie(): print "charlie"
-def printFoxtrot(): print "foxtrot"
-class CharlieMap(MappingRule):
+def printKilo(): print "kilo"
+def printLima(): print "lima"
+class KiloMap(MappingRule):
     mapping = {
-        "print charlie": Function(printCharlie),
+        "print kilo": Function(printKilo()),
     }
 
 
 
 alternatives = []
-alternatives.append(RuleRef(rule=CharlieMap()))
-alternatives.append(RuleRef(rule=_b.BravoMap()))
+alternatives.append(RuleRef(rule=KiloMap()))
+alternatives.append(RuleRef(rule=_continuous_rec_import.TangoMap()))
 
 single_action = Alternative(alternatives)
 
@@ -32,7 +32,6 @@ class ChainRule(CompoundRule):
     def _process_recognition(self, node, extras):
         sequence = extras["sequence"]   # A sequence of actions.
         # print "sequence: " + str(sequence)
-        action_loop_count = -1
         for action in sequence:
             # print "action: " + str(action)
             # print "node words: " + str(node.words())
@@ -40,14 +39,13 @@ class ChainRule(CompoundRule):
 
 
 
-grammar = Grammar("example grammar")
-grammar.add_rule(ChainRule())
+chain_grammar = Grammar("chain grammar")
+chain_grammar.add_rule(ChainRule())
 
-grammar.load()
+chain_grammar.load()
 
 def unload():
     print "unloading...."
-    #reload(_working)
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global chain_grammar
+    if chain_grammar: chain_grammar.unload()
+    chain_grammar = None
