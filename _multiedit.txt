@@ -83,7 +83,7 @@ cmd.map = {
         "race [<n>]": Key("rbrace:%(n)d"),
         "lack [<n>]": Key("lbracket:%(n)d"),
         "rack [<n>]": Key("rbracket:%(n)d"),
-        "(laip | lipe) [<n>]": Key("lparen:%(n)d"),
+        "(lop | lob) [<n>]": Key("lparen:%(n)d"),
         "hype [<n>]": Key("rparen:%(n)d"),
 
         ### Letters / Alphabet
@@ -93,7 +93,7 @@ cmd.map = {
         "Doy [<n>]": Key("d:%(n)d"),
         "Eve [<n>]": Key("e:%(n)d"),
         "Fay [<n>]": Key("f:%(n)d"),
-        "Gao [<n>]": Key("g:%(n)d"),
+        "Goo [<n>]": Key("g:%(n)d"),
         "Hoe [<n>]": Key("h:%(n)d"),
         #"Ick [<n>]": Key("i:%(n)d"),
         "(Ice | ice) [<n>]": Key("i:%(n)d"),
@@ -134,17 +134,17 @@ cmd.map = {
         "string (add | had)": Key("space, plus, space"),
 
         ### Lines
-        "wipe [<n>]": Key("home, s-down:%(n)d, del"), # del lines down
-        "wipe up [<n>]": release + Key("home, s-up:%(n)d, s-home, del"), # del lines up
+        "wipe [<n>]": Key("end, home:2, s-down:%(n)d, del"), # del lines down
+        "wipe up [<n>]": release + Key("end, home:2, s-up:%(n)d, s-home, del"), # del lines up
         "strip": release + Key("s-end, del"), # del from cursor to line end
         "(grab | strop)": release + Key("s-end, c-c"), # copy from cursor to line end
         "cut end": release + Key("s-end, c-x"), # cut from cursor to line end
         "strip head": release + Key("s-home, del"), # del from cursor to line home
         "grab head": release + Key("s-home, c-c"), # copy from cursor to line home
         "cut head": release + Key("s-home, c-x"), # cut from cursor to line home
-        "nab [<n>]": release + Key("home, s-down:%(n)d, c-c, right"), # copy lines down
-        "swipe [<n>]": release + Key("home, s-down:%(n)d, c-x, right"), # cut lines down
-        "dupe [<n>]": release + Key("home, s-down:%(n)d, s-home, c-c, home, c-v, up"), # duplicate lines down
+        "nab [<n>]": release + Key("end, home:2, s-down:%(n)d, c-c, up"), # copy lines down
+        "swipe [<n>]": release + Key("end, home:2, s-down:%(n)d, c-x, escape"), # cut lines down
+        "dupe": release + Key("end, home, s-end, c-c, end, enter, c-v"), # duplicate lines down
 
         ### words
         #"bump [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, del"), # del words right
@@ -173,7 +173,7 @@ cmd.map = {
         "release": release,
 
         ### other
-        "(undo | whip) [<n>]": Key("c-z:%(n)d"),
+        "undo [<n>]": Key("c-z:%(n)d"),
         "switch": release + Key("ctrl:down, tab"),
         "show apps": release + Key("alt:down, tab"),
         "say <text>": release + Text("%(text)s"),

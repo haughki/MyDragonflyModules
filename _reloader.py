@@ -19,7 +19,7 @@ def languageReloader():
     #     reimport(mod)
     reimport(specs)
     reimport(python_rule, java_rule)
-    utils.touch(MACROSYSTEM_DIRECTORY + "\\_switcher.py")
+    utils.touch(MACROSYSTEM_DIRECTORY + "\\_language_switcher.py")
     Key("npadd/10,npadd").execute()
 
 
