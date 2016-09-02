@@ -6,62 +6,30 @@
 
 
 from dragonfly import *
-import _a
-import _b
 
-def enableAlpha():
-    print "enabling alpha"
-    _a.alpha_rule.enable()
+from supporting import utils
 
-def disableAlpha():
-    print "disabling alpha"
-    _a.alpha_rule.disable()
+class Example(CompoundRule):
+    spec = "find object"
 
-def enableBravo():
-    print "enabling bravo"
-    _b.bravo_rule.enable()
-
-def disableBravo():
-    print "disabling bravo"
-    _b.bravo_rule.disable()
+    def _process_recognition(self, node, extras):
+        an_id = 202945552
+        found = utils.objects_by_id(an_id)
+        if found:
+            print found
+        else:
+            print "None"
 
 
-class ExampleMapping(MappingRule):
-    mapping = {
-        "enable alpaha": Function(enableAlpha),
-        "disable alpaha": Function(disableAlpha),
-        "enable bravo": Function(enableBravo),
-        "disable bravo": Function(disableBravo),
-    }
-    extras = [
-        Dictation("text"),
-    ]
+example_grammar = Grammar("example grammar")
+example_grammar.add_rule(Example())
 
 
-import logging
-rule_log = logging.getLogger("rule")
-
-class ExampleRule(CompoundRule):
-    spec = "silly"                  # Spoken form of command.
-
-    def _process_recognition(self, node, extras):   # Callback when command is spoken.
-        Key("alt:up,s-down").execute()
-        
-
-
-
-
-
-
-grammar = Grammar("example grammar")
-grammar.add_rule(ExampleRule())
-grammar.add_rule(ExampleMapping())
-
-
-grammar.load()
+example_grammar.load()
 
 def unload():
-    #reload(_working)
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global example_grammar
+    if example_grammar:
+        print "unloading " + __name__ + "..."
+        example_grammar.unload()
+    example_grammar = None

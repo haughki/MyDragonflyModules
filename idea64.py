@@ -67,6 +67,7 @@ class CommandRule(MappingRule):
         "accept choice": Key("c-enter"),
         "implement method": Key("c-i"),
         "override method": Key("c-o"),
+        "red light bulb": Key("a-enter"),
 
         # Edit
         "(shoreline | [go to | show] line) <n>": Key("c-g/30") + Text("%(n)d") + Key("enter"),

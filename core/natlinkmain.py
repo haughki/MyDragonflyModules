@@ -1,10 +1,3 @@
-# import sys
-# sys.path.append('pycharm-debug.egg')
-# import pydevd
-# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
-
-
-
 #
 # Python Macro Language for Dragon NaturallySpeaking
 #   (c) Copyright 1999 by Joel Gould
@@ -378,26 +371,6 @@ try:
             sys.stderr.write( 'Error calling '+modName+'.'+funcName+'\n' )
             traceback.print_exc()
             return None
-
-    #
-    # Hawkeye Change: adds the ability to add additional search directories in which to look for
-    # grammar files. setSearchImportDirs() also uses information from these functions.
-    def buildBaseDirectories():
-        languagesDirectory = "\\languages"
-        additionalDirectories = [languagesDirectory]  # additional subdirectories that I want to search for grammars
-        compiledDirectories = [baseDirectory]
-        for directory in additionalDirectories:
-            compiledDirectories.append(baseDirectory + directory)
-        return compiledDirectories
-
-    def findBaseDirectoryFiles():
-        allBaseDirectories = buildBaseDirectories()
-        allFiles = []
-        for d in allBaseDirectories:
-            allFiles.extend([x for x in os.listdir(d) if x.endswith('.py') and x != "__init__.py"])
-        # print allFiles
-        return allFiles
-    
     
     #
     # This routine loads two types of files.  If curModule is empty then we will
@@ -446,8 +419,7 @@ try:
                 if res: addToFilesToLoad( filesToLoad, res.group(1), userDirectory, moduleHasDot )
         # baseDirectory:
         if baseDirectory:
-            baseDirFiles = findBaseDirectoryFiles()  # Hawkeye Change: replaces the following line
-            # baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
+            baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
         else:
             baseDirFiles = []
     
@@ -473,9 +445,7 @@ try:
                         del loadedFiles[x]
                         if debugLoad: print 'Vocola is disabled...'
             # repeat the base directory, as Vocola just had the chance to rebuild Python grammar files:
-            baseDirFiles = findBaseDirectoryFiles()  # Hawkeye change: replaces the following line
-            #baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
-
+            baseDirFiles = [x for x in os.listdir(baseDirectory) if x.endswith('.py')]
         for x in baseDirFiles:
             res = pat.match(x)
             if res: addToFilesToLoad( filesToLoad, res.group(1), baseDirectory, moduleHasDot )
@@ -598,10 +568,8 @@ try:
         searchImportDirs = []
         if userDirectory != '':
             searchImportDirs.append(userDirectory)
-        allBaseDirectories = buildBaseDirectories() # Hawkeye change: expense the search to multiple directories
-        for directory in allBaseDirectories:
-            searchImportDirs.append(directory)
-        
+        searchImportDirs.append(baseDirectory)
+    
     
     #
     # When a new utterance begins we check all the loaded modules for changes.
@@ -656,26 +624,15 @@ try:
             loadModSpecific(moduleInfo, 1)  # only if changed module
         if debugTiming:
             print 'checked all grammar files: %.6f'% (time.time()-t0,)
-
-
-    #
-    # Hawkeye Change:  Helper method so that I can import this functionality
-    # for "custom" reload logic. (Tries to) which (tries to) duplicate the action 
-    # of switching the mic on and off. Generally speaking, functions from this module
-    # are not imported.  This is a hack.
-    #
-    def micOnCallback():
-        moduleInfo = natlink.getCurrentModule()
-        findAndLoadFiles()
-        beginCallback(moduleInfo, checkAll=1)
-        loadModSpecific(moduleInfo)       
+            
     #
     # This callback is called when the user changes or when the microphone
     # changes state.  We check for changes when the microphone is turned on.
     #
     # Note: getCurrentModule can raise the BadWindow except and if that happens
     # we ignore the callback.
-    #    
+    #
+    
     def changeCallback(type,args):
         global userName, DNSuserDirectory, language, BaseModel, BaseTopic, DNSmode, changeCallbackUserFirst
         if debugCallback:
@@ -683,11 +640,10 @@ try:
         if type == 'mic' and args == 'on':
             if debugCallback:
                 print 'findAndLoadFiles...'
-            micOnCallback()
-            # moduleInfo = natlink.getCurrentModule()
-            # findAndLoadFiles()
-            # beginCallback(moduleInfo, checkAll=1)
-            # loadModSpecific(moduleInfo)
+            moduleInfo = natlink.getCurrentModule()
+            findAndLoadFiles()
+            beginCallback(moduleInfo, checkAll=1)
+            loadModSpecific(moduleInfo)
         if type == 'user' and userName != args[0]:
             userName, DNSuserDirectory = args
             moduleInfo = natlink.getCurrentModule()

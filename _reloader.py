@@ -5,35 +5,36 @@
 # pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
 from dragonfly import *
-from natlinkmain import micOnCallback, natDisconnect, start_natlink
+#from natlinkmain import micOnCallback, natDisconnect, start_natlink
 
 from supporting import utils
 from reimport import reimport
-#reimport(_python_rule)
-#reimport(specs)
+from languages import python_rule
+
 
 MACROSYSTEM_DIRECTORY = "C:\\NatLink\\NatLink\\MacroSystem"
 
 def restartNatlink():
     print "Restarting NatLink d..."
-    natDisconnect()
-    start_natlink(True)
+    # natDisconnect()
+    # start_natlink(True)
 
 def languageReloader():
     print "Reloading languages..."
-    # pp = pprint.PrettyPrinter()
-    # pp.pprint(sys.modules)
-    # languages._python_rule.pythonRuleReimport()
-    micOnCallback()
-    utils.touch(MACROSYSTEM_DIRECTORY + "\\languages\\_python_rule.py")
-    micOnCallback()
-    utils.touch(MACROSYSTEM_DIRECTORY + "\\_multiedit.py")
-    micOnCallback()
+
+    # manually reload python_rule
+    reimport(python_rule)
+    
+    # touch switcher
+    utils.touch(MACROSYSTEM_DIRECTORY + "\\_switcher.py")
+    
+    # toggle mic
+    Key("npadd/10,npadd").execute()
+
 
 class ReloadRule(MappingRule):
     mapping = {
         "reload languages": Function(languageReloader),
-        "restart (natlink | NatLink | Natlink)": Function(restartNatlink),
     }
 
 reload_grammar = Grammar("reloading grammar")

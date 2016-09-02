@@ -50,3 +50,12 @@ def touch(fname, times=None):
         os.utime(fname, times)
     finally:
         fhandle.close()
+
+
+import gc
+
+def objects_by_id(id_):
+    for obj in gc.get_objects():
+        if id(obj) == id_:
+            return obj
+    return None
