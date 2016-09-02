@@ -1,7 +1,7 @@
-import sys
-sys.path.append('pycharm-debug.egg')
-import pydevd
-pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
 from dragonfly import *
 
@@ -11,14 +11,17 @@ the_python_rule = python_rule.PythonRule()
 the_java_rule = java_rule.JavaRule()
 
 supported_languages = {"python": the_python_rule, "java": the_java_rule}
+for supported in supported_languages:
+    if supported != "python":
+        supported_languages[supported].disable()
 
 def disableAll():
     for lang in supported_languages:
         if supported_languages[lang].enabled:
             supported_languages[lang].disable()
             
-class Toggler(CompoundRule):
-    spec = "activate (python | java)"
+class SetLanguageRule(CompoundRule):
+    spec = "set language (python | java)"
     
     def _process_recognition(self, node, extras):
         lang_to_activate = node.words()[-1]
@@ -31,7 +34,7 @@ class Toggler(CompoundRule):
 
 
 switcher_grammar = Grammar("switcher grammar")
-switcher_grammar.add_rule(Toggler())
+switcher_grammar.add_rule(SetLanguageRule())
 switcher_grammar.add_rule(the_python_rule)
 switcher_grammar.add_rule(the_java_rule)
 switcher_grammar.load()

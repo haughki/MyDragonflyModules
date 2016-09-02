@@ -11,8 +11,9 @@ class TokenSet(object):
         self.long_comment = long_comment
 
 class SymbolSpecs(object):
-    IF = "if then again"
-    ELSE = "shells"
+    IF = "if then"
+    ELSE = "(shells | else)"
+    DEFINE_METHOD = "define [<modifiers>] method"
     
     SWITCH = "switch"
     CASE = "case of"
@@ -32,7 +33,7 @@ class SymbolSpecs(object):
     OR = "lodge or"
     NOT = "lodge not"
     
-    SYSOUT = "print to console"
+    SYSOUT = "print statement"
     
     IMPORT = "import"
     
