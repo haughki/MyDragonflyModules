@@ -1,4 +1,6 @@
 '''
+Created on Oct 17, 2015
+@author: synkarius
 '''
 import re
 
@@ -22,12 +24,12 @@ class SymbolSpecs(object):
     
     DO_LOOP = "do loop"
     WHILE_LOOP = "while loop"
-    FOR_LOOP = "for loop"
     FOR_EACH_LOOP = "for each"
-    
-    TO_INTEGER = "convert to integer"
-    TO_FLOAT = "convert to floating point"
-    TO_STRING = "convert to string"
+    FOR_LOOP = "for loop"
+
+    TO_INTEGER = "to integer"
+    TO_FLOAT = "to floating point"
+    TO_STRING = "to string"
     
     AND = "lodge and"
     OR = "lodge or"

@@ -27,8 +27,10 @@ class JavaRule(MappingRule):
         specs.SymbolSpecs.IF:                       Text("if(){") + Key("enter,up,left"),
         specs.SymbolSpecs.ELSE:                     Text("else {") + Key("enter"),
         specs.SymbolSpecs.DEFINE_METHOD:            Function(defineMethod),
+        specs.SymbolSpecs.FOR_LOOP:                 Text("for (int i=0; i< ; i++){") + Key("enter,up"),
         specs.SymbolSpecs.FOR_EACH_LOOP:            Text("for( : ){") + Key("enter,up,left:4"),
         specs.SymbolSpecs.SYSOUT:                   Text("System.out.println()")+Key("left"),
+        specs.SymbolSpecs.TO_STRING:                Text(".toString()"),
     }
     extras = [
         Dictation("modifiers"),

@@ -85,6 +85,7 @@ cmd.map = {
         "rack [<n>]": Key("rbracket:%(n)d"),
         "(lop | lob) [<n>]": Key("lparen:%(n)d"),
         "hype [<n>]": Key("rparen:%(n)d"),
+        "law pipe": Key("lparen,rparen"),  # lop hype
 
         ### Letters / Alphabet
         "Al [<n>]": Key("a:%(n)d"),
@@ -184,6 +185,7 @@ cmd.map = {
         "file save": Key("c-s"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
         "list Windows": Mimic("list", "all", "Windows"),
+        "(you tells | utils)": Text("utils"),
                 
         ### programming
         "(integer | int)": Key("i, n, t"),

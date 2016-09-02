@@ -14,8 +14,10 @@ class PythonRule(MappingRule):
             specs.SymbolSpecs.IF:                   Key("i,f,space,colon,left"),
             specs.SymbolSpecs.ELSE:                 Text("else:") + Key("enter"),
             specs.SymbolSpecs.DEFINE_METHOD:        Text("def (self):") + Key("left:7"),
+            specs.SymbolSpecs.FOR_LOOP:             Text("for i in range(0, ):") + Key("left:2"),
             specs.SymbolSpecs.FOR_EACH_LOOP:        Text("for in :") + Key("left:4"),
-            specs.SymbolSpecs.SYSOUT:               Text("print()")+Key("left"),
+            specs.SymbolSpecs.SYSOUT:               Text("print "),
+            specs.SymbolSpecs.TO_STRING:            Text("str()")+ Key("left"),
     }            
     extras = [
         Dictation("modifiers"),

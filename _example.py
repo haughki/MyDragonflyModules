@@ -9,16 +9,29 @@ from dragonfly import *
 
 from supporting import utils
 
+character_names = "space | amp | star | slosh | bar | coal | dash | drip | dot | quote | chud | bang | hash | plus | flash | smote | ray | Shem | lang | rang | lace | race | lack | rack | lop | hype | Al | Braa | Chow | Doy | Eve | Fay | Goo | Hoe | Ice | Jaa | Koi | Lee | Mao | Noy | Oak | Poe | Quinn | Roy | Soy | Tao | Ugh | Vote | Wes | Ecks | Yaa | Zoo | zero | one | two | three | four | five | six | seven | eight | nine"
+
 class Example(CompoundRule):
-    spec = "find object"
+    spec = "search line (<text> | " + character_names + ")"
+
+    extras = [Dictation("text")]
+    defaults = {"text":""}
 
     def _process_recognition(self, node, extras):
-        an_id = 202945552
-        found = utils.objects_by_id(an_id)
-        if found:
-            print found
+        to_find = str(extras["text"])
+        if to_find == "":
+            print "nothing"
+            to_find = node.words()[-1]
+        print "searching for: " + to_find 
+        Key("end,s-home,c-c").execute()
+        line = utils.getSelectedText()
+        line_index = line.find(to_find)
+        if line_index != -1:
+            Key("end,home,right:" + str(line_index)).execute()
         else:
-            print "None"
+            Key("escape").execute()
+            print "unable to find: " + to_find
+            print "line: " + line
 
 
 example_grammar = Grammar("example grammar")

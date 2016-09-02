@@ -6,8 +6,17 @@ https://github.com/dictation-toolbox/dragonfly-scripts/blob/master/_app_intellij
 Licensed under the LGPL3.
 
 """
-
+from dragonfly import Function
 from dragonfly import Grammar, MappingRule, Dictation, Integer, Key, Text, IntegerRef, AppContext
+
+def getFile(text=None):
+    open_get_file_dialog = Key("cas-n")
+    if text:
+        open_get_file_dialog.execute()
+        file_name = str(text).lower()
+        Text(file_name).execute()
+    else:
+        open_get_file_dialog.execute()
 
 class CommandRule(MappingRule):
     mapping = {
@@ -25,8 +34,7 @@ class CommandRule(MappingRule):
 
         # Code navigation.
         "[go to | show] class": Key("c-n"),
-        "show file": Key("cas-n"),  # "Navigate > File..."
-        "get file <text>": Key("cas-n") + Text("%(text)s"),
+        "get file [<text>]": Function(getFile),  # "Navigate > File..."
 
         "([go to | show] declaration | jump)": Key("c-b"),
         "[go to | show] implementation": Key("ca-b"),
