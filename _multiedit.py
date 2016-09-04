@@ -65,8 +65,7 @@ except ImportError:
     pass
 
 from dragonfly import *
-
-from supporting import putstringcommands
+from supporting import utils, putstringcommands
 
 #---------------------------------------------------------------------------
 # Here we globally defined the release action which releases all modifier-keys used within this grammar.  It is defined here
@@ -83,7 +82,7 @@ config = Config("multi edit")
 config.cmd = Section("Command section")
 config.cmd.map = Item(
     # Here we define the *default* command map.  If you would like to modify it to your personal taste, please *do not* make changes
-    #  here.  Instead change the *config file* called "_multiedit.txt".
+    #  here.  Instead change the *config file* called "_multiedit.txt".  If it exists, the map there will replace this one.
     {},
     namespace={
         "Key": Key,
@@ -126,6 +125,8 @@ else:
     FormatRule = None
 
 
+
+
 #---------------------------------------------------------------------------
 # Here we define the keystroke rule.
 
@@ -157,6 +158,7 @@ class KeystrokeRule(MappingRule):
 #  will be the value of the referenced rule: an action.
 alternatives = []
 alternatives.append(RuleRef(rule=KeystrokeRule()))
+#alternatives.append(RuleRef(rule=LookRule()))
 if FormatRule:
     alternatives.append(RuleRef(rule=FormatRule()))
 

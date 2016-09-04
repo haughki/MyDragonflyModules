@@ -7,7 +7,7 @@ from dragonfly import *
 from reimport import reimport, modified
 
 from languages import python_rule, java_rule, specs
-from supporting import utils
+from supporting import utils, character
 
 MACROSYSTEM_DIRECTORY = "C:\\NatLink\\NatLink\\MacroSystem"
 
@@ -22,10 +22,16 @@ def languageReloader():
     utils.touch(MACROSYSTEM_DIRECTORY + "\\_language_switcher.py")
     Key("npadd/10,npadd").execute()
 
+def characterReloader():
+    print "Reloading character..."
+    reimport(character)
+    Key("npadd/10,npadd").execute()
+
 
 class ReloadRule(MappingRule):
     mapping = {
         "reload languages": Function(languageReloader),
+        "reload character": Function(characterReloader)
     }
 
 reload_grammar = Grammar("reloading grammar")

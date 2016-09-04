@@ -44,6 +44,14 @@ def getSelectedText():
     return clipboard.get_text()
 
 
+def find_nth(search_in, find_me, n):
+    start = search_in.find(find_me)
+    while start >= 0 and n > 1:
+        start = search_in.find(find_me, start + len(find_me))
+        n -= 1
+    return start
+
+
 def touch(fname, times=None):
     fhandle = open(fname, 'a')
     try:
