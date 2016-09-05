@@ -1,7 +1,10 @@
-﻿# import sys
-# sys.path.append('pycharm-debug.egg')
-# import pydevd
-# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+﻿import sys
+
+from dragonfly.actions.action_base import BoundAction
+
+sys.path.append('pycharm-debug.egg')
+import pydevd
+pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
 #
 # This file is a command-module for Dragonfly.
@@ -65,7 +68,7 @@ except ImportError:
     pass
 
 from dragonfly import *
-from supporting import utils, putstringcommands
+from supporting import utils, putstringcommands, character
 
 #---------------------------------------------------------------------------
 # Here we globally defined the release action which releases all modifier-keys used within this grammar.  It is defined here
@@ -125,8 +128,6 @@ else:
     FormatRule = None
 
 
-
-
 #---------------------------------------------------------------------------
 # Here we define the keystroke rule.
 
@@ -151,6 +152,51 @@ class KeystrokeRule(MappingRule):
         }
 
 
+def lineSearch(dictation_to_find, _node):
+    second_arg = _node.words()[1]
+    ordinal_arg = None
+    for ordinal in ordinal_map:
+        if second_arg == ordinal:
+            ordinal_arg = second_arg
+            break
+
+    to_find = str(dictation_to_find)
+    if to_find == "":
+        print "No dictation, searching for character..."
+        character_to_find = _node.words()[-1]
+        to_find = character.CHARACTER_MAP[character_to_find]
+
+    to_find = to_find.lower()
+    searching_message = "Searching for " + ordinal_arg + ": "  if ordinal_arg else "Searching for: "
+    print searching_message + to_find
+    Key("end,s-home").execute()  # select the line
+    line = utils.getSelectedText().lower()  # copied to the clipboard, then get from the clipboard 
+    line_index = -1
+    if ordinal_arg:
+        line_index = utils.find_nth(line, to_find, ordinal_map[ordinal_arg])
+    else:
+        line_index = line.find(to_find)
+    if line_index != -1:
+        Key("end,home,right:" + str(line_index)).execute()
+    else:
+        Key("escape").execute()
+        print "unable to find: " + to_find
+        print "line: " + line
+
+
+ordinal_map = {"second":2, "third":3, "fourth":4, "fifth":5, "sixth":6}
+
+class LookRule(MappingRule):
+    mapping = {
+        "look [(second | third | fourth | fifth | sixth)] (<dictation_to_find> | " + character.CHARACTER_ALTERNATIVES + ")": Function(lineSearch),
+    }
+
+    extras = [Dictation("dictation_to_find"),
+              ]
+    defaults = {"dictation_to_find":""}
+
+
+
 #---------------------------------------------------------------------------
 # Here we create an element which is the sequence of keystrokes.
 
@@ -158,7 +204,7 @@ class KeystrokeRule(MappingRule):
 #  will be the value of the referenced rule: an action.
 alternatives = []
 alternatives.append(RuleRef(rule=KeystrokeRule()))
-#alternatives.append(RuleRef(rule=LookRule()))
+alternatives.append(RuleRef(rule=LookRule()))
 if FormatRule:
     alternatives.append(RuleRef(rule=FormatRule()))
 
@@ -203,28 +249,26 @@ class RepeatRule(CompoundRule):
         #print sequence
         is_skip_next_action = False
         for i in range(repeat_count):
-            action_loop_count = -1
+            action_count = -1
             for action in sequence:
-                # all of the "extra" code below is for the "mash" command
-                action_loop_count += 1
-                #print ""
-                #print action_loop_count
-                #print is_skip_next_action
-                #print action
+                # all of the "extra" code below is for the "mash/sky" command
+                action_count += 1
                 if is_skip_next_action:
                     is_skip_next_action = False
                     continue
-                #print node.words()
-                commands = node.words()
-                if len(commands) > 0:
-                    if commands[action_loop_count] == "mash" or commands[action_loop_count] == "sky":  # special command to uppercase individual letters
-                        if len(sequence) > 1:
-                            upper_case_it = sequence[action_loop_count] + sequence[action_loop_count + 1] + release
-                            upper_case_it.execute()
-                            is_skip_next_action = True
-                    else:
-                        action.execute()
-                else:
+                # print node.words()
+                # commands = node.words()
+                if isinstance(action, BoundAction):  # it certainly should be, so this is sort of paranoia
+                    if len(action._data["_node"].words()) > 0:  # more paranoia -- how could this not be true?
+                        command = action._data["_node"].words()[0]
+                        if command == "sky" or command == "mash":
+                            if len(sequence) > 1:  # make sure something's coming after "sky"
+                                upper_case_it = action + sequence[action_count + 1] + release
+                                upper_case_it.execute()
+                                is_skip_next_action = True  # we just executed the next action, don't do it twice                      
+                        else:  # no "sky command" -- normal path
+                            action.execute()
+                else:  # not a bound action?
                     action.execute()
 
 
