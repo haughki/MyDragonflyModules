@@ -1,10 +1,7 @@
-﻿import sys
-
-from dragonfly.actions.action_base import BoundAction
-
-sys.path.append('pycharm-debug.egg')
-import pydevd
-pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+﻿# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
 #
 # This file is a command-module for Dragonfly.
@@ -67,6 +64,7 @@ try:
 except ImportError:
     pass
 
+from dragonfly.actions.action_base import BoundAction
 from dragonfly import *
 from supporting import utils, putstringcommands, character
 
