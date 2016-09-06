@@ -1,61 +1,50 @@
-import sys
-sys.path.append('pycharm-debug.egg')
-import pydevd
-pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
-
-
+# import sys
+# sys.path.append('pycharm-debug.egg')
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+import os
 
 from dragonfly import *
 from dragonfly.actions.action_base import BoundAction
 
 from supporting import utils, character
 
-
-
-def format_score_function(repeated_choices):
-    print repeated_choices
-    words = []
-    for choice in repeated_choices:
-        if isinstance(choice, BoundAction):
-            words.append(choice._action._spec)
-        else:
-            words.append(str(choice))
-    print words
-    print "_".join(words)
-
-class DirkRule(MappingRule):
-    mapping = {
-        "Dirk": Text("smirk"),
-    }
-
-
-alternatives = [Dictation("dictation"), RuleRef(rule=DirkRule())]
-either_one = Alternative(alternatives)
-repeated_choices = Repetition(either_one, min=1, max=16, name="repeated_choices")
+def addAlias(dictation):
+    alias_name = str(dictation)
+    alias_value = utils.getSelectedText()
+    if not alias_value or alias_value == "":
+        raise StandardError("No value for \"alias_value\".  Select some text to alias.")
+    file_path = "C:\\NatLink\\NatLink\\MacroSystem\\_aliases.py"
+    lines = []
+    with open(file_path, 'r') as aliases:
+        lines = aliases.readlines()
+    with open(file_path, 'w') as aliases:
+        started_mapping = False
+        done_adding = False
+        for line in lines:
+            if done_adding:
+                aliases.write(line)
+                continue
+            if not started_mapping:
+                aliases.write(line)
+                if line.find("mapping = {") != -1:
+                    started_mapping = True
+                    continue
+            if started_mapping and not done_adding:
+                if line.find("}") != -1:
+                    aliases.write("\t\t\"" + alias_name + "\": Text(\"" + alias_value + "\"),\n")
+                    aliases.write(line)
+                    done_adding = True
+                else:
+                    aliases.write(line)
+                
 
 class Example(MappingRule):
     mapping = {
-        "chore <repeated_choices>": Function(format_score_function)
+        "alias <dictation>": Function(addAlias),
     }
+    extras = [Dictation("dictation")]
 
-    extras = [repeated_choices,]
-    # defaults = {"dictation":""}
-
-
-
-# class ChainRule(CompoundRule):
-#     spec = "<action_sequence>"
-#     extras = [
-#         action_sequence, # action_sequence of actions defined above.
-#     ]
-# 
-#     def _process_recognition(self, node, extras):
-#         action_sequence = extras["action_sequence"]   # A action_sequence of actions.
-#         # print "action_sequence: " + str(action_sequence)
-#         for action in action_sequence:
-#             # print "action: " + str(action)
-#             # print "node words: " + str(node.words())
-#             action.execute()
 
 example_grammar = Grammar("example grammar")
 example_grammar.add_rule(Example())

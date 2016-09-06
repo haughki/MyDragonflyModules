@@ -187,9 +187,9 @@ cmd.map = {
         "(you tells | utils)": Text("utils"),
                 
         ### programming
-        "(integer | int)": Key("i, n, t"),
-        "(Boolean | boolean | bool)": Key("b, o, o, l"),
-        "(character | char)": Key("c, h, a, r"),
+        "(integer | int)": Text("int"),
+        "(Boolean | boolean | bool)": Text("bool"),
+        "(character | char)": Text("char"),
         
 }
 
