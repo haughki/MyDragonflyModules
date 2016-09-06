@@ -27,11 +27,16 @@ def characterReloader():
     reimport(character)
     Key("npadd/10,npadd").execute()
 
+def utilsReloader():
+    print "Reloading utils..."
+    reimport(utils)
+    Key("npadd/10,npadd").execute()
 
 class ReloadRule(MappingRule):
     mapping = {
         "reload languages": Function(languageReloader),
-        "reload character": Function(characterReloader)
+        "reload character": Function(characterReloader),
+        "reload utilities": Function(utilsReloader),
     }
 
 reload_grammar = Grammar("reloading grammar")
