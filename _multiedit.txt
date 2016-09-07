@@ -155,6 +155,8 @@ cmd.map = {
         "(porche | scoop left) [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-c, left"), # copy words left
         "slice right [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-x, right"), # cut words right
         "slice left [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-x, left"), # cut words left
+        "select right [<n>]": release + Key("cs-right:%(n)d"), # select words right
+        "select left [<n>]": release + Key("cs-left:%(n)d"), # select words left
         
         ### copy/paste
         "pace": release + Key("c-v"), # paste

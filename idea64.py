@@ -35,7 +35,6 @@ class CommandRule(MappingRule):
         # Code navigation.
         "[go to | show] class": Key("c-n"),
         "get file [<text>]": Function(getFile),  # "Navigate > File..."
-
         "([go to | show] declaration | jump)": Key("c-b"),
         "[go to | show] implementation": Key("ca-b"),
         "[go to | show] super": Key("c-u"),
@@ -56,7 +55,6 @@ class CommandRule(MappingRule):
         "[go to | show] module settings": Key("f4"),
         "[go to | show] [project] settings": Key("cas-s"),
         "[go to | show] Global settings": Key("ca-s"),
-        #"synchronize files": Key("ca-y"),
 
         # Terminal.
         "run terminal": Key("a-f12"),
@@ -84,6 +82,7 @@ class CommandRule(MappingRule):
         "(Hide | hide | hi) side": Key("cas-c"),  # "hide side tool windows"
         "comment [line | that | it]": Key("c-slash"),
         "show white space": Key("cs-w"),
+        "redo": Key("cs-z"),
         
         # Window handling.
         "next tab [<t>]": Key("a-right/5:%(t)d"),

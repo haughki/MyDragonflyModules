@@ -61,7 +61,7 @@ T = "Tao"
 U = "Ugh"
 V = "Vote"
 W = "Wes"
-X = "Ecks"
+X = "x-ray"
 Y = "Yaa"
 Z = "Zoo"
 
