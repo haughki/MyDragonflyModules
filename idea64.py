@@ -33,7 +33,7 @@ class CommandRule(MappingRule):
         "(keep running | resume)": Key("f9"),
 
         # Code navigation.
-        "[go to | show] class": Key("c-n"),
+        "(go to | show) class": Key("c-n"),
         "get file [<text>]": Function(getFile),  # "Navigate > File..."
         "([go to | show] declaration | jump)": Key("c-b"),
         "[go to | show] implementation": Key("ca-b"),
@@ -43,7 +43,7 @@ class CommandRule(MappingRule):
         "[go to | show] hierarchy": Key("a-8"),
         "[go to | show] version control": Key("a-9"),
         "quick definition": Key("cs-i"),
-        "quick docs": Key("c-q"),
+        "quick (documentation | docs)": Key("c-q"),
         "toggle (book | bookmark)": Key("f7"),
         "next (book | bookmark)": Key("cs-n"),
         "(prev | previous) book": Key("cs-p"),

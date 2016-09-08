@@ -5,6 +5,7 @@ class Aliases(MappingRule):
     mapping = {
         "short object": Text("obj"),
         "short string": Text("str"),
+		"end": Text("end"),
     }
 
 example_grammar = Grammar("alias grammar")

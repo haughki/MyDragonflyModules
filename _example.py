@@ -9,10 +9,28 @@ from dragonfly.actions.action_base import BoundAction
 
 from supporting import utils, character
 
+def defineMethod(_node):
+    # "define [(public | protected | private)] [static] [void] method"
+    modifiers_string = None
+    if len(_node.words()) > 2:
+        modifiers = _node.words()[1: -1]
+        modifiers_string = ""
+        for modifier in modifiers:
+            modifiers_string = modifiers_string + modifier + " "
+
+
+
+
+    # method_index = -1
+    # for i in range(len(command)):
+    #     if command[i] == "method":
+    #         method_index = i
+    #     
+    # if method_index > 1:
 
 class Example(MappingRule):
     mapping = {
-        "Dirk": Text("turkey"),
+        "Dirk [(public | protected | private)] [static] [void] method": Function(defineMethod),
     }
     extras = [Dictation("dictation")]
 

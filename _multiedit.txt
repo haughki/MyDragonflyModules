@@ -192,6 +192,8 @@ cmd.map = {
         "(integer | int)": Text("int"),
         "(Boolean | boolean | bool)": Text("bool"),
         "(character | char)": Text("char"),
+        "function": Text("()"),
+        "jason": Text("json"),
         
 }
 

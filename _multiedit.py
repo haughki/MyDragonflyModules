@@ -150,14 +150,27 @@ class KeystrokeRule(MappingRule):
         }
 
 
-def lineSearch(dictation_to_find, _node):
-    second_arg = _node.words()[1]
+def lineSearch(dictation_to_find, replace_with_me, _node):
+    commands = _node.words()
+    
+    # parse ordinal arguments
+    second_arg = commands[1]
     ordinal_arg = None
     for ordinal in ordinal_map:
         if second_arg == ordinal:
             ordinal_arg = second_arg
             break
 
+    # parse replace arguments
+    replacing = False
+    if len(commands) > 2:
+        second_to_last_arg = commands[-2]
+        last_arg = commands[-1]
+        if second_to_last_arg == "replace" or last_arg == "replace":
+            print "Replacing..."
+            replacing = True
+            replace_with_me = str(replace_with_me)
+    
     to_find = str(dictation_to_find)
     if to_find == "":
         print "No dictation, searching for character..."
@@ -176,6 +189,15 @@ def lineSearch(dictation_to_find, _node):
         line_index = line.find(to_find)
     if line_index != -1:
         Key("end,home,right:" + str(line_index)).execute()
+        if replacing:
+            Key("cs-right").execute()
+            selected = utils.getSelectedText()
+            if selected[-1] == " ":
+                Key("s-left").execute()  # deselect a single trailing space if it exists
+            if replace_with_me == "":
+                Key("backspace").execute()
+            else:
+                Text(replace_with_me).execute()
     else:
         Key("escape").execute()
         print "unable to find: " + to_find
@@ -186,12 +208,15 @@ ordinal_map = {"second":2, "third":3, "fourth":4, "fifth":5, "sixth":6}
 
 class LookRule(MappingRule):
     mapping = {
-        "look [(second | third | fourth | fifth | sixth)] (<dictation_to_find> | " + character.CHARACTER_ALTERNATIVES + ")": Function(lineSearch),
+        "(scan | look) [(second | third | fourth | fifth | sixth)] (<dictation_to_find> | " + character.CHARACTER_ALTERNATIVES + ") [replace] [<replace_with_me>]": Function(lineSearch),
     }
 
     extras = [Dictation("dictation_to_find"),
+              Dictation("replace_with_me"),
               ]
-    defaults = {"dictation_to_find":""}
+    defaults = {"dictation_to_find":"",
+                "replace_with_me":"",
+                }
 
 
 

@@ -12,8 +12,6 @@ from supporting import utils, character
 
 MACROSYSTEM_DIRECTORY = "C:\\NatLink\\NatLink\\MacroSystem"
 
-def toggleMicrophone():
-    Key("npadd/10,npadd").execute()
 
 def languageReloader():
     print "Reloading languages..."
@@ -24,24 +22,24 @@ def languageReloader():
     reimport(specs)
     reimport(python_rule, java_rule)
     utils.touch(MACROSYSTEM_DIRECTORY + "\\_language_switcher.py")
-    toggleMicrophone()
+    utils.toggleMicrophone()
 
 def characterReloader():
     print "Reloading character..."
     reimport(character)
-    toggleMicrophone()
+    utils.toggleMicrophone()
 
 def utilsReloader():
     print "Reloading utils..."
     reimport(utils)
-    toggleMicrophone()
+    utils.toggleMicrophone()
     
 def reloadAll():
     print "Reloading everything in the Macrosystem directory..."
     user_directory_files = [f for f in os.listdir(MACROSYSTEM_DIRECTORY) if f.endswith('.py')]
     for file in user_directory_files:
         utils.touch(MACROSYSTEM_DIRECTORY + "\\" + file)
-    toggleMicrophone()
+    utils.toggleMicrophone()
 
 class ReloadRule(MappingRule):
     mapping = {

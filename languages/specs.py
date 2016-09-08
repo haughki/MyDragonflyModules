@@ -15,7 +15,7 @@ class TokenSet(object):
 class SymbolSpecs(object):
     IF = "if then"
     ELSE = "(shells | else)"
-    DEFINE_METHOD = "define [<modifiers>] method"
+    DEFINE_METHOD = "define [(public | protected | private)] [static] [void] method"  # public static void myMethod()
     
     SWITCH = "switch"
     CASE = "case of"

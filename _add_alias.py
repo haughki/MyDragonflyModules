@@ -34,6 +34,7 @@ def addAlias(dictation):
                     done_adding = True
                 else:
                     aliases.write(line)
+    utils.toggleMicrophone()
                 
 
 class AddAliasRule(MappingRule):

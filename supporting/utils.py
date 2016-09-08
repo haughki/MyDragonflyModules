@@ -59,6 +59,9 @@ def touch(fname, times=None):
     finally:
         fhandle.close()
 
+def toggleMicrophone():
+    Key("npadd/10,npadd").execute()
+
 
 import gc
 
