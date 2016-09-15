@@ -19,7 +19,6 @@ class PythonRule(MappingRule):
             specs.SymbolSpecs.SYSOUT:               Text("print "),
             specs.SymbolSpecs.TO_STRING:            Text("str()") + Key("left"),
 
-
             "with":                         Text("with "),
             # "open file":                    Text("open('filename','r') as f:"),
             # "read lines":                   Text("content = f.readlines()"),
@@ -34,18 +33,13 @@ class PythonRule(MappingRule):
             specs.SymbolSpecs.AND:                Text(" and "),
             specs.SymbolSpecs.OR:                 Text(" or "),
             specs.SymbolSpecs.NOT:                Text("!"),
-    
-            specs.SymbolSpecs.IMPORT:             Text( "import " ),
-    
+            
+            specs.SymbolSpecs.IMPORT:             Text( "import " ),    
             specs.SymbolSpecs.CLASS:              Text("class "),
-    
             specs.SymbolSpecs.COMMENT:            Text( "#" ),
             specs.SymbolSpecs.LONG_COMMENT:       Text("''''''") + Key("left:3"),
-    
             specs.SymbolSpecs.NULL:               Text("None"),
-    
             specs.SymbolSpecs.RETURN:             Text("return "),
-    
             specs.SymbolSpecs.TRUE:               Text("True"),
             specs.SymbolSpecs.FALSE:              Text("False"),
         
@@ -56,18 +50,14 @@ class PythonRule(MappingRule):
             "self":                         Text("self"),
             "long not":                     Text(" not "),
             "it are in":                    Text(" in "),          #supposed to sound like "iter in"
-    
             # "shell iffae | LFA":            Key("e,l,i,f,space,colon,left"),
             "convert to character":         Text("chr()")+ Key("left"),
-    
             "global":                       Text("global "),
-    
             "list comprehension":           Text("[x for x in if ]"),
-    
             "[dot] (pie | pi)":             Text(".py"),
             "identity is":                  Text(" is "),
-        
-            "length ":                              Text("len()") + Key("left"),
+            "length ":                      Text("len()") + Key("left"),
+            
     }            
     extras = [
         Dictation("modifiers"),

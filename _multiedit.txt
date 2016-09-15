@@ -43,6 +43,7 @@ cmd.map = {
         "kick [<n>]": Key("end:%(n)d"),
         "top": Key("c-home"),
         "toe": Key("c-end"),
+        "make line": Key("up, end, enter"),
 
         #### Various keys
         character.SPACE       + " [<n>]": Key("space:%(n)d"),
@@ -114,7 +115,7 @@ cmd.map = {
         character.X           + " [<n>]": Key("x:%(n)d"),
         character.Y           + " [<n>]": Key("y:%(n)d"),
         character.Z           + " [<n>]": Key("z:%(n)d"),
-
+                
         ### Numbers
         "zero": Key("0"),
         "one": Key("1"),
@@ -137,7 +138,7 @@ cmd.map = {
         "wipe [<n>]": Key("end, home:2, s-down:%(n)d, del"), # del lines down
         "wipe up [<n>]": release + Key("end, home:2, s-up:%(n)d, s-home, del"), # del lines up
         "strip": release + Key("s-end, del"), # del from cursor to line end
-        "(grab | strop)": release + Key("s-end, c-c"), # copy from cursor to line end
+        "grab": release + Key("s-end, c-c"), # copy from cursor to line end
         "cut end": release + Key("s-end, c-x"), # cut from cursor to line end
         "strip head": release + Key("s-home, del"), # del from cursor to line home
         "grab head": release + Key("s-home, c-c"), # copy from cursor to line home
@@ -147,12 +148,10 @@ cmd.map = {
         "dupe": release + Key("end, home, s-end, c-c, end, enter, c-v"), # duplicate lines down
 
         ### words
-        #"bump [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, del"), # del words right
         "bump [<n>]": release + Key("cs-right:%(n)d, del"), # del words right
-        #"swat [<n>]": release + Key("left, c-right, cs-left:%(n)d, del"), # del words left
         "swat [<n>]": release + Key("cs-left:%(n)d, del"), # del words left
-        "(yose | scoop right) [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-c, right"), # copy words right
-        "(porche | scoop left) [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-c, left"), # copy words left
+        "scoop right [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-c, right"), # copy words right
+        "scoop left [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-c, left"), # copy words left
         "slice right [<n>]": release + Key("right:2, c-left, cs-right:%(n)d, c-x, right"), # cut words right
         "slice left [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-x, left"), # cut words left
         "select right [<n>]": release + Key("cs-right:%(n)d"), # select words right
@@ -192,9 +191,14 @@ cmd.map = {
         "(integer | int)": Text("int"),
         "(Boolean | boolean | bool)": Text("bool"),
         "(character | char)": Text("char"),
+        "short object": Text("obj"),
+        "short string": Text("str"),
         "function": Text("()"),
         "jason": Text("json"),
         
+        ### Dragonfly Commands
+        "add text map": Text("\"\": Text(\"\"),") + Key("left:12"),
+        "add key map": Text("\"\": Key(\"\"),") + Key("left:11"),
 }
 
 #---------------------------------------------------------------------------

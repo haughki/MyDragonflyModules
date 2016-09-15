@@ -29,7 +29,7 @@ def addAlias(dictation):
                     continue
             if started_mapping and not done_adding:
                 if line.find("}") != -1:
-                    aliases.write("\t\t\"" + alias_name + "\": Text(\"" + alias_value + "\"),\n")
+                    aliases.write("        \"" + alias_name + "\": Text(\"" + alias_value + "\"),\n")
                     aliases.write(line)
                     done_adding = True
                 else:
