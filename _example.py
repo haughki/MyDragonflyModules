@@ -9,15 +9,10 @@ from dragonfly.actions.action_base import BoundAction
 
 from supporting import utils, character
 
-def defineMethod(_node):
-    # "define [(public | protected | private)] [static] [void] method"
-    modifiers_string = None
-    if len(_node.words()) > 2:
-        modifiers = _node.words()[1: -1]
-        modifiers_string = ""
-        for modifier in modifiers:
-            modifiers_string = modifiers_string + modifier + " "
 
+
+def defineMethod(_node):
+    print "monkey balls"
 
 
 
@@ -30,7 +25,7 @@ def defineMethod(_node):
 
 class Example(MappingRule):
     mapping = {
-        "Dirk [(public | protected | private)] [static] [void] method": Function(defineMethod),
+        "Dirk (public | (protected | Fox) | private)": Function(defineMethod),
     }
     extras = [Dictation("dictation")]
 

@@ -17,7 +17,7 @@ class SymbolSpecs(object):
     ELSE = "(shells | else)"
     DEFINE_METHOD = "define [(public | protected | private)] [static] [final] [void] method"  # public static void myMethod()
     
-    SWITCH = "switch"
+    SWITCH = "switch statement"
     CASE = "case of"
     BREAK = "breaker"
     DEFAULT = "default"
@@ -26,6 +26,7 @@ class SymbolSpecs(object):
     WHILE_LOOP = "while loop"
     FOR_EACH_LOOP = "for each"
     FOR_LOOP = "for loop"
+    TRY_CATCH = "try catch"
 
     TO_INTEGER = "to integer"
     TO_FLOAT = "to floating point"

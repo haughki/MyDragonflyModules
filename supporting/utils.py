@@ -35,13 +35,19 @@ def windowIsValid(window):
 
 
 def getSelectedText():
+    """ Get the currently selected text by copying it to the clipboard and pulling it from there.
+    Preserve the original clipboard state. """
+    original = Clipboard(from_system=True)
+    
     Key("c-c").execute()
     # note that trying to re-use this clipboard object after it's been
-    # modified has caused me issues in the past -- seems to hold onto old
-    # values...
-    clipboard = Clipboard()
-    clipboard.copy_from_system()
-    return clipboard.get_text()
+    # modified has caused me issues in the past -- seems to hold onto old values...
+    just_copied = Clipboard()
+    just_copied.copy_from_system()
+
+    original.copy_to_system()  # restore the state of the clipboard
+
+    return just_copied.get_text()
 
 
 def find_nth(search_in, find_me, n):

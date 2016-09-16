@@ -32,8 +32,8 @@ class SetLanguageRule(CompoundRule):
         if not supported_languages[lang_to_activate].enabled:
             supported_languages[lang_to_activate].enable()
 
-
-switcher_grammar = Grammar("switcher grammar")
+context = AppContext(executable="idea64")
+switcher_grammar = Grammar("switcher grammar", context=context)
 switcher_grammar.add_rule(SetLanguageRule())
 switcher_grammar.add_rule(the_python_rule)
 switcher_grammar.add_rule(the_java_rule)

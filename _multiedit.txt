@@ -44,6 +44,8 @@ cmd.map = {
         "top": Key("c-home"),
         "toe": Key("c-end"),
         "make line": Key("up, end, enter"),
+        "(scroll | page) up [<n>]": Key("c-up:%(n)d"),
+        "(scroll | page) down [<n>]": Key("c-down:%(n)d"),
 
         #### Various keys
         character.SPACE       + " [<n>]": Key("space:%(n)d"),
@@ -133,6 +135,7 @@ cmd.map = {
         "eeks": Key("space, equal, equal, space"),
         "line dash": Key("space, hyphen, hyphen, space"),
         "string (add | had)": Key("space, plus, space"),
+        "(spacebar | space bar) space": Text(" | "),
 
         ### Lines
         "wipe [<n>]": Key("end, home:2, s-down:%(n)d, del"), # del lines down
@@ -177,10 +180,11 @@ cmd.map = {
         "undo [<n>]": Key("c-z:%(n)d"),
         "switch": release + Key("ctrl:down, tab"),
         "show apps": release + Key("alt:down, tab"),
+        "prev window": Key("a-tab/10"),
         "say <text>": release + Text("%(text)s"),
         "mimic <text>": release + Mimic(extra="text"),
         "pop": Key("apps"), # right click
-        "close tab [<n>]": Key("c-w/10:%(n)d"),
+        "close tab [<n>]": Key("c-w/20:%(n)d"),
         "new (thing | file)": Key("c-n"),
         "file save": Key("c-s"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),

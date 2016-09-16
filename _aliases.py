@@ -3,6 +3,7 @@ from dragonfly import MappingRule, Text, Grammar
 
 class Aliases(MappingRule):
     mapping = {
+        "Rumpelstiltskin": Text("placeholder alias"),
     }
 
 example_grammar = Grammar("alias grammar")
