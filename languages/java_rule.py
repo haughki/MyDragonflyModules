@@ -2,25 +2,54 @@
 # sys.path.append('pycharm-debug.egg')
 # import pydevd
 # pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+
+
 from dragonfly import Dictation
 from dragonfly import Function
 from dragonfly import Key, Text, MappingRule
 
 from languages import specs
+from supporting import utils
 
 
-def defineMethod(_node):
-    # "define [(public | protected | private)] [static] [final] [void] method"
+def getModifiers(words):
     modifiers_string = ""
-    if len(_node.words()) > 2:
-        modifiers = _node.words()[1: -1]
-        modifiers_string = ""
+    if len(words) > 0:
+        modifiers = words
         for modifier in modifiers:
             modifiers_string = modifiers_string + modifier + " "
+    return modifiers_string
 
-    modifiers_string = modifiers_string.strip()
-    Text(modifiers_string + " ()").execute()
-    Key("lbrace, enter, up, end, left:3").execute()
+
+def defineMethod(text, _node):
+    commands = _node.words()
+    method_index = commands.index("method")
+    modifiers_string = getModifiers(commands[:method_index])
+    formatted_class_name = ""
+    if text:
+        format_me = str(text)
+        if len(commands) > method_index + 1:
+            format_command = commands[method_index + 1]
+            if (format_command != "pascal") and (format_command !="snake"):
+                format_command = "camel"  # default
+            formatted_class_name = utils.text_to_case(format_command, format_me)
+    (Text(modifiers_string + formatted_class_name + "() {") + Key("enter, up, end, left:3")).execute()    
+    
+        
+def defineClass(text, _node):
+    commands = _node.words()
+    class_index = commands.index("class")
+    modifiers_string = getModifiers(commands[:class_index])
+    formatted_class_name = ""
+    if text:
+        format_me = str(text)
+        if len(commands) > class_index + 1:
+            format_command = commands[class_index + 1]
+            if (format_command != "camel") and (format_command !="snake"):
+                format_command = "pascal"  # default
+            formatted_class_name = utils.text_to_case(format_command, format_me)
+    (Text(modifiers_string + "class " + formatted_class_name + " {") + Key("enter")).execute()
+
 
 class JavaRule(MappingRule):
     INTELLIJ_POPUP_DELAY = "10"    
@@ -51,20 +80,20 @@ class JavaRule(MappingRule):
         specs.SymbolSpecs.NOT:                      Text("!"),
         
         # specs.SymbolSpecs.SYSOUT:                   Text("System.out.println()")+Key("left"),
-        specs.SymbolSpecs.SYSOUT:                  Key("dot, s, o, u, t/" + INTELLIJ_POPUP_DELAY + ", enter"),
+        specs.SymbolSpecs.SYSOUT:                   Key("dot, s, o, u, t/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.IMPORT:                   Text( "import " ),
-        specs.SymbolSpecs.FUNCTION:                 Text("(){}")+Key("left"),
-        specs.SymbolSpecs.CLASS:                    Text("class  {}")+Key("left:3"),
-        
+        specs.SymbolSpecs.FUNCTION:                 Text("(){")+Key("left"),
+        specs.SymbolSpecs.CLASS:                    Function(defineClass),
+
         specs.SymbolSpecs.COMMENT:                  Text( "// " ),
         specs.SymbolSpecs.LONG_COMMENT:             Text("/**/")+Key("left,left"),
         specs.SymbolSpecs.NULL:                     Key("dot, n, u, l, l/" + INTELLIJ_POPUP_DELAY + ", enter"),
-        "is not null": Key("dot, n, o, t, n, u, l, l/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.RETURN:                   Key("dot, r, e, t, u, r, n/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.TRUE:                     Text("true"),
         specs.SymbolSpecs.FALSE:                    Text("false"),
 
         # "it are in": Text("Arrays.asList(TOKEN).contains(TOKEN)"),
+        "is not null": Key("dot, n, o, t, n, u, l, l/" + INTELLIJ_POPUP_DELAY + ", enter"),
         "create field": Key("dot, f, i, e, l, d/" + INTELLIJ_POPUP_DELAY + ", enter"),
         "try with resources": Key("dot, t, w, r/"  + INTELLIJ_POPUP_DELAY + ", enter"),
         "array to stream": Key("dot, s, t, r, e, a, m/" + INTELLIJ_POPUP_DELAY + ", enter"),
@@ -72,20 +101,14 @@ class JavaRule(MappingRule):
         "generic list": Text("List<>") + Key("left"),
         "generic map": Text("Map<>") + Key("left"),
         "convert (array | hooray) to list": Text("Arrays.asList("),
-        "(array | hooray) list": Text("ArrayList"),
+        "new in line list": Text(" = new ArrayList<>(Arrays.asList())") + Key("left:2"),
+        "(array | hooray) list": Text("ArrayList<"),
         "hash map": Text("HashMap"),
 
-        "public": Text("public "),
-        "private": Text("private "),
-        "static": Text("static "),
-        "final": Text("final "),
-        "void": Text("void "),
-
         # "cast to integer": Text("(int)()")+ Key("left"),
-        "new new": Text("new "),
         "big integer": Text("Integer "),
         "string": Text("String "),
-        "boolean": Text("boolean "),
+
         # "substring": Text("substring"),
 
         # "sue iffae": Text("if ()")+ Key("left"),
@@ -93,16 +116,56 @@ class JavaRule(MappingRule):
         "shell if": Text("else if ()")+ Key("left"),
 
         "ternary": Text("()?:") + Key("left:3"),
-        "this": Text("this"),
-        "continue": Text("continue"),
         "throw exception": Text("throw new Exception()")+ Key("left"),
         # "is instance of": Text(" instanceof "),
         "is instance of": Key("dot, i, n, s, t/" + INTELLIJ_POPUP_DELAY + ", enter"),
+
+        specs.SymbolSpecs.NEW: Text("new "),
+        "new me up": Key("space, equal, space, n, e, w, space/10, cs-space"),
+        "this": Text("this"),
+        "continue": Text("continue"),
+        "public": Text("public "),
+        "private": Text("private "),
+        "static": Text("static "),
+        "final": Text("final "),
+        "void": Text("void "),
+        "abstract": Text("abstract "),
+        "assert": Text("assert "),
+        "go to": Text("goto "),
+        "package": Text("package "),
+        "synchronized": Text("synchronized "),
+        "double": Text("double "),
+        "implements": Text("implements "),
+        "import": Text("import "),
+        "throws": Text("throws "),
+        "throw": Text("throw "),
+        "enumeration": Text("enum "),
+        "transient": Text("transient "),
+        "extends": Text("extends "),
+        "try": Text("try "),
+        "catch": Text("catch "),
+        "interface": Text("interface "),
+        "finally": Text("finally "),
+        "volatile": Text("volatile "),
+        "constant": Text("const "),
+        "native": Text("native "),
+        "super": Text("super "),
+
+        "(bite | byte)": Text("byte "),
+        "(integer | int)": Text("int "),
+        "boolean": Text("boolean "),
+        "(character | char)": Text("char "),
+        "short": Text("short "),
+        "long": Text("long "),
+        "float": Text("float "),
+        "char": Text("char "),
     }
     extras = [
         Dictation("modifiers"),
+        Dictation("text"),
     ]
     defaults = {
         "modifiers": None,
+        "text": None,
     }
 

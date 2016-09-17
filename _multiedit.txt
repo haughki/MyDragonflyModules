@@ -7,7 +7,7 @@
 # Pull in all of Dragonfly's action objects so that we can use them here.
 
 from dragonfly import *
-from supporting import character
+from supporting import character, utils
 
 
 #---------------------------------------------------------------------------
@@ -192,9 +192,6 @@ cmd.map = {
         "(you tells | utils)": Text("utils"),
                 
         ### programming
-        "(integer | int)": Text("int"),
-        "(Boolean | boolean | bool)": Text("bool"),
-        "(character | char)": Text("char"),
         "short object": Text("obj"),
         "short string": Text("str"),
         "function": Text("()"),
@@ -212,64 +209,46 @@ cmd.map = {
 #  See below for various examples.
 
 # Format: some_words
-def format_score(dictation):          # Function name must start with "format_".
-    """ score <dictation> """         # Docstring defining spoken-form.
-    text = str(dictation)             # Get written-form of dictated text.
-    words = [word.lower() for word in text.split(" ")]
-    return "_".join(words)            # Put underscores between words.
+def format_snake(dictation):
+    """ (score | snake) <dictation> """
+    return utils.snake(str(dictation))
 
 # Format: some_words()
 def format_score_function(dictation):
-    """ score funk <dictation> """
-    text = str(dictation)
-    words = [word.lower() for word in text.split(" ")]
-    return "_".join(words) + "()"
+    """ (score | snake) funk <dictation> """
+    return utils.snake_function(str(dictation))
 
 # Format: SOME_WORDS
 def format_upper_score(dictation):
-    """ score up <dictation> """
-    text = str(dictation)
-    words = [word.upper() for word in text.split(" ")]
-    return "_".join(words)
+    """ (score | snake) up <dictation> """
+    return utils.upper_snake(str(dictation))
 
 # Format: somewords
 def format_one_word(dictation):
     """ squash <dictation> """
-    text = str(dictation)
-    words = [word.lower() for word in text.split(" ")]
-    return "".join(words)
+    return utils.one_word(str(dictation))
 
 # Format: SOMEWORDS
 def format_upper_word(dictation):
     """ squash up <dictation> """
-    text = str(dictation)
-    words = [word.upper() for word in text.split(" ")]
-    return "".join(words)
+    return utils.upper_one_word(str(dictation))
 
 # Format: SomeWords
 def format_pascal(dictation):
     """ Pascal <dictation> """
-    text = str(dictation)
-    words = [word.capitalize() for word in text.split(" ")]
-    return "".join(words)
+    return utils.pascal(str(dictation))
 
 # Format: SomeWords()
 def format_pascal_function(dictation):
     """ Pascal funk <dictation> """
-    text = str(dictation)
-    words = [word.capitalize() for word in text.split(" ")]
-    return "".join(words) + "()"
+    return utils.pascal_function(str(dictation))
 
 # Format: someWords
 def format_camel(dictation):
     """ camel <dictation> """
-    text = str(dictation)
-    words = text.split(" ")
-    return words[0] + "".join(w.capitalize() for w in words[1:])
+    return utils.camel(str(dictation))
 
 # Format: someWords()
 def format_camel_function(dictation):
-    """ camel funk<dictation> """
-    text = str(dictation)
-    words = text.split(" ")
-    return words[0] + "".join(w.capitalize() for w in words[1:]) + "()"
+    """ camel funk <dictation> """
+    return utils.camel_function(str(dictation))

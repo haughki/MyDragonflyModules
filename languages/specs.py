@@ -15,7 +15,7 @@ class TokenSet(object):
 class SymbolSpecs(object):
     IF = "if then"
     ELSE = "(shells | else)"
-    DEFINE_METHOD = "define [(public | protected | private)] [static] [final] [void] method"  # public static void myMethod()
+    DEFINE_METHOD = "[(public | protected | private)] [static] [final] [void] method [pascal | snake] [<text>]"  # public static void myMethod()
     
     SWITCH = "switch statement"
     CASE = "case of"
@@ -36,23 +36,16 @@ class SymbolSpecs(object):
     OR = "lodge or"
     NOT = "lodge not"
     
-    SYSOUT = "print statement"
-    
+    SYSOUT = "print out"
     IMPORT = "import"
-    
     FUNCTION = "function"
-    CLASS = "class"
+    CLASS = "[(public | protected | private)] [static] [final] class [camel | snake] [<text>]"
     
     COMMENT = "add comment"
     LONG_COMMENT = "long comment"
     
     NULL = "value not"
-    
     RETURN = "return"
-    
-    TRUE = "value true"
-    FALSE = "value false"
-
-    # not part of the programming standard:
-    CANCEL = "(terminate | escape)"
-    
+    TRUE = "true"
+    FALSE = "false"
+    NEW = "new"

@@ -76,3 +76,54 @@ def objects_by_id(id_):
         if id(obj) == id_:
             return obj
     return None
+
+def text_to_case(make_me, format_me):
+    if make_me == "pascal":
+        return pascal(format_me)
+    elif make_me == "camel":
+        return camel(format_me)
+    elif make_me == "snake":
+        return snake(format_me)
+    return ""
+
+def snake(text):
+    # some_words
+    words = [word.lower() for word in text.split(" ")]
+    return "_".join(words)
+
+def snake_function(text):
+    # Format: some_words()
+    return snake(text) + "()"
+
+def upper_snake(text):
+    # Format: SOME_WORDS
+    words = [word.upper() for word in text.split(" ")]
+    return "_".join(words)
+
+def one_word(text):
+    # Format: somewords
+    words = [word.lower() for word in text.split(" ")]
+    return "".join(words)
+
+def upper_one_word(text):
+    # Format: SOMEWORDS
+    words = [word.upper() for word in text.split(" ")]
+    return "".join(words)
+
+def pascal(text):
+    # Format: SomeWords
+    words = [word.capitalize() for word in text.split(" ")]
+    return "".join(words)
+
+def pascal_function(text):
+    # Format: SomeWords()
+    return pascal(text) + "()"
+
+def camel(text):
+    # Format: someWords
+    words = text.split(" ")
+    return words[0] + "".join(w.capitalize() for w in words[1:])
+
+def camel_function(text):
+    # Format: someWords()
+    return camel(text) + "()"

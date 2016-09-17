@@ -36,7 +36,7 @@ class PythonRule(MappingRule):
             specs.SymbolSpecs.NOT:                Text("!"),
             
             specs.SymbolSpecs.IMPORT:             Text( "import " ),    
-            specs.SymbolSpecs.CLASS:              Text("class "),
+            specs.SymbolSpecs.CLASS:              Text("class ") + Text("%(text)s:") + Key("enter"),
             specs.SymbolSpecs.COMMENT:            Text( "#" ),
             specs.SymbolSpecs.LONG_COMMENT:       Text("\"\"\""),
             specs.SymbolSpecs.NULL:               Text("None"),
@@ -62,6 +62,7 @@ class PythonRule(MappingRule):
     }            
     extras = [
         Dictation("modifiers"),
+        Dictation("text"),
     ]
     defaults = {
         "modifiers": None,
