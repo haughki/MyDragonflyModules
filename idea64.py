@@ -24,6 +24,7 @@ class CommandRule(MappingRule):
         "run app": Key("s-f10"),
         "debug app": Key("s-f9"),
         "re-run app": Key("c-f5"),
+        "run this [app]": Key("cs-f10"),
         "run test": Key("cs-f10"),
         "stop running": Key("c-f2"),
         "[toggle] (breakpoint | break)": Key("c-f8"),
@@ -77,6 +78,7 @@ class CommandRule(MappingRule):
         "show complete": Key("c-space"),
         "context complete": Key("cs-space"),
         "syntax complete": Key("cs-enter"),
+        "gets complete": Key("space, equal, space/10, cs-space"),
 
         # Edit
         "(shoreline | [go to | show] line) <n>": Key("c-g/30") + Text("%(n)d") + Key("enter"),

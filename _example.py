@@ -11,8 +11,9 @@ from supporting import utils, character
 
 
 
-def defineMethod(_node):
-    print "monkey balls"
+def defineMethod(dictation, _node):
+    if dictation:
+        print str(dictation)
 
 
 
@@ -25,9 +26,10 @@ def defineMethod(_node):
 
 class Example(MappingRule):
     mapping = {
-        "Dirk (public | (protected | Fox) | private)": Function(defineMethod),
+        "Dirk [<dictation>]": Function(defineMethod),
     }
     extras = [Dictation("dictation")]
+    defaults = {"dictation":None}
 
 
 example_grammar = Grammar("example grammar")
