@@ -44,7 +44,8 @@ class SymbolSpecs(object):
     COMMENT = "add comment"
     LONG_COMMENT = "long comment"
     
-    NULL = "value not"
+    NOT_EQUAL_NULL = "not nothing"
+    NULL = "(null | nothing)"
     RETURN = "return"
     TRUE = "true"
     FALSE = "false"

@@ -36,7 +36,7 @@ class CommandRule(MappingRule):
         # Code navigation.
         "(go to | show) class": Key("c-n"),
         "get file [<text>]": Function(getFile),  # "Navigate > File..."
-        "([go to | show] declaration | jump)": Key("c-b"),
+        "([go to | show] declaration | dive | plunge)": Key("c-b"),
         "[go to | show] implementation": Key("ca-b"),
         "[go to | show] super": Key("c-u"),
         "float [file] structure": Key("c-f12"),
@@ -81,11 +81,11 @@ class CommandRule(MappingRule):
         "gets complete": Key("space, equal, space/10, cs-space"),
 
         # Edit
-        "(shoreline | [go to | show] line) <n>": Key("c-g/30") + Text("%(n)d") + Key("enter"),
+        "[shoreline | go to | show] (row | line) <n>": Key("c-g/30") + Text("%(n)d") + Key("enter"),
         "(full-screen | full screen)": Key("cs-x"),  # macro, combination of: "Toggle Full Screen Mode" and "Hide All Tool Windows"
         "(Hide | hide | hi) bottom": Key("s-escape"),  # "hide active tool window"
         "(Hide | hide | hi) side": Key("cas-c"),  # "hide side tool windows"
-        "comment [line | that | it]": Key("c-slash"),
+        # "comment [line | that | it]": Key("c-slash"),
         "show white space": Key("cs-w"),
         "redo": Key("cs-z"),
         
@@ -98,19 +98,18 @@ class CommandRule(MappingRule):
         "show diff": Key("c-d"),
 
         # Refactoring.
-        "(refactor|re-factor) (this|choose)": Key("cas-t"),
-        "(refactor|re-factor) rename": Key("s-f6"),
-        "(refactor|re-factor) change signature": Key("c-f6"),
-        "(refactor|re-factor) move": Key("f6"),
-        "(refactor|re-factor) copy": Key("f5"),
-        "(refactor|re-factor) safe delete": Key("a-del"),
-        "(refactor|re-factor) extract variable": Key("ca-v"),
-        "(refactor|re-factor) extract constant": Key("ca-c"),
-        "(refactor|re-factor) extract field": Key("ca-f"),
-        "(refactor|re-factor) extract parameter": Key("ca-p"),
-        "(refactor|re-factor) extract variable": Key("ca-v"),
-        "(refactor|re-factor) extract method": Key("ca-m"),
-        "(refactor|re-factor) (in line|inline)": Key("ca-n"),
+        "[(refactor|re-factor)] (this|choose)": Key("cas-t"),
+        "[(refactor|re-factor)] rename": Key("s-f6"),
+        "[(refactor|re-factor)] change signature": Key("c-f6"),
+        "[(refactor|re-factor)] move": Key("f6"),
+        "[(refactor|re-factor)] copy": Key("f5"),
+        "[(refactor|re-factor)] safe delete": Key("a-del"),
+        "[(refactor|re-factor)] extract constant": Key("ca-c"),
+        "[(refactor|re-factor)] extract field": Key("ca-f"),
+        "[(refactor|re-factor)] extract parameter": Key("ca-p"),
+        "[(refactor|re-factor)] extract variable": Key("ca-v"),
+        "[(refactor|re-factor)] extract method": Key("ca-w"),
+        "[(refactor|re-factor)] (in line|inline)": Key("ca-n"),
         
         # Custom key mappings.
         # "(run SSH session|run SSH console|run remote terminal|run remote console)": Key("a-f11/25, enter"),

@@ -21,7 +21,7 @@ def disableAll():
             supported_languages[lang].disable()
             
 class SetLanguageRule(CompoundRule):
-    spec = "set language (python | java)"
+    spec = "[set] language (python | java)"
     
     def _process_recognition(self, node, extras):
         lang_to_activate = node.words()[-1]

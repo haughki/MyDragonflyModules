@@ -39,7 +39,7 @@ class PythonRule(MappingRule):
             specs.SymbolSpecs.CLASS:              Text("class ") + Text("%(text)s:") + Key("enter"),
             specs.SymbolSpecs.COMMENT:            Text( "#" ),
             specs.SymbolSpecs.LONG_COMMENT:       Text("\"\"\""),
-            specs.SymbolSpecs.NULL:               Text("None"),
+            specs.SymbolSpecs.NOT_EQUAL_NULL:               Text("None"),
             specs.SymbolSpecs.RETURN:             Text("return "),
             specs.SymbolSpecs.TRUE:               Text("True"),
             specs.SymbolSpecs.FALSE:              Text("False"),

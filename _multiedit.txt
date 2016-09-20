@@ -22,6 +22,7 @@ release = Key("alt:up, shift:up, ctrl:up")
 # Here we define the single-action commands.  These can be spoken
 #  in series so as to execute multiple actions within a single utterance.
 
+
 cmd.map = {
         # Spoken-form    ->    ->    ->     Action object
 
@@ -133,6 +134,7 @@ cmd.map = {
         ### Special Strings
         "gets": Key("space, equal, space"),
         "eeks": Key("space, equal, equal, space"),
+        "(not eeks | nodeeks)": Key("space, bang, equal, space"),
         "line dash": Key("space, hyphen, hyphen, space"),
         "string (add | had)": Key("space, plus, space"),
         "(spacebar | space bar) space": Text(" | "),
@@ -140,6 +142,7 @@ cmd.map = {
         ### Lines
         "wipe [<n>]": Key("end, home:2, s-down:%(n)d, del"), # del lines down
         "wipe up [<n>]": release + Key("end, home:2, s-up:%(n)d, s-home, del"), # del lines up
+        "clear line": Key("end, home:2, s-end, del"), # del everything on the line except the newline
         "strip": release + Key("s-end, del"), # del from cursor to line end
         "grab": release + Key("s-end, c-c"), # copy from cursor to line end
         "cut end": release + Key("s-end, c-x"), # cut from cursor to line end
@@ -162,7 +165,7 @@ cmd.map = {
         
         ### copy/paste
         "pace": release + Key("c-v"), # paste
-        "clone <n>": release + Key("c-c, c-v:%(n)d"), # copy/paste
+        "clone [<n>]": release + Key("c-c, c-v:%(n)d"), # copy/paste
         "(copy | snatch)": release + Key("c-c"), # copy
         "cut": release + Key("c-x"), # cut
         "(select all | tarp)": release + Key("c-a"), # select all
@@ -200,6 +203,9 @@ cmd.map = {
         ### Dragonfly Commands
         "add text map": Text("\"\": Text(\"\"),") + Key("left:12"),
         "add key map": Text("\"\": Key(\"\"),") + Key("left:11"),
+        
+        ### Intellij Commands
+        "comment": Key("c-slash"),
 }
 
 #---------------------------------------------------------------------------

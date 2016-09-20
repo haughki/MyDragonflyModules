@@ -39,7 +39,7 @@ def addAlias(dictation):
 
 class AddAliasRule(MappingRule):
     mapping = {
-        "alias <dictation>": Function(addAlias),
+        "[add | at | had] alias <dictation>": Function(addAlias),
     }
     extras = [Dictation("dictation")]
 
