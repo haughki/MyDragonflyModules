@@ -12,6 +12,22 @@ from languages import specs
 from supporting import utils
 
 
+def defineGeneric(text, generic_type):
+    formatted_text = ""
+    if text:
+        format_me = str(text)
+        formatted_text = utils.text_to_case("pascal", format_me)
+    Text(generic_type + formatted_text + "> ").execute()
+    
+
+def defineArrayList(text):
+    defineGeneric(text, "ArrayList<")
+
+
+def defineHashMap(text):
+    defineGeneric(text, "HashMap<")
+
+    
 def getModifiers(words):
     modifiers_string = ""
     if len(words) > 0:
@@ -54,8 +70,8 @@ def defineClass(text, _node):
 class JavaRule(MappingRule):
     INTELLIJ_POPUP_DELAY = "10"    
     mapping = {
-        # specs.SymbolSpecs.IF:                       Text("if(){") + Key("enter,up,left"),
-        specs.SymbolSpecs.IF:                       Key("dot, i, f/" + INTELLIJ_POPUP_DELAY + ", enter"),
+        specs.SymbolSpecs.IF:                       Text("if(){") + Key("enter,up,left"),
+        # specs.SymbolSpecs.IF:                       Key("dot, i, f/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.ELSE:                     Text("else {") + Key("enter"),
         specs.SymbolSpecs.DEFINE_METHOD:            Function(defineMethod),
         # specs.SymbolSpecs.SWITCH:                   Text("switch(){\ncase : break;\ndefault: break;")+Key("up,up,left,left"),
@@ -87,7 +103,8 @@ class JavaRule(MappingRule):
 
         specs.SymbolSpecs.COMMENT:                  Text( "// " ),
         specs.SymbolSpecs.LONG_COMMENT:             Text("/**/")+Key("left,left"),
-        specs.SymbolSpecs.NULL:                     Key("dot, n, u, l, l/" + INTELLIJ_POPUP_DELAY + ", enter"),
+        specs.SymbolSpecs.NULL:                     Text("null"),
+        specs.SymbolSpecs.NOT_EQUAL_NULL:           Key("dot, n, u, l, l/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.RETURN:                   Key("dot, r, e, t, u, r, n/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.TRUE:                     Text("true"),
         specs.SymbolSpecs.FALSE:                    Text("false"),
@@ -101,22 +118,22 @@ class JavaRule(MappingRule):
         "generic list": Text("List<>") + Key("left"),
         "generic map": Text("Map<>") + Key("left"),
         "convert (array | hooray) to list": Text("Arrays.asList("),
-        "new in line list": Text(" = new ArrayList<>(Arrays.asList())") + Key("left:2"),
-        "(array | hooray) list": Text("ArrayList<"),
-        "hash map": Text("HashMap"),
+        "new in line list": Text(" = new ArrayList<>(Arrays.asList());") + Key("left:3"),
+        "(array | hooray) list [<text>]": Function(defineArrayList),
+        "hash map [<text>]": Function(defineHashMap),
 
         # "cast to integer": Text("(int)()")+ Key("left"),
         "big integer": Text("Integer "),
         "string": Text("String "),
-
+        "becomes": Text(" -> "),
+        
         # "substring": Text("substring"),
-
-        # "sue iffae": Text("if ()")+ Key("left"),
-        # "sue shells": Text("else")+ Key("enter"),
+        "(short | sue) if then": Text("if ()")+ Key("left"),
+        "(short | sue) shells": Text("else")+ Key("enter"),
         "shell if": Text("else if ()")+ Key("left"),
 
         "ternary": Text("()?:") + Key("left:3"),
-        "throw exception": Text("throw new Exception()")+ Key("left"),
+        # "throw exception": Text("throw new Exception()")+ Key("left"),
         # "is instance of": Text(" instanceof "),
         "is instance of": Key("dot, i, n, s, t/" + INTELLIJ_POPUP_DELAY + ", enter"),
 
@@ -138,7 +155,7 @@ class JavaRule(MappingRule):
         "implements": Text("implements "),
         "import": Text("import "),
         "throws": Text("throws "),
-        "throw": Text("throw "),
+        "throw": Text("throw new "),
         "enumeration": Text("enum "),
         "transient": Text("transient "),
         "extends": Text("extends "),
