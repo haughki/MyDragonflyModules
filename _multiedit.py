@@ -148,7 +148,7 @@ class KeystrokeRule(MappingRule):
     defaults = {
         "n": 1,
         }
-
+    
 
 def lineSearch(dictation_to_find, replace_with_me, _node):
     commands = _node.words()
@@ -208,7 +208,7 @@ ordinal_map = {"second":2, "third":3, "fourth":4, "fifth":5, "sixth":6}
 
 class LookRule(MappingRule):
     mapping = {
-        "(scan | look) [(second | third | fourth | fifth | sixth)] (<dictation_to_find> | " + character.CHARACTER_ALTERNATIVES + ") [replace] [<replace_with_me>]": Function(lineSearch),
+        "scan [(second | third | fourth | fifth | sixth)] (<dictation_to_find> | " + character.CHARACTER_ALTERNATIVES + ") [replace] [<replace_with_me>]": Function(lineSearch),
     }
 
     extras = [Dictation("dictation_to_find"),
@@ -230,9 +230,6 @@ alternatives.append(RuleRef(rule=KeystrokeRule()))
 alternatives.append(RuleRef(rule=LookRule()))
 if FormatRule:
     alternatives.append(RuleRef(rule=FormatRule()))
-
-if putstringcommands.PutStringCommandsRule:
-    alternatives.append(RuleRef(rule=putstringcommands.PutStringCommandsRule()))
 
 single_action = Alternative(alternatives)
 

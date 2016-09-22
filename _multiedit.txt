@@ -174,36 +174,18 @@ cmd.map = {
         "(mash | sky)": Key("shift:down"),
         "mark": Key("shift:down"),
         "mark up": Key("shift:up"),
-        "wave": Key("shift:up, right"),
-        #        "boss": Key("ctrl:down"),
-        #        "shun": Key("ctrl:up"),
         "release": release,
 
         ### other
         "undo [<n>]": Key("c-z:%(n)d"),
-        "switch": release + Key("ctrl:down, tab"),
-        "show apps": release + Key("alt:down, tab"),
         "prev window": Key("a-tab/10"),
         "say <text>": release + Text("%(text)s"),
-        "mimic <text>": release + Mimic(extra="text"),
-        "pop": Key("apps"), # right click
         "close tab [<n>]": Key("c-w/20:%(n)d"),
         "new (thing | file)": Key("c-n"),
         "file save": Key("c-s"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
-        "list Windows": Mimic("list", "all", "Windows"),
         "(you tells | utils)": Text("utils"),
-                
-        ### programming
-        "short object": Text("obj"),
-        "short string": Text("str"),
-        "function": Text("()"),
-        "jason": Text("json"),
-        
-        ### Dragonfly Commands
-        "add text map": Text("\"\": Text(\"\"),") + Key("left:12"),
-        "add key map": Text("\"\": Key(\"\"),") + Key("left:11"),
-        
+                                
         ### Intellij Commands
         "comment": Key("c-slash"),
 }

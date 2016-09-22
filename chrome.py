@@ -123,14 +123,16 @@ class OpenGmailLineRule(CompoundRule):
 #gmail_context = AppContext(executable="chrome", title="Gmail")
 
 context = AppContext(executable="chrome")
-grammar = Grammar("Google Chrome", context=context)
-grammar.add_rule(GlobalChromeMappings())
-grammar.add_rule(GmailMappings())
-grammar.add_rule(OpenGmailLineRule())
-# grammar.add_rule(NavigateCalendarWeeks())
-grammar.load()
+chrome_grammar = Grammar("Google Chrome", context=context)
+chrome_grammar.add_rule(GlobalChromeMappings())
+chrome_grammar.add_rule(GmailMappings())
+chrome_grammar.add_rule(OpenGmailLineRule())
+# chrome_grammar.add_rule(NavigateCalendarWeeks())
+chrome_grammar.load()
 
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global chrome_grammar
+    if chrome_grammar:
+        print "unloading " + __name__ + "..."
+        chrome_grammar.unload()
+    chrome_grammar = None
