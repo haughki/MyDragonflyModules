@@ -180,8 +180,9 @@ def lineSearch(dictation_to_find, replace_with_me, _node):
     to_find = to_find.lower()
     searching_message = "Searching for " + ordinal_arg + ": "  if ordinal_arg else "Searching for: "
     print searching_message + to_find
-    Key("end,s-home").execute()  # select the line
-    line = utils.getSelectedText().lower()  # copied to the clipboard, then get from the clipboard 
+    Key("end,s-home/5").execute()  # select the line
+    line = utils.getSelectedText().lower()  # copied to the clipboard, then get from the clipboard
+    print "Searching in line: " + line
     line_index = -1
     if ordinal_arg:
         line_index = utils.find_nth(line, to_find, ordinal_map[ordinal_arg])

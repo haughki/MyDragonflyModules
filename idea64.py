@@ -8,6 +8,7 @@ Licensed under the LGPL3.
 """
 from dragonfly import Function
 from dragonfly import Grammar, MappingRule, Dictation, Integer, Key, Text, IntegerRef, AppContext
+from supporting import utils
 
 def getFile(text=None):
     open_get_file_dialog = Key("cas-n")
@@ -17,6 +18,10 @@ def getFile(text=None):
         Text(file_name).execute()
     else:
         open_get_file_dialog.execute()
+
+def printNumber(w, x=None, y=None, z=None):
+    number = utils.buildNumber(w, x, y, z)
+    Text(number).execute()
 
 class CommandRule(MappingRule):
     mapping = {
@@ -81,7 +86,7 @@ class CommandRule(MappingRule):
         "gets complete": Key("space, equal, space/10, cs-space"),
 
         # Edit
-        "[shoreline | go to | show] (row | line) <n>": Key("c-g/30") + Text("%(n)d") + Key("enter"),
+        "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/30") + Function(printNumber)+ Key("enter"),
         "(full-screen | full screen)": Key("cs-x"),  # macro, combination of: "Toggle Full Screen Mode" and "Hide All Tool Windows"
         "(Hide | hide | hi) bottom": Key("s-escape"),  # "hide active tool window"
         "(Hide | hide | hi) side": Key("cas-c"),  # "hide side tool windows"
@@ -98,11 +103,11 @@ class CommandRule(MappingRule):
         "show diff": Key("c-d"),
 
         # Refactoring.
-        "[(refactor|re-factor)] (this|choose)": Key("cas-t"),
+        "(refactor|re-factor) (this|choose)": Key("cas-t"),
         "[(refactor|re-factor)] rename": Key("s-f6"),
         "[(refactor|re-factor)] change signature": Key("c-f6"),
-        "[(refactor|re-factor)] move": Key("f6"),
-        "[(refactor|re-factor)] copy": Key("f5"),
+        "(refactor|re-factor) move": Key("f6"),
+        "(refactor|re-factor) copy": Key("f5"),
         "[(refactor|re-factor)] safe delete": Key("a-del"),
         "[(refactor|re-factor)] extract constant": Key("ca-c"),
         "[(refactor|re-factor)] extract field": Key("ca-f"),
@@ -117,7 +122,11 @@ class CommandRule(MappingRule):
     extras = [
         Integer("t", 1, 50),
         Dictation("text"),
-        IntegerRef("n", 1, 50000)
+        IntegerRef("n", 1, 50000),
+        Integer("w", 0, 10),
+        Integer("x", 0, 10),
+        Integer("y", 0, 10),
+        Integer("z", 0, 10),
     ]
     defaults = {
         "t": 1,

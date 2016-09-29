@@ -11,24 +11,28 @@ from supporting import utils, character
 
 
 
-def defineMethod(dictation, _node):
-    if dictation:
-        print str(dictation)
+def buildNumber(w, x=None, y=None, z=None):
+    number = str(w)
+    if x is not None:
+        number += str(x)
+    if y is not None:
+        number += str(y)
+    if z is not None:
+        number += str(z)
+    Text(number).execute()
+        
 
-
-
-    # method_index = -1
-    # for i in range(len(command)):
-    #     if command[i] == "method":
-    #         method_index = i
-    #     
-    # if method_index > 1:
-
+        
 class Example(MappingRule):
     mapping = {
-        "Dirk [<dictation>]": Function(defineMethod),
+        "Dirk <w> [<x>] [<y>] [<z>]": Function(buildNumber),
     }
-    extras = [Dictation("dictation")]
+    extras = [Dictation("dictation"),
+              Integer("w", 0, 10),
+              Integer("x", 0, 9),
+              Integer("y", 0, 9),
+              Integer("z", 0, 9),
+              ]
     defaults = {"dictation":None}
 
 

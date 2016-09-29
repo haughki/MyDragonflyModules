@@ -1,5 +1,30 @@
-from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mimic, Dictation, Function, CompoundRule,
-                       Pause)
+from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mimic, Dictation, Function, CompoundRule)
+from supporting import utils
+
+
+def printNumberWithExtension(extension, w, x=None, y=None, z=None):
+    number = utils.buildNumber(w, x, y, z)
+    Text(number + extension).execute()
+    
+def printNumber(w, x=None, y=None, z=None):
+    printNumberWithExtension("", w, x, y, z)
+
+def printNumberGoToTab(w, x=None, y=None, z=None):
+    printNumberWithExtension(":t", w, x, y, z)
+
+def printNumberToTab(w, x=None, y=None, z=None):
+    printNumberWithExtension(":b", w, x, y, z)
+
+def printNumberFocus(w, x=None, y=None, z=None):
+    printNumberWithExtension(":f", w, x, y, z)
+
+def printNumberClick(w, x=None, y=None, z=None):
+    printNumberWithExtension(":c", w, x, y, z)
+
+def printNumberGoToWindow(w, x=None, y=None, z=None):
+    printNumberWithExtension(":w", w, x, y, z)
+
+go_command = "(go | goat | goke | launch | lunch)"
 
 class GlobalChromeMappings(MappingRule):
     mapping = {
@@ -20,13 +45,25 @@ class GlobalChromeMappings(MappingRule):
         "find (prev | previous)": Key("s-enter"),
         "bookmark page": Key("c-d"),
         "(full-screen | full screen)": Key("f11"),
+        "open <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumber) + Key("enter"),  # click by voice
+        "open focus <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberFocus) + Key("enter"),  # click by voice
+        "open click <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberClick) + Key("enter"),  # click by voice
+        go_command + " <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberToTab) + Key("enter"),  # click by voice
+        go_command + " tab <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberGoToTab) + Key("enter"),  # click by voice
+        go_command + " window <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberGoToWindow) + Key("enter"),  # click by voice
+        "hide hints": Key("cs-space/50") + Text(":-") + Key("enter"),  # click by voice
+        "show hints": Key("cs-space/50") + Text(":+") + Key("enter"),  # click by voice
         "open": Key("f"),                         # vimium
         "tabs": Key("s-f"),                       # vimium
-        "(go | launch | visit | lunch | goat | goke | choose) <number>": Text("%(number)d"),        # vimium
-        "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
+        # "(go | goat | goke | launch | lunch) <number>": Text("%(number)d"),        # vimium
+        # "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
     }
     extras=[
         Integer("n", 1, 50),
+        Integer("w", 0, 10),
+        Integer("x", 0, 10),
+        Integer("y", 0, 10),
+        Integer("z", 0, 10),
         Integer("tab", 1, 8),
         Integer("number", 1, 9999),
         Dictation("text"),

@@ -1,4 +1,4 @@
-import inspect, os
+import inspect, os, gc
 from dragonfly.windows.clipboard import Clipboard
 from dragonfly import Key
 
@@ -39,12 +39,17 @@ def getSelectedText():
     Preserve the original clipboard state. """
     original = Clipboard(from_system=True)
     
-    Key("c-c").execute()
+    # print "original before copy: " + original.get_text()
+    
+    Key("c-c/5").execute()
     # note that trying to re-use this clipboard object after it's been
     # modified has caused me issues in the past -- seems to hold onto old values...
     just_copied = Clipboard()
     just_copied.copy_from_system()
-
+    
+    # print "original after copy: " + original.get_text()
+    # print "just copied before original copy back: " + just_copied.get_text()
+    
     original.copy_to_system()  # restore the state of the clipboard
 
     return just_copied.get_text()
@@ -68,8 +73,16 @@ def touch(fname, times=None):
 def toggleMicrophone():
     Key("npadd/10,npadd").execute()
 
-
-import gc
+def buildNumber(w, x=None, y=None, z=None):
+    """ Each input variable is a number 0...9, so that w=1, x=4, y=2 would produce 142 """
+    number = str(w)
+    if x is not None:
+        number += str(x)
+    if y is not None:
+        number += str(y)
+    if z is not None:
+        number += str(z)
+    return number
 
 def objects_by_id(id_):
     for obj in gc.get_objects():
