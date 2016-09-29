@@ -37,6 +37,10 @@ def getModifiers(words):
     return modifiers_string
 
 
+def printModifiers(_node):
+    Text(getModifiers(_node.words())).execute()
+
+    
 def defineMethod(text, _node):
     commands = _node.words()
     method_index = commands.index("method")
@@ -108,8 +112,9 @@ class JavaRule(MappingRule):
         specs.SymbolSpecs.RETURN:                   Key("dot, r, e, t, u, r, n/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.TRUE:                     Text("true"),
         specs.SymbolSpecs.FALSE:                    Text("false"),
-
+        
         # "it are in": Text("Arrays.asList(TOKEN).contains(TOKEN)"),
+        "[(public | protected | private)] [static] [final]": Function(printModifiers),
         "is not null": Key("dot, n, o, t, n, u, l, l/" + INTELLIJ_POPUP_DELAY + ", enter"),
         "create field": Key("dot, f, i, e, l, d/" + INTELLIJ_POPUP_DELAY + ", enter"),
         "try with resources": Key("dot, t, w, r/"  + INTELLIJ_POPUP_DELAY + ", enter"),
@@ -130,7 +135,7 @@ class JavaRule(MappingRule):
         # "substring": Text("substring"),
         "(short | sue) if then": Text("if ()")+ Key("left"),
         "(short | sue) shells": Text("else")+ Key("enter"),
-        "shell if": Text("else if ()")+ Key("left"),
+        "(shell | shells) if": Text("else if ()")+ Key("left"),
 
         "ternary": Text("()?:") + Key("left:3"),
         # "throw exception": Text("throw new Exception()")+ Key("left"),

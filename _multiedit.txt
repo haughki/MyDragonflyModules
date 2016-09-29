@@ -166,7 +166,7 @@ cmd.map = {
         ### copy/paste
         "pace": release + Key("c-v"), # paste
         "clone [<n>]": release + Key("c-c, c-v:%(n)d"), # copy/paste
-        "(copy | snatch)": release + Key("c-c"), # copy
+        "copy": release + Key("c-c"), # copy
         "cut": release + Key("c-x"), # cut
         "(select all | tarp)": release + Key("c-a"), # select all
         "copy all": release + Key("c-a, c-c"), # copy all
