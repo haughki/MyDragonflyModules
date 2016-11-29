@@ -1,4 +1,6 @@
 from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mimic, Dictation, Function, CompoundRule)
+from dragonfly import Pause
+
 from supporting import utils
 
 
@@ -24,7 +26,16 @@ def printNumberClick(w, x=None, y=None, z=None):
 def printNumberGoToWindow(w, x=None, y=None, z=None):
     printNumberWithExtension(":w", w, x, y, z)
 
+def lineTrash(n=None):
+    if n > 1:
+        for i in range(0,n):
+            Key("x/5,hash").execute()
+            Pause("30").execute()
+    else:
+        Key("x/5,hash").execute()            
+
 go_command = "(go | goat | goke | launch | lunch)"
+click_by_voice_delay = "50"
 
 class GlobalChromeMappings(MappingRule):
     mapping = {
@@ -45,14 +56,15 @@ class GlobalChromeMappings(MappingRule):
         "find (prev | previous)": Key("s-enter"),
         "bookmark page": Key("c-d"),
         "(full-screen | full screen)": Key("f11"),
-        "open <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumber) + Key("enter"),  # click by voice
-        "open focus <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberFocus) + Key("enter"),  # click by voice
-        "open click <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberClick) + Key("enter"),  # click by voice
-        go_command + " <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberToTab) + Key("enter"),  # click by voice
-        go_command + " tab <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberGoToTab) + Key("enter"),  # click by voice
-        go_command + " window <w> [<x>] [<y>] [<z>]": Key("cs-space/50") + Function(printNumberGoToWindow) + Key("enter"),  # click by voice
-        "hide hints": Key("cs-space/50") + Text(":-") + Key("enter"),  # click by voice
-        "show hints": Key("cs-space/50") + Text(":+") + Key("enter"),  # click by voice
+        "open <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumber) + Key("enter"),  # click by voice
+        "open focus <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberFocus) + Key("enter"),  # click by voice
+        "open click <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberClick) + Key("enter"),  # click by voice
+        go_command + " <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberToTab) + Key("enter"),  # click by voice
+        go_command + " tab <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberGoToTab) + Key("enter"),  # click by voice
+        go_command + " window <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberGoToWindow) + Key("enter"),  # click by voice
+        "hide hints": Key("cs-space/" + click_by_voice_delay) + Text(":-") + Key("enter"),  # click by voice
+        "show hints": Key("cs-space/" + click_by_voice_delay) + Text(":+") + Key("enter"),  # click by voice
+        "high contrast": Key("cs-space/" + click_by_voice_delay) + Text(":+c") + Key("enter"),  # click by voice
         "open": Key("f"),                         # vimium
         "tabs": Key("s-f"),                       # vimium
         # "(go | goat | goke | launch | lunch) <number>": Text("%(number)d"),        # vimium
@@ -82,7 +94,7 @@ class GmailMappings(MappingRule):
         "[go to] sent mail": Key("g,t"),
         "[go to] drafts": Key("g,d"),
         "(delete | trash)": Key("hash"),
-        "line trash": Key("x/5,hash"),
+        "line trash [<n>]": Function(lineTrash),
         "send [and] archive": Mimic("click", "send", "and", "archive"),
         "send (it | mail)": Key("c-enter"),
         "reply": Key("r"),
