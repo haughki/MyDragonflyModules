@@ -28,11 +28,18 @@ def printNumberGoToWindow(w, x=None, y=None, z=None):
 
 def lineTrash(n=None):
     if n > 1:
-        for i in range(0,n):
-            Key("x/5,hash").execute()
-            Pause("30").execute()
+        select(n)
+        Key("hash").execute()
     else:
-        Key("x/5,hash").execute()            
+        Key("x/5,hash").execute()
+        
+def select(n=None):
+    if n > 1:
+        for i in range(0,n):
+            Key("x/5,down").execute()
+            Pause("5").execute()
+    else:
+        Key("x").execute()
 
 go_command = "(go | goat | goke | launch | lunch)"
 click_by_voice_delay = "50"
@@ -100,11 +107,18 @@ class GmailMappings(MappingRule):
         "reply": Key("r"),
         "reply [to] all": Key("a"),
         "forward": Key("f"),
-        "select": Key("x"),
-        "move": Key("v"),
-        "[to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
-        "move to <text>": Key("x,v/20") + Text("%(text)s") + Key("enter"),
+        "select [<n>]": Function(select),
         "send archive": Mimic("click", "send", "and", "archive"),
+        "move": Key("v"),
+        "move to <text>": Key("x,v/20") + Text("%(text)s") + Key("enter"),
+        "[to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
+        "asap": Key("x,v/20") + Text("aa_todo/asap") + Key("enter"),
+        "[to] soon": Key("x,v/20") + Text("aa_todo/check back soon") + Key("enter"),
+        "[to] respond": Key("x,v/20") + Text("aa_todo/respond") + Key("enter"),
+        "[to] someday": Key("x,v/20") + Text("aa_todo/someday") + Key("enter"),
+        "[to] waiting": Key("x,v/20") + Text("aa_todo/waiting for response") + Key("enter"),
+        "notes [to self]": Key("x,v/20") + Text("notes to self") + Key("enter"),
+        "check me out": Key("x,v/20") + Text("check me out") + Key("enter"),
     }
 
     extras = [
