@@ -107,18 +107,27 @@ class GmailMappings(MappingRule):
         "reply": Key("r"),
         "reply [to] all": Key("a"),
         "forward": Key("f"),
+        "important": Key("s"),
         "select [<n>]": Function(select),
         "send archive": Mimic("click", "send", "and", "archive"),
+        
+        # move to folders
         "move": Key("v"),
         "move to <text>": Key("x,v/20") + Text("%(text)s") + Key("enter"),
+        
         "[to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
         "asap": Key("x,v/20") + Text("aa_todo/asap") + Key("enter"),
-        "[to] soon": Key("x,v/20") + Text("aa_todo/check back soon") + Key("enter"),
+        "[to] [check back] soon": Key("x,v/20") + Text("aa_todo/check back soon") + Key("enter"),
         "[to] respond": Key("x,v/20") + Text("aa_todo/respond") + Key("enter"),
         "[to] someday": Key("x,v/20") + Text("aa_todo/someday") + Key("enter"),
-        "[to] waiting": Key("x,v/20") + Text("aa_todo/waiting for response") + Key("enter"),
-        "notes [to self]": Key("x,v/20") + Text("notes to self") + Key("enter"),
+        "[to] waiting [for response]": Key("x,v/20") + Text("aa_todo/waiting for response") + Key("enter"),
+        
         "check me out": Key("x,v/20") + Text("check me out") + Key("enter"),
+        "friends": Key("x,v/20") + Text("friends") + Key("enter"),
+        "miscellaneous": Key("x,v/20") + Text("miscellaneous") + Key("enter"),
+        "mom": Key("x,v/20") + Text("mom") + Key("enter"),
+        "notes [to self]": Key("x,v/20") + Text("notes to self") + Key("enter"),
+        "trips": Key("x,v/20") + Text("trips") + Key("enter"),
     }
 
     extras = [

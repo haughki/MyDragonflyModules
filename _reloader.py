@@ -46,7 +46,7 @@ class ReloadRule(MappingRule):
         "reload languages": Function(languageReloader),
         "reload character": Function(characterReloader),
         "reload utilities": Function(utilsReloader),
-        "reload all modules": Function(reloadAll),
+        "reload all [(modules | grammars)]": Function(reloadAll),
     }
 
 reload_grammar = Grammar("reloading grammar")
