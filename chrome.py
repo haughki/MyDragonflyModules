@@ -101,6 +101,8 @@ class GmailMappings(MappingRule):
         "[go to] sent mail": Key("g,t"),
         "[go to] drafts": Key("g,d"),
         "(delete | trash)": Key("hash"),
+        "archive": Key("e"),
+        "select [and] archive": Key("x,e"),
         "line trash [<n>]": Function(lineTrash),
         "send [and] archive": Mimic("click", "send", "and", "archive"),
         "send (it | mail)": Key("c-enter"),
@@ -109,7 +111,6 @@ class GmailMappings(MappingRule):
         "forward": Key("f"),
         "important": Key("s"),
         "select [<n>]": Function(select),
-        "send archive": Mimic("click", "send", "and", "archive"),
         
         # move to folders
         "move": Key("v"),
