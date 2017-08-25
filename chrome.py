@@ -63,6 +63,8 @@ class GlobalChromeMappings(MappingRule):
         "find (prev | previous)": Key("s-enter"),
         "bookmark page": Key("c-d"),
         "(full-screen | full screen)": Key("f11"),
+        
+        # commands for Vimium and Click By Voice
         "open <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumber) + Key("enter"),  # click by voice
         "open focus <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberFocus) + Key("enter"),  # click by voice
         "open click <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberClick) + Key("enter"),  # click by voice

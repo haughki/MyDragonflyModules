@@ -229,6 +229,9 @@ class LookRule(MappingRule):
 alternatives = []
 alternatives.append(RuleRef(rule=KeystrokeRule()))
 alternatives.append(RuleRef(rule=LookRule()))
+if putstringcommands.PutStringCommandsRule:
+    alternatives.append(RuleRef(rule=putstringcommands.PutStringCommandsRule()))
+
 if FormatRule:
     alternatives.append(RuleRef(rule=FormatRule()))
 
