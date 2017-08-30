@@ -49,7 +49,7 @@ class GlobalChromeMappings(MappingRule):
         "new (thing | tab)": Key("c-t"),
         "new window": Key("c-n"),
         "reopen tab": Key("cs-t"),
-        "(next | nex) tab [<n>]": Key("c-pgdown:%(n)d"),
+        "(next | nex) (tab | ab) [<n>]": Key("c-pgdown:%(n)d"),
         "(previous | preev) tab [<n>]": Key("c-pgup:%(n)d"),
         "show tab <tab>": Key("c-%(tab)d"),
         "(first | firs) tab": Key("c-1"),
@@ -64,7 +64,7 @@ class GlobalChromeMappings(MappingRule):
         "bookmark page": Key("c-d"),
         "(full-screen | full screen)": Key("f11"),
         
-        # commands for Vimium and Click By Voice
+        # Click By Voice
         "open <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumber) + Key("enter"),  # click by voice
         "open focus <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberFocus) + Key("enter"),  # click by voice
         "open click <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberClick) + Key("enter"),  # click by voice
@@ -74,10 +74,14 @@ class GlobalChromeMappings(MappingRule):
         "hide hints": Key("cs-space/" + click_by_voice_delay) + Text(":-") + Key("enter"),  # click by voice
         "show hints": Key("cs-space/" + click_by_voice_delay) + Text(":+") + Key("enter"),  # click by voice
         "high contrast": Key("cs-space/" + click_by_voice_delay) + Text(":+c") + Key("enter"),  # click by voice
-        "open": Key("f"),                         # vimium
-        "tabs": Key("s-f"),                       # vimium
+
+        # Vimium
+        "open": Key("f"),
+        "tabs": Key("s-f"),
+        "get Earl": Key("y,y"),  # copy the current url to the clipboard
+        "get link Earl": Key("y,f"),  # copy a link url to the clipboard
         # "(go | goat | goke | launch | lunch) <number>": Text("%(number)d"),        # vimium
-        # "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
+        "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
     }
     extras=[
         Integer("n", 1, 50),
@@ -99,9 +103,8 @@ class GmailMappings(MappingRule):
         "compose": Key("c"),
         "next mail [<n>]": Key("j:%(n)d"),
         "(previous | preev) mail [<n>]": Key("k:%(n)d"),
-        "[go to] inbox": Key("g,i"),
-        "[go to] sent mail": Key("g,t"),
-        "[go to] drafts": Key("g,d"),
+        "next mess [<n>]": Key("n:%(n)d"),
+        "(previous | preev) mess [<n>]": Key("p:%(n)d"),
         "(delete | trash)": Key("hash"),
         "archive": Key("e"),
         "select [and] archive": Key("x,e"),
@@ -114,23 +117,30 @@ class GmailMappings(MappingRule):
         "important": Key("s"),
         "select [<n>]": Function(select),
         
+        # navigation
+        "[go to] inbox": Key("g,i"),
+        "[go to] sent mail": Key("g,t"),
+        "[go to] drafts": Key("g,d"),
+        "[go to] label Indeni": Key("g,l/20") + Text("__Indeni") + Key("enter"),
+        
         # move to folders
         "move": Key("v"),
         "move to <text>": Key("x,v/20") + Text("%(text)s") + Key("enter"),
         
-        "[to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
-        "asap": Key("x,v/20") + Text("aa_todo/asap") + Key("enter"),
-        "[to] [check back] soon": Key("x,v/20") + Text("aa_todo/check back soon") + Key("enter"),
-        "[to] respond": Key("x,v/20") + Text("aa_todo/respond") + Key("enter"),
-        "[to] someday": Key("x,v/20") + Text("aa_todo/someday") + Key("enter"),
-        "[to] waiting [for response]": Key("x,v/20") + Text("aa_todo/waiting for response") + Key("enter"),
+        "[move] [to] Indeni": Key("x,v/20") + Text("__Indeni") + Key("enter"),
+        "[move] [to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
+        "[move] [to] asap": Key("x,v/20") + Text("aa_todo/asap") + Key("enter"),
+        "[move] [to] [check back] soon": Key("x,v/20") + Text("aa_todo/check back soon") + Key("enter"),
+        "[move] [to] respond": Key("x,v/20") + Text("aa_todo/respond") + Key("enter"),
+        "[move] [to] someday": Key("x,v/20") + Text("aa_todo/someday") + Key("enter"),
+        "[move] [to] waiting [for response]": Key("x,v/20") + Text("aa_todo/waiting for response") + Key("enter"),
         
-        "check me out": Key("x,v/20") + Text("check me out") + Key("enter"),
-        "friends": Key("x,v/20") + Text("friends") + Key("enter"),
-        "miscellaneous": Key("x,v/20") + Text("miscellaneous") + Key("enter"),
-        "mom": Key("x,v/20") + Text("mom") + Key("enter"),
-        "notes [to self]": Key("x,v/20") + Text("notes to self") + Key("enter"),
-        "trips": Key("x,v/20") + Text("trips") + Key("enter"),
+        "[move] [to] check me out": Key("x,v/20") + Text("check me out") + Key("enter"),
+        "[move] [to] friends": Key("x,v/20") + Text("friends") + Key("enter"),
+        "[move] [to] miscellaneous": Key("x,v/20") + Text("miscellaneous") + Key("enter"),
+        "[move] [to] mom": Key("x,v/20") + Text("mom") + Key("enter"),
+        "[move] [to] notes [to self]": Key("x,v/20") + Text("notes to self") + Key("enter"),
+        "[move] [to] trips": Key("x,v/20") + Text("trips") + Key("enter"),
     }
 
     extras = [

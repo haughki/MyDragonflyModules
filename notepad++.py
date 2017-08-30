@@ -4,7 +4,13 @@ Licensed under the LGPL3.
 
 """
 
-from dragonfly import Grammar, MappingRule, Dictation, Integer, Key, Text, IntegerRef, AppContext
+from dragonfly import Grammar, MappingRule, Dictation, Integer, Key, Text, IntegerRef, AppContext, Function
+from supporting import utils
+
+
+def printNumber(w, x=None, y=None, z=None):
+    number = utils.buildNumber(w, x, y, z)
+    Text(number).execute()
 
 class CommandRule(MappingRule):
     mapping = {
@@ -15,7 +21,7 @@ class CommandRule(MappingRule):
         "find in files": Key("cs-f"),
 
         # Code.
-        "(shoreline | [go to | show] line) <n>": Key("c-g/25") + Text("%(n)d") + Key("enter"),
+        "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/25") + Function(printNumber)+ Key("enter"),
         "show white space": Key("cs-w"),
         
         # Window handling.
@@ -28,7 +34,11 @@ class CommandRule(MappingRule):
     extras = [
         Integer("t", 1, 50),
         Dictation("text"),
-        IntegerRef("n", 1, 50000)
+        IntegerRef("n", 1, 50000),
+        Integer("w", 0, 10),
+        Integer("x", 0, 10),
+        Integer("y", 0, 10),
+        Integer("z", 0, 10)
     ]
     defaults = {
         "t": 1,

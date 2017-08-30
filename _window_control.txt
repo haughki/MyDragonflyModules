@@ -16,5 +16,6 @@ settings.defaults = {
         "command": ("cmd", "command prompt"),
         "explore": ("explorer", ""),
         "word": ("winword", ""),
+        "slack": ("", ""),
         "dragonpad": ("natspeak", "dragonpad"),
     }
