@@ -17,5 +17,6 @@ settings.defaults = {
         "explore": ("explorer", ""),
         "word": ("winword", ""),
         "slack": ("", ""),
+        "Indeni": ("virtualbox", "indeni server"),
         "dragonpad": ("natspeak", "dragonpad"),
     }

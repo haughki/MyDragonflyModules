@@ -17,7 +17,11 @@ class CommandRule(MappingRule):
         #"[go to | show] project window": Key("a-1"),
 
         # Search.
-        "find (text | it)": Key("c-f"),
+        "replace": Key("c-h"),
+        "show find": Key("c-f"),
+        "find <text>": Key("c-f/25") + Text("%(text)s"),
+        # "find next": Key("f3"),
+        # "find (prev | previous)": Key("s-f3"),
         "find in files": Key("cs-f"),
 
         # Code.

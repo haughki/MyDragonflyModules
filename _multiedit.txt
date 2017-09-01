@@ -178,16 +178,18 @@ cmd.map = {
 
         ### other
         "undo [<n>]": Key("c-z:%(n)d"),
-        "prev window": Key("a-tab/10"),
+        "preev window": Key("a-tab/10"),
+        "preev file": Key("c-tab"),
         "say <text>": release + Text("%(text)s"),
         "close tab [<n>]": Key("c-w/20:%(n)d"),
         "new (thing | file)": Key("c-n"),
         "file save": Key("c-s"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
         "(you tells | utils)": Text("utils"),
+        "new Evernote": Key("ca-n"),
                                 
         ### Intellij Commands
-        "comment": Key("c-slash"),
+        #"comment": Key("c-slash"),
 }
 
 #---------------------------------------------------------------------------

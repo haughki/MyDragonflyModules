@@ -90,11 +90,12 @@ class CommandRule(MappingRule):
         "(full-screen | full screen)": Key("cs-x"),  # macro, combination of: "Toggle Full Screen Mode" and "Hide All Tool Windows"
         "(Hide | hide | hi) bottom": Key("s-escape"),  # "hide active tool window"
         "(Hide | hide | hi) side": Key("cas-c"),  # "hide side tool windows"
-        # "comment [line | that | it]": Key("c-slash"),
+        "comment [line | that | it]": Key("c-slash"),
         "show white space": Key("cs-w"),
         "redo": Key("cs-z"),
         
         # Window handling.
+        # "preev file": Key("c-tab"),
         "next tab [<t>]": Key("a-right/5:%(t)d"),
         "(preev | previous) tab [<t>]": Key("a-left/5:%(t)d"),
         "close tab": Key("c-w"),

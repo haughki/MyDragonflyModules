@@ -1,3 +1,8 @@
+import sys
+sys.path.append('pycharm-debug.egg')  # pycharm-debug-py3k.egg for python 3.x
+import pydevd
+pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+
 from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mimic, Dictation, Function, CompoundRule)
 from dragonfly import Pause
 
@@ -100,6 +105,7 @@ class GlobalChromeMappings(MappingRule):
 class GmailMappings(MappingRule):
     mapping = {
         "Gmail find <text>": Key("slash/25") + Text("%(text)s"),
+        "Gmail undo": Key("z"),
         "compose": Key("c"),
         "next mail [<n>]": Key("j:%(n)d"),
         "(previous | preev) mail [<n>]": Key("k:%(n)d"),
@@ -114,7 +120,7 @@ class GmailMappings(MappingRule):
         "reply": Key("r"),
         "reply [to] all": Key("a"),
         "forward": Key("f"),
-        "important": Key("s"),
+        "important": Key("s"),  # star line item
         "select [<n>]": Function(select),
         
         # navigation
@@ -217,7 +223,4 @@ chrome_grammar.load()
 
 def unload():
     global chrome_grammar
-    if chrome_grammar:
-        print "unloading " + __name__ + "..."
-        chrome_grammar.unload()
-    chrome_grammar = None
+    chrome_grammar = utils.unloadHelper(chrome_grammar, __name__)

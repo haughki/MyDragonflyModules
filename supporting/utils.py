@@ -1,8 +1,19 @@
-import inspect, os, gc
-from dragonfly.windows.clipboard import Clipboard
+import gc
+import inspect
+import os
+
 from dragonfly import Key
+from dragonfly.windows.clipboard import Clipboard
 
 __author__ = 'parkerh'
+
+
+def unloadHelper(grammar, name):
+    if grammar:
+        print "unloading " + name + "..."
+        grammar.unload()
+    return None
+
 
 
 def getClassFields(aClass):
