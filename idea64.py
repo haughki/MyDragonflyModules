@@ -135,14 +135,10 @@ class CommandRule(MappingRule):
 
 
 context = AppContext(executable="idea64")
-grammar = Grammar("IntelliJ Idea", context=context)
-grammar.add_rule(CommandRule())
-grammar.load()
+idea_grammar = Grammar("IntelliJ Idea", context=context)
+idea_grammar.add_rule(CommandRule())
+idea_grammar.load()
 
-# Unload function which will be called by natlink at unload time.
 def unload():
-    global grammar
-    if grammar:
-        print "unloading " + __name__ + "..."
-        grammar.unload()
-    grammar = None
+    global idea_grammar
+    idea_grammar = utils.unloadHelper(idea_grammar,__name__)

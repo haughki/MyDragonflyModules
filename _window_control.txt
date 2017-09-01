@@ -16,6 +16,7 @@ settings.defaults = {
         "command": ("cmd", "command prompt"),
         "explore": ("explorer", ""),
         "word": ("winword", ""),
+        "Ubuntu": ("virtualbox", "ubuntu-desktop"), 
         "slack": ("", ""),
         "Indeni": ("virtualbox", "indeni server"),
         "dragonpad": ("natspeak", "dragonpad"),

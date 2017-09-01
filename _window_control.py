@@ -100,7 +100,7 @@ config.load()
 #===========================================================================
 # Create this module's main grammar object.
 
-grammar = Grammar("window control")
+winctrl_grammar = Grammar("window control")
 
 
 #---------------------------------------------------------------------------
@@ -241,7 +241,7 @@ class FocusWinRule(CompoundRule):
                 break
 
 
-grammar.add_rule(FocusWinRule())
+winctrl_grammar.add_rule(FocusWinRule())
 
 
 #---------------------------------------------------------------------------
@@ -259,7 +259,7 @@ class NameWinRule(CompoundRule):
         win_names[name] = window
         self._log.debug("%s: named foreground window '%s'." % (self, window))
 
-grammar.add_rule(NameWinRule())
+winctrl_grammar.add_rule(NameWinRule())
 
 
 #---------------------------------------------------------------------------
@@ -278,7 +278,7 @@ class FocusTitleRule(CompoundRule):
         except ActionError:
             self._log.warning("No window with that name found.", exc_info=True)
 
-grammar.add_rule(FocusTitleRule())
+winctrl_grammar.add_rule(FocusTitleRule())
 
 
 #---------------------------------------------------------------------------
@@ -372,7 +372,7 @@ class TranslateRule(CompoundRule):
         pos.translate(dx, dy)
         window.move(pos, animate="spline")
 
-grammar.add_rule(TranslateRule())
+winctrl_grammar.add_rule(TranslateRule())
 
 
 #---------------------------------------------------------------------------
@@ -416,7 +416,7 @@ class ResizeRule(CompoundRule):
         pos = Rectangle(x1, y1, x2-x1, y2-y1)
         window.move(pos, animate="spline")
 
-grammar.add_rule(ResizeRule())
+winctrl_grammar.add_rule(ResizeRule())
 
 
 #---------------------------------------------------------------------------
@@ -451,7 +451,7 @@ class StretchRule(CompoundRule):
         pos = Rectangle(x1, y1, x2-x1, y2-y1)
         window.move(pos, animate="spline")
 
-grammar.add_rule(StretchRule())
+winctrl_grammar.add_rule(StretchRule())
 
 
 #---------------------------------------------------------------------------
@@ -498,13 +498,12 @@ class PlaceFractionRule(CompoundRule):
         pos = Rectangle(x1, y1, dx, dy)
         window.move(pos, animate="spline")
 
-grammar.add_rule(PlaceFractionRule())
+winctrl_grammar.add_rule(PlaceFractionRule())
 
 
 #---------------------------------------------------------------------------
 
-grammar.load()
+winctrl_grammar.load()
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global winctrl_grammar
+    winctrl_grammar = utils.unloadHelper(winctrl_grammar, __name__)
