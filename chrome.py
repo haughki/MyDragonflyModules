@@ -1,7 +1,7 @@
-import sys
-sys.path.append('pycharm-debug.egg')  # pycharm-debug-py3k.egg for python 3.x
-import pydevd
-pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+# import sys
+# sys.path.append('pycharm-debug.egg')  # pycharm-debug-py3k.egg for python 3.x
+# import pydevd
+# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
 from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mimic, Dictation, Function, CompoundRule)
 from dragonfly import Pause
