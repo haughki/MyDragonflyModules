@@ -39,7 +39,7 @@ def M(*args, **kws):
 
 class ShellCoreRule(MappingRule):
     mapping = {
-        "get out": K(),
+        "get out": K("rcontrol"),
         "exit": T("exit\n"),
         "alias": T("alias "),
         "cat": T("cat "),
@@ -59,6 +59,8 @@ class ShellCoreRule(MappingRule):
         "glimpse": T("glimpse "),
         # "<grep>": T("%(grep)s -rin -B2 -A2 '' .") + K("left:3"),
         # "<grep> <text>": T("%(grep)s -rin -B2 -A2 '%(text)s' .\n"),
+        "grep": T("grep -rin -B2 -A2 '' .") + K("left:3"),
+        "grep <text>": T("grep -rin -B2 -A2 '%(text)s' .\n"),
         "info documentation": T("info "),
         "jobs": T("jobs -l\n"),
         "jobs running": T("jobs -lr\n"),

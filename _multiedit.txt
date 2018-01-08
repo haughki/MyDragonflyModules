@@ -136,6 +136,7 @@ cmd.map = {
         "eeks": Key("space, equal, equal, space"),
         "(not eeks | nodeeks)": Key("space, bang, equal, space"),
         "line dash": Key("space, hyphen, hyphen, space"),
+        "(one | won) dash": Key("space, hyphen, space"),
         "string (add | had)": Key("space, plus, space"),
         "(spacebar | space bar) space": Text(" | "),
 
