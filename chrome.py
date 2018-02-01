@@ -134,6 +134,7 @@ class GmailMappings(MappingRule):
         "move to <text>": Key("x,v/20") + Text("%(text)s") + Key("enter"),
         
         "[move] [to] Indeni": Key("x,v/20") + Text("__Indeni") + Key("enter"),
+        "[move] [to] Indeni to do": Key("x,v/20") + Text("__Indeni/todo") + Key("enter"),
         "[move] [to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
         "[move] [to] asap": Key("x,v/20") + Text("aa_todo/asap") + Key("enter"),
         "[move] [to] [check back] soon": Key("x,v/20") + Text("aa_todo/check back soon") + Key("enter"),
