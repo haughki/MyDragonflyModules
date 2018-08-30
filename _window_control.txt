@@ -1,9 +1,9 @@
 # tries to match windows using "focus" <app_name> [<title_fragment>].  The dict below correlates the spoken app_name key
 # with an (<exe name>, <window title hint>).  The hint is hard-coded, whereas the title_fragment is dictation, dictation
-# which let's you choose, in real-time, between multiple windows with the same process name.  If you app_name command
-# is the same as the exe_name, ou can leave off either 
-# <process name> or ; if you do, just replace with empty quotes "".  To see data about the current
-# available windows, try "print windows".
+# which let's you choose, in real-time, between multiple windows with the same process name. If your app_name command
+# is the same as the exe_name, you can leave out the exe_name.
+
+# To see data about the current available windows (including the actual names to use here), try "print windows".
 settings.defaults = {
         "NatLink": ("natspeak", "messages from Natlink"),
         "idea": ("", ""),
@@ -18,6 +18,8 @@ settings.defaults = {
         "word": ("winword", ""),
         "Ubuntu": ("virtualbox", "ubuntu-desktop"), 
         "slack": ("", ""),
+        "atom": ("", ""),
         "Indeni": ("virtualbox", "indeni server"),
         "dragonpad": ("natspeak", "dragonpad"),
+        "wonder list": ("applicationframehost", "wunderlist"),
     }

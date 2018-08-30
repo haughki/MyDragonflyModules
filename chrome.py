@@ -9,6 +9,10 @@ from dragonfly import Pause
 from supporting import utils
 
 
+def vimPrintNumber(w, x=None, y=None, z=None):
+    number = utils.buildNumber(w, x, y, z)
+    Text(number).execute()
+
 def printNumberWithExtension(extension, w, x=None, y=None, z=None):
     number = utils.buildNumber(w, x, y, z)
     Text(number + extension).execute()
@@ -85,6 +89,7 @@ class GlobalChromeMappings(MappingRule):
         "tabs": Key("s-f"),
         "get Earl": Key("y,y"),  # copy the current url to the clipboard
         "get link Earl": Key("y,f"),  # copy a link url to the clipboard
+        go_command + " <w> [<x>] [<y>] [<z>]": Function(vimPrintNumber),             # vimium
         # "(go | goat | goke | launch | lunch) <number>": Text("%(number)d"),        # vimium
         "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
     }
@@ -124,10 +129,12 @@ class GmailMappings(MappingRule):
         "select [<n>]": Function(select),
         
         # navigation
+        "Gmail back": Key("u"),
         "[go to] inbox": Key("g,i"),
         "[go to] sent mail": Key("g,t"),
         "[go to] drafts": Key("g,d"),
         "[go to] label Indeni": Key("g,l/20") + Text("__Indeni") + Key("enter"),
+        "[go to] label Indeni to do": Key("g,l/20") + Text("__Indeni/todo") + Key("enter"),
         
         # move to folders
         "move": Key("v"),

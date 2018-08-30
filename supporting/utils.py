@@ -111,7 +111,7 @@ def text_to_case(make_me, format_me):
     return ""
 
 def snake(text):
-    # some_words
+    # Format: some_words
     words = [word.lower() for word in text.split(" ")]
     return "_".join(words)
 
@@ -123,6 +123,11 @@ def upper_snake(text):
     # Format: SOME_WORDS
     words = [word.upper() for word in text.split(" ")]
     return "_".join(words)
+
+def kebab(text):
+    # Format: some-words
+    words = [word.lower() for word in text.split(" ")]
+    return "-".join(words)
 
 def one_word(text):
     # Format: somewords

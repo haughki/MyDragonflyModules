@@ -214,6 +214,11 @@ def format_upper_score(dictation):
     """ (score | snake) up <dictation> """
     return utils.upper_snake(str(dictation))
 
+# Format: some-words
+def format_kebab(dictation):
+    """ kebab <dictation> """
+    return utils.kebab(str(dictation))
+
 # Format: somewords
 def format_one_word(dictation):
     """ squash <dictation> """
