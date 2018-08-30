@@ -1,5 +1,5 @@
 from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Dictation)
-
+from supporting import utils
 
 class SlackMapping(MappingRule):
     mapping = {
@@ -26,13 +26,10 @@ class SlackMapping(MappingRule):
 
 
 context = AppContext(executable="slack")
-slack_grammar = Grammar("Slack", context=context)
+slack_grammar = Grammar("Slack Grammar", context=context)
 slack_grammar.add_rule(SlackMapping())
 slack_grammar.load()
 
 def unload():
     global slack_grammar
-    if slack_grammar:
-        print "unloading " + __name__ + "..."
-        slack_grammar.unload()
-    slack_grammar = None
+    slack_grammar= utils.unloadHelper(slack_grammar, __name__)
