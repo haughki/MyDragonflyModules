@@ -1,9 +1,10 @@
-from dragonfly import (Grammar, AppContext, MappingRule, Integer, Key, Text, Mimic, Dictation, Function, CompoundRule,
-                       Pause)
+from dragonfly import (Grammar, MappingRule, Integer, Key, Text, Mimic, Dictation)
+
+from supporting import utils
 
 release = Key("alt:up, shift:up, ctrl:up")
 
-class AlternateKeyMap(MappingRule):
+class MultiMoreKeyMap(MappingRule):
     mapping = {
         "wave": Key("shift:up, right"),
         #        "boss": Key("ctrl:down"),
@@ -34,13 +35,10 @@ class AlternateKeyMap(MappingRule):
         "n": 1,
     }
 
-multiedit_alternate_grammar = Grammar("Multiedit Alternate")
-multiedit_alternate_grammar.add_rule(AlternateKeyMap())
-multiedit_alternate_grammar.load()
+multiedit_more_grammar = Grammar("Multiedit More")
+multiedit_more_grammar.add_rule(MultiMoreKeyMap())
+multiedit_more_grammar.load()
 
 def unload():
-    global multiedit_alternate_grammar
-    if multiedit_alternate_grammar:
-        print "unloading " + __name__ + "..."
-        multiedit_alternate_grammar.unload()
-    multiedit_alternate_grammar = None
+    global multiedit_more_grammar
+    multiedit_more_grammar = utils.unloadHelper(multiedit_more_grammar, __name__)

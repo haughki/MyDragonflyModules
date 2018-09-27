@@ -108,6 +108,8 @@ class GlobalChromeMappings(MappingRule):
     }
 
 class GmailMappings(MappingRule):
+    select_line_open_move = Key("x/30,v/30")
+    
     mapping = {
         "Gmail find <text>": Key("slash/25") + Text("%(text)s"),
         "Gmail undo": Key("z"),
@@ -138,23 +140,25 @@ class GmailMappings(MappingRule):
         
         # move to folders
         "move": Key("v"),
-        "move to <text>": Key("x,v/20") + Text("%(text)s") + Key("enter"),
+        "move to <text>": select_line_open_move + Text("%(text)s") + Key("enter"),
         
-        "[move] [to] Indeni": Key("x,v/20") + Text("__Indeni") + Key("enter"),
-        "[move] [to] Indeni to do": Key("x,v/20") + Text("__Indeni/todo") + Key("enter"),
-        "[move] [to] receipts": Key("x,v/20") + Text("aa_receipts") + Key("enter"),
-        "[move] [to] asap": Key("x,v/20") + Text("aa_todo/asap") + Key("enter"),
-        "[move] [to] [check back] soon": Key("x,v/20") + Text("aa_todo/check back soon") + Key("enter"),
-        "[move] [to] respond": Key("x,v/20") + Text("aa_todo/respond") + Key("enter"),
-        "[move] [to] someday": Key("x,v/20") + Text("aa_todo/someday") + Key("enter"),
-        "[move] [to] waiting [for response]": Key("x,v/20") + Text("aa_todo/waiting for response") + Key("enter"),
+        "[move] [to] Indeni": select_line_open_move + Text("__Indeni") + Key("enter"),
+        "[move] [to] Indeni to do": select_line_open_move + Text("__Indeni/todo") + Key("enter"),
+        "[move] [to] receipts": select_line_open_move + Text("aa_receipts") + Key("enter"),
+        "[move] [to] asap": select_line_open_move + Text("aa_todo/asap") + Key("enter"),
+        "[move] [to] [check back] soon": select_line_open_move + Text("aa_todo/check back soon") + Key("enter"),
+        "[move] [to] respond": select_line_open_move + Text("aa_todo/respond") + Key("enter"),
+        "[move] [to] someday": select_line_open_move + Text("aa_todo/someday") + Key("enter"),
+        "[move] [to] waiting [for response]": select_line_open_move + Text("aa_todo/waiting for response") + Key("enter"),
         
-        "[move] [to] check me out": Key("x,v/20") + Text("check me out") + Key("enter"),
-        "[move] [to] friends": Key("x,v/20") + Text("friends") + Key("enter"),
-        "[move] [to] miscellaneous": Key("x,v/20") + Text("miscellaneous") + Key("enter"),
-        "[move] [to] mom": Key("x,v/20") + Text("mom") + Key("enter"),
-        "[move] [to] notes [to self]": Key("x,v/20") + Text("notes to self") + Key("enter"),
-        "[move] [to] trips": Key("x,v/20") + Text("trips") + Key("enter"),
+        "[move] [to] check me out": select_line_open_move + Text("check me out") + Key("enter"),
+        
+        
+        "[move] [to] friends": select_line_open_move + Text("friends") + Key("enter"),
+        "[move] [to] miscellaneous": select_line_open_move + Text("miscellaneous") + Key("enter"),
+        "[move] [to] mom": select_line_open_move + Text("mom") + Key("enter"),
+        "[move] [to] notes [to self]": select_line_open_move + Text("notes to self") + Key("enter"),
+        "[move] [to] trips": select_line_open_move + Text("trips") + Key("enter"),
     }
 
     extras = [
