@@ -172,7 +172,7 @@ cmd.map = {
         "(select all | tarp)": release + Key("c-a"), # select all
         "copy all": release + Key("c-a, c-c"), # copy all
 
-        "(mash | sky | coo | cool | pop)": Key("shift:down"),
+        "(mash | sky | coo | cool)": Key("shift:down"),
         "mark": Key("shift:down"),
         "mark up": Key("shift:up"),
         "release": release,
@@ -189,7 +189,7 @@ cmd.map = {
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
         "(you tells | utils)": Text("utils"),
         "new Evernote": Key("ca-n"),
-        "tog lock": Key("capital"),
+        "it'slock": Key("capital"),
                                 
         ### Intellij Commands
         #"comment": Key("c-slash"),
