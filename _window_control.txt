@@ -23,4 +23,6 @@ settings.defaults = {
         "Indeni": ("virtualbox", "indeni server"),
         "dragonpad": ("natspeak", "dragonpad"),
         "wonder list": ("applicationframehost", "wunderlist"),
+        "code": ("", ""),
+        "you code": ("xwin_mobax.exe", "visual studio code"),
     }

@@ -92,6 +92,9 @@ class GlobalChromeMappings(MappingRule):
         go_command + " <w> [<x>] [<y>] [<z>]": Function(vimPrintNumber),             # vimium
         # "(go | goat | goke | launch | lunch) <number>": Text("%(number)d"),        # vimium
         "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
+        
+        # Workona
+        "(tab manager | workona)": Key("a-s"),
     }
     extras=[
         Integer("n", 1, 50),
