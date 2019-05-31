@@ -1,4 +1,4 @@
-from dragonfly import (Grammar, MappingRule, Integer, Key, Text, Mimic, Dictation)
+from dragonfly import (Grammar, MappingRule, Integer, Key, Text, Mimic, Dictation, Pause)
 
 from supporting import utils
 
@@ -14,6 +14,7 @@ class MultiMoreKeyMap(MappingRule):
         "mimic <text>": release + Mimic(extra="text"),
         "pop": Key("apps"), # right click
         "list Windows": Mimic("list", "all", "Windows"),
+        "focus chrome too": Mimic("focus", "chrome") + Pause("25") + Mimic("focus", "chrome"), 
 
         ### programming
         "short object": Text("obj"),

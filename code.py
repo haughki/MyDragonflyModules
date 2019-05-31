@@ -1,4 +1,4 @@
-"""A command module for Dragonfly, for controlling notepad++.
+"""A command module for Dragonfly, for controlling VSCode.
 -----------------------------------------------------------------------------
 Licensed under the LGPL3.
 
@@ -50,7 +50,12 @@ class VsCodeMapping(MappingRule):
         "close tab": Key("c-w"),
         "(full-screen | full screen)": Key("cs-x"),
         "side panel": Key("c-b"),
+        
+        # git
+        "pull this": Key("c-t"),
+        "push this": Key("c-k"),
     }
+    
     extras = [
         Integer("t", 1, 50),
         Dictation("text"),
