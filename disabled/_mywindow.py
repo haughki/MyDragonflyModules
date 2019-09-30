@@ -1,7 +1,7 @@
 try:
     import pkg_resources
 
-    pkg_resources.require("dragonfly >= 0.6.5beta1.dev-r99")
+    pkg_resources.require("dragonfly2 >= 0.6.5beta1.dev-r99")
 except ImportError:
     pass
 

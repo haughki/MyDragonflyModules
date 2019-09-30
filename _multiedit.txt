@@ -56,7 +56,7 @@ cmd.map = {
         character.DEL         + " [<n>]": Key("del:%(n)d"),
         character.BACKSPACE   + " [<n>]": Key("backspace:%(n)d"),
         character.ESCAPE      + " [<n>]": Key("escape:%(n)d"),
-        
+
         character.AMPERSAND   + " [<n>]": Key("ampersand:%(n)d"),
         character.APOSTROPHE  + " [<n>]": Key("apostrophe:%(n)d"),
         character.ASTERISK    + " [<n>]": Key("asterisk:%(n)d"),
@@ -90,7 +90,7 @@ cmd.map = {
         character.RBRACKET    + " [<n>]": Key("rbracket:%(n)d"),
         character.LPAREN      + " [<n>]": Key("lparen:%(n)d"),
         character.RPAREN      + " [<n>]": Key("rparen:%(n)d"),
-        
+
         ### ALPHABET
         character.A           + " [<n>]": Key("a:%(n)d"),
         character.B           + " [<n>]": Key("b:%(n)d"),
@@ -118,7 +118,7 @@ cmd.map = {
         character.X           + " [<n>]": Key("x:%(n)d"),
         character.Y           + " [<n>]": Key("y:%(n)d"),
         character.Z           + " [<n>]": Key("z:%(n)d"),
-                
+
         ### Numbers
         "zero": Key("0"),
         "one": Key("1"),
@@ -163,7 +163,7 @@ cmd.map = {
         "slice left [<n>]": release + Key("left, c-right, cs-left:%(n)d, c-x, left"), # cut words left
         "select right [<n>]": release + Key("cs-right:%(n)d"), # select words right
         "select left [<n>]": release + Key("cs-left:%(n)d"), # select words left
-        
+
         ### copy/paste
         "pace": release + Key("c-v"), # paste
         "clone [<n>]": release + Key("c-c, c-v:%(n)d"), # copy/paste
@@ -189,8 +189,8 @@ cmd.map = {
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
         "(you tells | utils)": Text("utils"),
         "new Evernote": Key("ca-n"),
-        "it'slock": Key("capital"),
-                                
+        "it'slock": Key("capslock"),
+
         ### Intellij Commands
         #"comment": Key("c-slash"),
 }

@@ -43,7 +43,7 @@ be represented by the following simplified language model:
 
  - *CommandRule* -- top-level rule which the user can say
     - *repetition* -- sequence of actions (name = "sequence")
-       - *KeystrokeRule* -- rule that maps a single 
+       - *KeystrokeRule* -- rule that maps a single
          spoken-form to an action
     - *optional* -- optional specification of repeat count
        - *integer* -- repeat count (name = "n")
@@ -60,7 +60,7 @@ within this callback is very simple:
 try:
     import pkg_resources
 
-    pkg_resources.require("dragonfly >= 0.6.5beta1.dev-r99")
+    pkg_resources.require("dragonfly2 >= 0.6.5beta1.dev-r99")
 except ImportError:
     pass
 
@@ -148,11 +148,11 @@ class KeystrokeRule(MappingRule):
     defaults = {
         "n": 1,
         }
-    
+
 
 def lineSearch(dictation_to_find, replace_with_me, _node):
     commands = _node.words()
-    
+
     # parse ordinal arguments
     second_arg = commands[1]
     ordinal_arg = None
@@ -170,7 +170,7 @@ def lineSearch(dictation_to_find, replace_with_me, _node):
             print "Replacing..."
             replacing = True
             replace_with_me = str(replace_with_me)
-    
+
     to_find = str(dictation_to_find)
     if to_find == "":
         print "No dictation, searching for character..."
@@ -289,7 +289,7 @@ class RepeatRule(CompoundRule):
                             if len(sequence) > 1:  # make sure something's coming after "sky"
                                 upper_case_it = action + sequence[action_count + 1] + release
                                 upper_case_it.execute()
-                                is_skip_next_action = True  # we just executed the next action, don't do it twice                      
+                                is_skip_next_action = True  # we just executed the next action, don't do it twice
                         else:  # no "sky command" -- normal path
                             action.execute()
                 else:  # not a bound action?

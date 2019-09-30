@@ -10,7 +10,7 @@ from reimport import reimport, modified
 from languages import python_rule, java_rule, specs
 from supporting import utils, character
 
-MACROSYSTEM_DIRECTORY = "C:\\NatLink\\NatLink\\MacroSystem"
+MACROSYSTEM_DIRECTORY = "C:\\NatLinkUserDirectory"
 
 
 def languageReloader():
@@ -33,7 +33,7 @@ def utilsReloader():
     print "Reloading utils..."
     reimport(utils)
     utils.toggleMicrophone()
-    
+
 def reloadAll():
     print "Reloading everything in the Macrosystem directory..."
     user_directory_files = [f for f in os.listdir(MACROSYSTEM_DIRECTORY) if f.endswith('.py')]

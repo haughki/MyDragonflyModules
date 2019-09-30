@@ -44,7 +44,7 @@ Usage examples
 """
 
 import pkg_resources
-pkg_resources.require("dragonfly >= 0.6.5beta1.dev-r76")
+pkg_resources.require("dragonfly2 >= 0.6.5beta1.dev-r76")
 
 import time, logging
 from dragonfly import *
@@ -138,7 +138,7 @@ def get_app_window(app_name, title_fragment=None):
 
     best_match = None
     got_title_hint_match = False
-    
+
     # print "exe: " + exe_name
     # print "title frag: " + title_fragment
     # print "title hint: " + title_hint

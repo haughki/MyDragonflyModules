@@ -52,7 +52,7 @@ Command: **"reload natlink"**
 
 try:
     import pkg_resources
-    pkg_resources.require("dragonfly >= 0.6.5beta1.dev-r81")
+    pkg_resources.require("dragonfly2 >= 0.6.5beta1.dev-r81")
 except ImportError:
     pass
 
