@@ -16,7 +16,7 @@ def vimPrintNumber(w, x=None, y=None, z=None):
 def printNumberWithExtension(extension, w, x=None, y=None, z=None):
     number = utils.buildNumber(w, x, y, z)
     Text(number + extension).execute()
-    
+
 def printNumber(w, x=None, y=None, z=None):
     printNumberWithExtension("", w, x, y, z)
 
@@ -41,14 +41,20 @@ def lineTrash(n=None):
         Key("hash").execute()
     else:
         Key("x/5,hash").execute()
-        
+
 def select(n=None):
     if n > 1:
         for i in range(0,n):
-            Key("x/5,down").execute()
-            Pause("5").execute()
+            Key("x/20,down/20").execute()
     else:
         Key("x").execute()
+
+def selectAndMove(dest):
+    Key("x/30,v/30").execute()
+    Text(dest).execute()
+    Pause("30").execute()
+    Key("enter").execute()
+
 
 go_command = "(go | goat | goke | launch | lunch)"
 click_by_voice_delay = "50"
@@ -72,7 +78,7 @@ class GlobalChromeMappings(MappingRule):
         "find (prev | previous)": Key("s-enter"),
         "bookmark page": Key("c-d"),
         "(full-screen | full screen)": Key("f11"),
-        
+
         # Click By Voice
         "open <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumber) + Key("enter"),  # click by voice
         "open focus <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberFocus) + Key("enter"),  # click by voice
@@ -92,7 +98,7 @@ class GlobalChromeMappings(MappingRule):
         go_command + " <w> [<x>] [<y>] [<z>]": Function(vimPrintNumber),             # vimium
         # "(go | goat | goke | launch | lunch) <number>": Text("%(number)d"),        # vimium
         "(duplicate | dupe) tab": Key("y/25,t"),  # vimium
-        
+
         # Workona
         "(tab manager | workona)": Key("a-s"),
     }
@@ -112,7 +118,7 @@ class GlobalChromeMappings(MappingRule):
 
 class GmailMappings(MappingRule):
     select_line_open_move = Key("x/30,v/30")
-    
+
     mapping = {
         "Gmail find <text>": Key("slash/25") + Text("%(text)s"),
         "Gmail undo": Key("z"),
@@ -132,7 +138,7 @@ class GmailMappings(MappingRule):
         "forward": Key("f"),
         "important": Key("s"),  # star line item
         "select [<n>]": Function(select),
-        
+
         # navigation
         "Gmail back": Key("u"),
         "[go to] inbox": Key("g,i"),
@@ -140,29 +146,29 @@ class GmailMappings(MappingRule):
         "[go to] drafts": Key("g,d"),
         "[go to] label Indeni": Key("g,l/20") + Text("__Indeni") + Key("enter"),
         "[go to] label Indeni to do": Key("g,l/20") + Text("__Indeni/_todo") + Key("enter"),
-        
+
         # move to folders
         "move": Key("v"),
         "move to <text>": select_line_open_move + Text("%(text)s") + Key("enter"),
-        
-        "[move] [to] Indeni": select_line_open_move + Text("__Indeni") + Key("enter"),
-        "[move] [to] Indeni to do": select_line_open_move + Text("__Indeni/_todo") + Key("enter"),
-        "[move] [to] Indeni waiting": select_line_open_move + Text("__Indeni/_waiting") + Key("enter"),
-        "[move] [to] receipts": select_line_open_move + Text("aa_receipts") + Key("enter"),
-        "[move] [to] asap": select_line_open_move + Text("aa_todo/asap") + Key("enter"),
-        "[move] [to] [check back] soon": select_line_open_move + Text("aa_todo/check back soon") + Key("enter"),
-        "[move] [to] respond": select_line_open_move + Text("aa_todo/respond") + Key("enter"),
-        "[move] [to] someday": select_line_open_move + Text("aa_todo/someday") + Key("enter"),
-        "[move] [to] waiting [for response]": select_line_open_move + Text("aa_todo/waiting for response") + Key("enter"),
-        
-        "[move] [to] check me out": select_line_open_move + Text("check me out") + Key("enter"),
-        
-        
-        "[move] [to] friends": select_line_open_move + Text("friends") + Key("enter"),
-        "[move] [to] miscellaneous": select_line_open_move + Text("miscellaneous") + Key("enter"),
-        "[move] [to] mom": select_line_open_move + Text("mom") + Key("enter"),
-        "[move] [to] notes [to self]": select_line_open_move + Text("notes to self") + Key("enter"),
-        "[move] [to] trips": select_line_open_move + Text("trips") + Key("enter"),
+
+        "[move] [to] Indeni": Function(selectAndMove, dest="__Indeni"),
+        "[move] [to] Indeni to do": Function(selectAndMove, dest="__Indeni/_todo"),
+        "[move] [to] Indeni waiting": Function(selectAndMove, dest="__Indeni/_waiting"),
+        "[move] [to] receipts": Function(selectAndMove, dest="aa_receipts"),
+        "[move] [to] asap": Function(selectAndMove, dest="aa_todo/asap"),
+        "[move] [to] [check back] soon": Function(selectAndMove, dest="aa_todo/check back soon"),
+        "[move] [to] respond": Function(selectAndMove, dest="aa_todo/respond"),
+        "[move] [to] someday": Function(selectAndMove, dest="aa_todo/someday"),
+        "[move] [to] waiting [for response]": Function(selectAndMove, dest="aa_todo/waiting for response"),
+
+        "[move] [to] check me out": Function(selectAndMove, dest="check me out"),
+
+
+        "[move] [to] friends": Function(selectAndMove, dest="friends"),
+        "[move] [to] miscellaneous": Function(selectAndMove, dest="miscellaneous"),
+        "[move] [to] mom": Function(selectAndMove, dest="mom"),
+        "[move] [to] notes [to self]": Function(selectAndMove, dest="notes to self"),
+        "[move] [to] trips": Function(selectAndMove, dest="trips"),
     }
 
     extras = [
@@ -205,7 +211,7 @@ class OpenGmailLineRule(CompoundRule):
 #     # extras = [
 #     #     Dictation("text"),
 #     # ]
-# 
+#
 #     def _process_recognition(self, node, extras):
 #         print node.words()
 #         words = node.words()
@@ -224,7 +230,7 @@ class OpenGmailLineRule(CompoundRule):
 #                 print "Commmand had incorrect word: " + words[0]
 #         else:
 #             print "Wrong number of words in command: " + words
-# 
+#
 
 
 #gmail_context = AppContext(executable="chrome", title="Gmail")
