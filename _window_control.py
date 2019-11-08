@@ -149,9 +149,9 @@ def get_app_window(app_name, title_fragment=None):
         if not utils.windowIsValid(window):
             continue
 
-        rule_log.debug("wanted exe:{} actual exe:{}".format(str(exe_name), window.executable.lower()))
-        rule_log.debug("hint:{} title:{}".format(str(title_hint), window.title.lower()))
-        rule_log.debug("fragment:{} title:{}".format(str(title_fragment), window.title.lower()))
+        rule_log.debug("wanted exe:{} actual exe:{}".format(exe_name.encode('utf-8'), window.executable.encode('utf-8').lower()))
+        rule_log.debug("hint:{} title:{}".format(title_hint.encode('utf-8'), window.title.encode('utf-8').lower()))
+        rule_log.debug("fragment:{} title:{}".format(title_fragment.encode('utf-8'), window.title.encode('utf-8').lower()))
 
         # there will always be an exe name because of check above
         if window.executable.lower().find(exe_name) != -1:

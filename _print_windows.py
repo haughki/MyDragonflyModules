@@ -15,9 +15,7 @@ class PrintWindowsRule(CompoundRule):
         #windows.sort(key=lambda x: x.executable)
         for window in windows:
             if utils.windowIsValid(window):
-                executable = unicode(window.executable, errors='ignore').lower()
-                title = unicode(window.title, errors='ignore').lower()
-                print "{:7} : {:75} : {}".format(window.handle, executable, title)
+                print "{:7} : {:75} : {}".format(window.handle, window.executable.encode("utf-8"), window.title.encode("utf-8"))
 
 
 # window.executable.lower()
