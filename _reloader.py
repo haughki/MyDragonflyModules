@@ -1,11 +1,7 @@
-# import sys
-# sys.path.append('pycharm-debug.egg')
-# import pydevd
-# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 import os
 
 from dragonfly import *
-from reimport import reimport, modified
+from reimport import reimport
 
 from languages import python_rule, java_rule, specs
 from supporting import utils, character

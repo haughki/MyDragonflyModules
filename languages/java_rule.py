@@ -1,9 +1,3 @@
-# import sys
-# sys.path.append('pycharm-debug.egg')
-# import pydevd
-# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
-
-
 from dragonfly import Dictation
 from dragonfly import Function
 from dragonfly import Key, Text, MappingRule
@@ -18,7 +12,7 @@ def defineGeneric(text, generic_type):
         format_me = str(text)
         formatted_text = utils.text_to_case("pascal", format_me)
     Text(generic_type + formatted_text + "> ").execute()
-    
+
 
 def defineArrayList(text):
     defineGeneric(text, "ArrayList<")
@@ -27,7 +21,7 @@ def defineArrayList(text):
 def defineHashMap(text):
     defineGeneric(text, "HashMap<")
 
-    
+
 def getModifiers(words):
     modifiers_string = ""
     if len(words) > 0:
@@ -40,7 +34,7 @@ def getModifiers(words):
 def printModifiers(_node):
     Text(getModifiers(_node.words())).execute()
 
-    
+
 def defineMethod(text, _node):
     commands = _node.words()
     method_index = commands.index("method")
@@ -53,9 +47,9 @@ def defineMethod(text, _node):
             if (format_command != "pascal") and (format_command !="snake"):
                 format_command = "camel"  # default
             formatted_class_name = utils.text_to_case(format_command, format_me)
-    (Text(modifiers_string + formatted_class_name + "() {") + Key("enter, up, end, left:3")).execute()    
-    
-        
+    (Text(modifiers_string + formatted_class_name + "() {") + Key("enter, up, end, left:3")).execute()
+
+
 def defineClass(text, _node):
     commands = _node.words()
     class_index = commands.index("class")
@@ -72,33 +66,33 @@ def defineClass(text, _node):
 
 
 class JavaRule(MappingRule):
-    INTELLIJ_POPUP_DELAY = "10"    
+    INTELLIJ_POPUP_DELAY = "10"
     mapping = {
         specs.SymbolSpecs.IF:                       Text("if(){") + Key("enter,up,left"),
         # specs.SymbolSpecs.IF:                       Key("dot, i, f/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.ELSE:                     Text("else {") + Key("enter"),
         specs.SymbolSpecs.DEFINE_METHOD:            Function(defineMethod),
         # specs.SymbolSpecs.SWITCH:                   Text("switch(){\ncase : break;\ndefault: break;")+Key("up,up,left,left"),
-        specs.SymbolSpecs.SWITCH:                   Key("dot, s, w, i, t, c, h/" + INTELLIJ_POPUP_DELAY + ", enter"),                   
+        specs.SymbolSpecs.SWITCH:                   Key("dot, s, w, i, t, c, h/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.CASE:                     Text("case :")+Key("left"),
         specs.SymbolSpecs.BREAK:                    Text("break;"),
         specs.SymbolSpecs.DEFAULT:                  Text("default: "),
         specs.SymbolSpecs.DO_LOOP:                  Text("do {}")+Key("left, enter:2"),
         # specs.SymbolSpecs.WHILE_LOOP:               Text("while ()")+Key("left"),
-        specs.SymbolSpecs.WHILE_LOOP:               Key("dot, w, h, i, l, e/" + INTELLIJ_POPUP_DELAY + ", enter"),               
+        specs.SymbolSpecs.WHILE_LOOP:               Key("dot, w, h, i, l, e/" + INTELLIJ_POPUP_DELAY + ", enter"),
         # specs.SymbolSpecs.FOR_LOOP:                 Text("for (int i=0; i< ; i++){") + Key("enter,up"),
         specs.SymbolSpecs.FOR_LOOP:                 Key("dot, f, o, r, i/" + INTELLIJ_POPUP_DELAY + ", enter"),
         # specs.SymbolSpecs.FOR_EACH_LOOP:            Text("for( : ){") + Key("enter,up"),
         specs.SymbolSpecs.FOR_EACH_LOOP:            Key("dot, f, o, r/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.TRY_CATCH:                Key("dot, t, r, y/" + INTELLIJ_POPUP_DELAY + ", enter"),
-        
+
         specs.SymbolSpecs.TO_INTEGER:               Text("Integer.parseInt()")+ Key("left"),
         specs.SymbolSpecs.TO_STRING:                Text(".toString()"),
-        
+
         specs.SymbolSpecs.AND:                      Text(" && "),
         specs.SymbolSpecs.OR:                       Text(" || "),
         specs.SymbolSpecs.NOT:                      Text("!"),
-        
+
         # specs.SymbolSpecs.SYSOUT:                   Text("System.out.println()")+Key("left"),
         specs.SymbolSpecs.SYSOUT:                   Key("dot, s, o, u, t/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.IMPORT:                   Text( "import " ),
@@ -112,7 +106,7 @@ class JavaRule(MappingRule):
         specs.SymbolSpecs.RETURN:                   Key("dot, r, e, t, u, r, n/" + INTELLIJ_POPUP_DELAY + ", enter"),
         specs.SymbolSpecs.TRUE:                     Text("true"),
         specs.SymbolSpecs.FALSE:                    Text("false"),
-        
+
         # "it are in": Text("Arrays.asList(TOKEN).contains(TOKEN)"),
         "[(public | protected | private)] [static] [final]": Function(printModifiers),
         "is not null": Key("dot, n, o, t, n, u, l, l/" + INTELLIJ_POPUP_DELAY + ", enter"),
@@ -131,7 +125,7 @@ class JavaRule(MappingRule):
         "big integer": Text("Integer "),
         "string": Text("String "),
         "becomes": Text(" -> "),
-        
+
         # "substring": Text("substring"),
         "(short | sue) if then": Text("if ()")+ Key("left"),
         "(short | sue) shells": Text("else")+ Key("enter"),

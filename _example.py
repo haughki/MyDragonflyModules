@@ -1,7 +1,3 @@
-# import sys
-# sys.path.append('pycharm-debug.egg')
-# import pydevd
-# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 import os
 
 from dragonfly import *
@@ -20,9 +16,9 @@ def buildNumber(w, x=None, y=None, z=None):
     if z is not None:
         number += str(z)
     Text(number).execute()
-        
 
-        
+
+
 class Example(MappingRule):
     mapping = {
         "Dirk <w> [<x>] [<y>] [<z>]": Function(buildNumber),

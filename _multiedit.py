@@ -1,9 +1,4 @@
-﻿# import sys
-# sys.path.append('pycharm-debug.egg')
-# import pydevd
-# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
-
-#
+﻿#
 # This file is a command-module for Dragonfly.
 # (c) Copyright 2008 by Christo Butcher
 # Licensed under the LGPL, see <http://www.gnu.org/licenses/>

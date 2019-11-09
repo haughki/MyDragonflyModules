@@ -1,8 +1,3 @@
-# import sys
-# sys.path.append('pycharm-debug.egg')
-# import pydevd
-# pydevd.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
-
 from dragonfly import *
 
 from languages import python_rule, java_rule
@@ -19,16 +14,16 @@ def disableAll():
     for lang in supported_languages:
         if supported_languages[lang].enabled:
             supported_languages[lang].disable()
-            
+
 class SetLanguageRule(CompoundRule):
     spec = "[set] language (python | java)"
-    
+
     def _process_recognition(self, node, extras):
         lang_to_activate = node.words()[-1]
         print "activating " + lang_to_activate
 
         disableAll()
-        
+
         if not supported_languages[lang_to_activate].enabled:
             supported_languages[lang_to_activate].enable()
 
