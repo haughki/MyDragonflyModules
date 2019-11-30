@@ -145,6 +145,7 @@ class GmailMappings(MappingRule):
         "[go to] sent mail": Key("g,t"),
         "[go to] drafts": Key("g,d"),
         "[go to] label Indeni": Key("g,l/20") + Text("__Indeni") + Key("enter"),
+        "[go to] label Indeni inbox": Key("g,l/20") + Text("__Indeni/_in") + Key("enter"),
         "[go to] label Indeni to do": Key("g,l/20") + Text("__Indeni/_todo") + Key("enter"),
 
         # move to folders
@@ -152,6 +153,7 @@ class GmailMappings(MappingRule):
         "move to <text>": select_line_open_move + Text("%(text)s") + Key("enter"),
 
         "[move] [to] Indeni": Function(selectAndMove, dest="__Indeni"),
+        "[move] [to] Indeni inbox": Function(selectAndMove, dest="__Indeni/_in"),
         "[move] [to] Indeni to do": Function(selectAndMove, dest="__Indeni/_todo"),
         "[move] [to] Indeni waiting": Function(selectAndMove, dest="__Indeni/_waiting"),
         "[move] [to] receipts": Function(selectAndMove, dest="aa_receipts"),

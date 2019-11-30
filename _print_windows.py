@@ -6,7 +6,7 @@ from dragonfly import CompoundRule, Grammar, Window
 from supporting import utils
 
 class PrintWindowsRule(CompoundRule):
-    spec = "print Windows"  # Spoken form of command.
+    spec = "print [all] Windows"  # Spoken form of command.
 
     def _process_recognition(self, node, extras):  # Callback when command is spoken.
         windows = Window.get_all_windows()
