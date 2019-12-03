@@ -22,6 +22,10 @@ def printNumber(w, x=None, y=None, z=None):
 
 class VsCodeMapping(MappingRule):
     mapping = {
+        # misc
+        "run app": Key("ca-n"),
+
+
         #"[go to | show] project window": Key("a-1"),
 
         # Search.
@@ -32,10 +36,11 @@ class VsCodeMapping(MappingRule):
         # "find (prev | previous)": Key("s-f3"),
         # "find in files": Key("cs-f"),
 
-        # Code.
+        # Edit.
         "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/25") + Function(printNumber)+ Key("enter"),
         "[show] white space": Key("cs-w"),
         "word wrap": Key("cs-d"),
+        "comment [line | that | it]": Key("c-slash"),
 
         # Code navigation.
         "get file [<text>]": Function(getFile),  # "Navigate > File..."
@@ -50,12 +55,17 @@ class VsCodeMapping(MappingRule):
         "close tab": Key("c-w"),
         "(full-screen | full screen)": Key("cs-x"),
         "side panel": Key("c-b"),
-        
+
         # git
         "pull this": Key("c-t"),
         "push this": Key("c-k"),
+
+        # Ansible
+        "define variable": Text("- set_fact:\n\t\t"),
+        "debug variable": Text("- debug: var="),
+        "debug message": Text("- debug: \n\t\tmsg: ")
     }
-    
+
     extras = [
         Integer("t", 1, 50),
         Dictation("text"),

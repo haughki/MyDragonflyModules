@@ -25,5 +25,5 @@ settings.defaults = {
         "dragonpad": ("natspeak", "dragonpad"),
         "wonder list": ("applicationframehost", "wunderlist"),
         "code": ("", ""),
-        "you code": ("xwin_mobax.exe", "visual studio code"),
+        "mobile": ("mobaxterm", ""),
     }
