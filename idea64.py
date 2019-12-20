@@ -93,7 +93,9 @@ class CommandRule(MappingRule):
         "comment [line | that | it]": Key("c-slash"),
         "show white space": Key("cs-w"),
         "redo": Key("cs-z"),
-        
+        "move line up": Key("c-up"),
+        "move line down": Key("c-down"),
+
         # Window handling.
         # "preev file": Key("c-tab"),
         "next tab [<t>]": Key("a-right/5:%(t)d"),
@@ -116,7 +118,7 @@ class CommandRule(MappingRule):
         "[(refactor|re-factor)] extract variable": Key("ca-v"),
         "[(refactor|re-factor)] extract method": Key("ca-w"),
         "[(refactor|re-factor)] (in line|inline)": Key("ca-n"),
-        
+
         # Custom key mappings.
         # "(run SSH session|run SSH console|run remote terminal|run remote console)": Key("a-f11/25, enter"),
     }

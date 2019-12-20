@@ -3,7 +3,7 @@ import os
 from dragonfly import *
 from reimport import reimport
 
-from languages import python_rule, java_rule, specs
+from languages import python_rule, java_rule, yaml_rule, specs
 from supporting import utils, character
 
 MACROSYSTEM_DIRECTORY = "C:\\NatLinkUserDirectory"
@@ -16,7 +16,7 @@ def languageReloader():
     # for mod in modified_modules:
     #     reimport(mod)
     reimport(specs)
-    reimport(python_rule, java_rule)
+    reimport(python_rule, java_rule, yaml_rule)
     utils.touch(MACROSYSTEM_DIRECTORY + "\\_language_switcher.py")
     utils.toggleMicrophone()
 

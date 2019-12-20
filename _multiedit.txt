@@ -155,7 +155,7 @@ cmd.map = {
         "grab head": release + Key("s-home, c-c"), # copy from cursor to line home
         "cut head": release + Key("s-home, c-x"), # cut from cursor to line home
         "nab [<n>]": release + Key("end, home:2, s-down:%(n)d, c-c, up"), # copy lines down
-        "swipe [<n>]": release + Key("end, home:2, s-down:%(n)d, c-x, escape"), # cut lines down
+        "swipe [<n>]": release + Key("end, home:2, s-down:%(n)d, c-x"), # cut lines down
         "dupe": release + Key("end, home, s-end, c-c, end, enter, c-v"), # duplicate lines down
 
         ### words

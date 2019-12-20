@@ -30,6 +30,7 @@ class VsCodeMapping(MappingRule):
 
         # Search.
         "replace": Key("c-r"),
+        "replace enter": Key("ca-enter"),
         "show find": Key("c-f"),
         "find <text>": Key("c-f/25") + Text("%(text)s"),
         # "find next": Key("f3"),
@@ -37,10 +38,12 @@ class VsCodeMapping(MappingRule):
         # "find in files": Key("cs-f"),
 
         # Edit.
-        "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/25") + Function(printNumber)+ Key("enter"),
+        "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/25") + Function(printNumber) + Key("enter"),
         "[show] white space": Key("cs-w"),
         "word wrap": Key("cs-d"),
         "comment [line | that | it]": Key("c-slash"),
+        "move line up": Key("c-up"),
+        "move line down": Key("c-down"),
 
         # Code navigation.
         "get file [<text>]": Function(getFile),  # "Navigate > File..."
@@ -54,7 +57,11 @@ class VsCodeMapping(MappingRule):
         "(preev | previous) tab [<t>]": Key("c-pageup:%(t)d"),
         "close tab": Key("c-w"),
         "(full-screen | full screen)": Key("cs-x"),
-        "side panel": Key("c-b"),
+        "close side panel": Key("c-b"),
+        "[switch | go] side (panel | bar)": Key("c-0"),
+        "rename [current] file": Key("c-0") + Key("f2"),
+        "side (panel | bar) rename": Key("f2"),
+        "[(switch | go) to] editor": Key("csa-`"),
 
         # git
         "pull this": Key("c-t"),
@@ -63,7 +70,8 @@ class VsCodeMapping(MappingRule):
         # Ansible
         "define variable": Text("- set_fact:\n\t\t"),
         "debug variable": Text("- debug: var="),
-        "debug message": Text("- debug: \n\t\tmsg: ")
+        "debug message": Text("- debug: \n\t\tmsg: "),
+        "extract variable": Text("\"{{}}\"") + Key("left:3")
     }
 
     extras = [

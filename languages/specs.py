@@ -16,12 +16,12 @@ class SymbolSpecs(object):
     IF = "if then"
     ELSE = "(shells | else)"
     DEFINE_METHOD = "[(public | protected | private)] [static] [final] [void] method [pascal | snake] [<text>]"  # public static void myMethod()
-    
+
     SWITCH = "switch statement"
     CASE = "case of"
     BREAK = "breaker"
     DEFAULT = "default"
-    
+
     DO_LOOP = "do loop"
     WHILE_LOOP = "while loop"
     FOR_EACH_LOOP = "for each"
@@ -31,22 +31,24 @@ class SymbolSpecs(object):
     TO_INTEGER = "to integer"
     TO_FLOAT = "to floating point"
     TO_STRING = "to string"
-    
+
     AND = "lodge and"
     OR = "lodge or"
     NOT = "lodge not"
-    
-    SYSOUT = "print out"
+
+    SYSOUT = "(print out | debug out)"
     IMPORT = "import"
     FUNCTION = "function"
     CLASS = "[(public | protected | private)] [static] [final] class [camel | snake] [<text>]"
-    
+
     COMMENT = "add comment"
     LONG_COMMENT = "long comment"
-    
-    NOT_EQUAL_NULL = "not nothing"
-    NULL = "(null | nothing)"
+
+    NOT_EQUAL_NULL = "not (null | nothing | undefined)"
+    NULL = "(null | nothing | undefined)"
     RETURN = "return"
     TRUE = "true"
     FALSE = "false"
     NEW = "new"
+
+    GET_LENGTH = "get length"
