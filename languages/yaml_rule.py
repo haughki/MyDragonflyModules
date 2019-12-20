@@ -24,7 +24,7 @@ class YamlRule(MappingRule):
             specs.SymbolSpecs.FALSE:              Text("False"),
 
             "(started | start it)": Text("- "),
-            "start when": Text("- when:"),
+            "start when": Text("- when: "),
             "long not":                     Text(" not "),
             "it are in":                    Text(" in "),          #supposed to sound like "iter in"
             # "convert to int":               Text("|int "),
@@ -32,7 +32,7 @@ class YamlRule(MappingRule):
             "dot YAML":                     Text(".yml"),
             "(create | define) variable": Text("- set_fact:\n\t\t"),
             "(print | debug) variable": Text("- debug: var="),
-            "(print | debug) message": Text("- debug: \n\t\tmsg: "),
+            "(print | debug) message": Text("- debug:\n\t\tmsg: "),
             "(extract | get) variable": Text("\"{{}}\"") + Key("left:3")
     }
     extras = [
