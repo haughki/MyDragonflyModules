@@ -30,6 +30,7 @@ class MobaXtermMapping(MappingRule):
     mapping = {
         "next tab [<t>]": Key("c-tab:%(t)d"),
         "(preev | previous) tab [<t>]": Key("cs-tab:%(t)d"),
+        "close tab [<t>]": Key("ca-q:%(t)d"),
 
         "Denny triage": Text("cd /usr/share/indeni-knowledge/stable/automation") + Key("enter"),
         "Ansible logs": Text("cd /usr/share/indeni-services/logs/ansible") + Key("enter"),

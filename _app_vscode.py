@@ -68,10 +68,10 @@ class VsCodeMapping(MappingRule):
         "push this": Key("c-k"),
 
         # Ansible
-        "define variable": Text("- set_fact:\n\t\t"),
-        "debug variable": Text("- debug: var="),
-        "debug message": Text("- debug: \n\t\tmsg: "),
-        "extract variable": Text("\"{{}}\"") + Key("left:3")
+        # "define variable": Text("- set_fact:\n\t\t"),
+        # "debug variable": Text("- debug: var="),
+        # "debug message": Text("- debug: \n\t\tmsg: "),
+        # "extract variable": Text("\"{{}}\"") + Key("left:3")
     }
 
     extras = [

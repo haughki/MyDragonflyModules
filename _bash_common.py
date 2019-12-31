@@ -102,6 +102,9 @@ class BashCommonMapping(MappingRule):
         "vim <text>": T("vim %(text)s") + K("tab,enter"),
         "suvim": T("sudo vim "),
         "suvim <text>": T("sudo vim %(text)s") + K("tab,enter"),
+
+        # checkpoint
+        "clish command": T("clish -c \"\"") + K("left")
     }
 
     extras = [
