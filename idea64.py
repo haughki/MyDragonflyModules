@@ -104,6 +104,9 @@ class CommandRule(MappingRule):
 
         # Version control.
         "show diff": Key("c-d"),
+        "(get | git) pull": Key("c-t"),
+        "(get | git) push": Key("cs-k"),
+        "(get | git) commit": Key("c-k"),
 
         # Refactoring.
         "(refactor|re-factor) (this|choose)": Key("cas-t"),

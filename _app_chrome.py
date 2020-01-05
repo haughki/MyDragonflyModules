@@ -52,7 +52,7 @@ def select(n=None):
 def selectAndMove(dest):
     Key("x/30,v/30").execute()
     Text(dest).execute()
-    Pause("30").execute()
+    Pause("50").execute()
     Key("enter").execute()
 
 
@@ -66,6 +66,8 @@ class GlobalChromeMappings(MappingRule):
         "reopen tab": Key("cs-t"),
         "(next | nex) (tab | ab) [<n>]": Key("c-pgdown:%(n)d"),
         "(previous | preev) tab [<n>]": Key("c-pgup:%(n)d"),
+        "move tab right [<n>]": Key("cs-pgdown/10:%(n)d"),
+        "move tab left [<n>]": Key("cs-pgup/10:%(n)d"),
         "show tab <tab>": Key("c-%(tab)d"),
         "(first | firs) tab": Key("c-1"),
         "(last | lass | las ) tab": Key("c-9"),

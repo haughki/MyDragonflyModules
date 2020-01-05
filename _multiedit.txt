@@ -184,7 +184,9 @@ cmd.map = {
         "release": release,
 
         ### other
+        "control slap": Key("c-enter"),
         "(bolder|boulder)": Key("c-b"),
+        "italics": Key("c-i"),
         "undo [<n>]": Key("c-z:%(n)d"),
         "preev window": Key("a-tab/10"),
         "preev file": Key("c-tab"),
