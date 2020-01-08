@@ -35,9 +35,12 @@ class BashCommonMapping(MappingRule):
     mapping = {
         "short list": Text("ls") + Key("enter"),
         "go home": Text("cd ~") + Key("enter"),
-        "free line": Key("c-a") + Key("c-k"),
+        "[clear | free] line": Key("c-a") + Key("c-k"),
         "free arg[ument]": Key("c-w"),
         "to Jason": Text(" | python -m json.tool") + Key("enter"),
+
+        "swat": Key("c-w"),
+
 
 
         "cat": T("cat "),

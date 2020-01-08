@@ -30,7 +30,7 @@ class VsCodeMapping(MappingRule):
 
         # Search.
         "replace": Key("c-r"),
-        "replace enter": Key("ca-enter"),
+        "replace (enter | all)": Key("ca-enter"),
         "show find": Key("c-f"),
         "find <text>": Key("c-f/25") + Text("%(text)s"),
         # "find next": Key("f3"),

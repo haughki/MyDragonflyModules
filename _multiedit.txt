@@ -195,13 +195,11 @@ cmd.map = {
         "clean close [<n>]": Key("c-a, del, c-w/20:%(n)d"),
         "new (thing | file)": Key("c-n"),
         "file save": Key("c-s"),
+        "file open": Key("c-o"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
         "(you tells | utils)": Text("utils"),
         "new Evernote": Key("ca-n"),
         "it'slock": Key("capslock"),
-
-        ### Intellij Commands
-        #"comment": Key("c-slash"),
 }
 
 #---------------------------------------------------------------------------

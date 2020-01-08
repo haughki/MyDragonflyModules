@@ -10,6 +10,8 @@ class SlackMapping(MappingRule):
         # "(previous | preev) tab [<n>]": Key("c-pgup:%(n)d"),
         # "show tab <tab>": Key("c-%(tab)d"),
         "switch <text>": Key("c-k/25") + Text("%(text)s") + Key("enter"),
+        "show switch": Key("c-k"),
+        "left (pain | pane)": Key("f6/10:3"),
 
         # "open <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumber) + Key("enter"),  # click by voice
         # "open focus <w> [<x>] [<y>] [<z>]": Key("cs-space/" + click_by_voice_delay) + Function(printNumberFocus) + Key("enter"),  # click by voice
