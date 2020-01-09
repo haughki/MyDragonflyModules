@@ -135,6 +135,20 @@ cmd.map = {
         "eight": Key("8"),
         "nine": Key("9"),
 
+        ### Function Keys
+        "(F | f) one": Key("f1"),
+        "(F | f) two": Key("f2"),
+        "(F | f) three": Key("f3"),
+        "(F | f) four": Key("f4"),
+        "(F | f) five": Key("f5"),
+        "(F | f) six": Key("f6"),
+        "(F | f) seven": Key("f7"),
+        "(F | f) eight": Key("f8"),
+        "(F | f) nine": Key("f9"),
+        "(F | f) ten": Key("f10"),
+        "(F | f) eleven": Key("f11"),
+        "(F | f) twelve": Key("f12"),
+
         ### Special Strings
         "gets": Key("space, equal, space"),
         "eeks": Key("space, equal, equal, space"),
