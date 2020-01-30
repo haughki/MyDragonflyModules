@@ -75,6 +75,7 @@ class GlobalChromeMappings(MappingRule):
         "go forward": Key("a-right"),
         "address [bar]": Key("a-d"),
         "refresh page": Key("f5"),
+        "show find": Key("c-g"),
         "find <text>": Key("c-g/25") + Text("%(text)s"),
         "find next": Key("enter"),
         "find (prev | previous)": Key("s-enter"),
@@ -146,33 +147,43 @@ class GmailMappings(MappingRule):
         "[go to] inbox": Key("g,i"),
         "[go to] sent mail": Key("g,t"),
         "[go to] drafts": Key("g,d"),
-        "[go to] label Indeni": Key("g,l/20") + Text("__Indeni") + Key("enter"),
-        "[go to] label Indeni inbox": Key("g,l/20") + Text("__Indeni/_in") + Key("enter"),
-        "[go to] label Indeni to do": Key("g,l/20") + Text("__Indeni/_todo") + Key("enter"),
 
         # move to folders
         "move": Key("v"),
         "move to <text>": select_line_open_move + Text("%(text)s") + Key("enter"),
 
-        "[move] [to] Indeni": Function(selectAndMove, dest="__Indeni"),
-        "[move] [to] Indeni inbox": Function(selectAndMove, dest="__Indeni/_in"),
-        "[move] [to] Indeni to do": Function(selectAndMove, dest="__Indeni/_todo"),
-        "[move] [to] Indeni waiting": Function(selectAndMove, dest="__Indeni/_waiting"),
-        "[move] [to] receipts": Function(selectAndMove, dest="aa_receipts"),
+        "[go to] label soon [as] possible": Key("g,l/20") + Text("aa_todo/asap") + Key("enter"),
+        "[go to] label check [back] soon": Key("g,l/20") + Text("aa_todo/check back soon") + Key("enter"),
+        "[go to] label respond": Key("g,l/20") + Text("aa_todo/respond") + Key("enter"),
+        "[go to] label someday": Key("g,l/20") + Text("aa_todo/someday") + Key("enter"),
+        "[go to] label waiting [for response]": Key("g,l/20") + Text("aa_todo/waiting for response") + Key("enter"),
+
+        "[go to] label newsletters": Key("g,l/20") + Text("newsletters") + Key("enter"),
+
         "[move] [to] asap": Function(selectAndMove, dest="aa_todo/asap"),
         "[move] [to] [check back] soon": Function(selectAndMove, dest="aa_todo/check back soon"),
         "[move] [to] respond": Function(selectAndMove, dest="aa_todo/respond"),
         "[move] [to] someday": Function(selectAndMove, dest="aa_todo/someday"),
         "[move] [to] waiting [for response]": Function(selectAndMove, dest="aa_todo/waiting for response"),
 
+        "move [to] inbox": Function(selectAndMove, dest="inbox"),
+        "[move] [to] receipts": Function(selectAndMove, dest="aa_receipts"),
         "[move] [to] check me out": Function(selectAndMove, dest="check me out"),
-
-
         "[move] [to] friends": Function(selectAndMove, dest="friends"),
         "[move] [to] miscellaneous": Function(selectAndMove, dest="miscellaneous"),
         "[move] [to] mom": Function(selectAndMove, dest="mom"),
         "[move] [to] notes [to self]": Function(selectAndMove, dest="notes to self"),
         "[move] [to] trips": Function(selectAndMove, dest="trips"),
+
+
+        # "[go to] label Indeni": Key("g,l/20") + Text("__Indeni") + Key("enter"),
+        # "[go to] label Indeni inbox": Key("g,l/20") + Text("__Indeni/_in") + Key("enter"),
+        # "[go to] label Indeni to do": Key("g,l/20") + Text("__Indeni/_todo") + Key("enter"),
+        #
+        # "[move] [to] Indeni": Function(selectAndMove, dest="__Indeni"),
+        # "[move] [to] Indeni inbox": Function(selectAndMove, dest="__Indeni/_in"),
+        # "[move] [to] Indeni to do": Function(selectAndMove, dest="__Indeni/_todo"),
+        # "[move] [to] Indeni waiting": Function(selectAndMove, dest="__Indeni/_waiting"),
     }
 
     extras = [

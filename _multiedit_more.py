@@ -10,7 +10,7 @@ class MultiMoreKeyMap(MappingRule):
         #        "boss": Key("ctrl:down"),
         #        "shun": Key("ctrl:up"),
         "switch": release + Key("ctrl:down, tab"),
-        "show apps": release + Key("alt:down, tab"),
+        "show [all] apps | show [all] Windows": release + Key("alt:down, tab"),
         "mimic <text>": release + Mimic(extra="text"),
         "pop": Key("apps"), # right click
         "list Windows": Mimic("list", "all", "Windows"),

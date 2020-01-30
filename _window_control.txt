@@ -26,4 +26,5 @@ settings.defaults = {
         "wonder list": ("applicationframehost", "wunderlist"),
         "code": ("", ""),
         "mobile": ("mobaxterm", ""),
+        "Windows get": ("mintty", ""),
     }

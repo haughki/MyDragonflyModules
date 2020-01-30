@@ -71,7 +71,7 @@ class CommandRule(MappingRule):
         "find <text>": Key("c-f/25") + Text("%(text)s"),
         "find next": Key("f3"),
         "find (prev | previous)": Key("s-f3"),
-        "find in files": Key("cs-f"),
+        "find [in | and] files": Key("cs-f"),
         "find usages": Key("a-f7"),
 
         # Code.
