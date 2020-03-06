@@ -14,7 +14,7 @@ class CommandRule(MappingRule):
         "close tab": Key("c-w"),
         
         # Edit
-        "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("f5/30") + Function(printNumber)+ Key("enter, escape"),
+        "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("f5/30, s-tab, up:2, down:2, tab") + Function(printNumber) + Key("enter, escape"),
     }
     extras = [
         Integer("t", 1, 50),

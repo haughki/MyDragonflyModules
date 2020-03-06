@@ -1,27 +1,17 @@
-import os
+import os, webbrowser
 
 from dragonfly import *
 from dragonfly.actions.action_base import BoundAction
 
 from supporting import utils, character
 
-
-
-def buildNumber(w, x=None, y=None, z=None):
-    number = str(w)
-    if x is not None:
-        number += str(x)
-    if y is not None:
-        number += str(y)
-    if z is not None:
-        number += str(z)
-    Text(number).execute()
-
+def openSite():
+    webbrowser.open("https://drive.google.com/drive/my-drive")
 
 
 class Example(MappingRule):
     mapping = {
-        "Dirk <w> [<x>] [<y>] [<z>]": Function(buildNumber),
+        "Dirk": Function(openSite)
     }
     extras = [Dictation("dictation"),
               Integer("w", 0, 10),

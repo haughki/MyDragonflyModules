@@ -23,6 +23,19 @@ def printNumber(w, x=None, y=None, z=None):
     number = utils.buildNumber(w, x, y, z)
     Text(number).execute()
 
+
+is_full_screen = False
+def toggleFullScreen():
+    global is_full_screen
+    if is_full_screen:
+        Key("cas-x").execute()    # "hide all tool windows"
+        Key("w-down").execute()   # Windows OS for "restore window" -- doing this because IntelliJ's full screen mode is broken -- doesn't properly restore window after full-screen mode
+        is_full_screen = False
+    else:
+        Key("w-up").execute()    # Windows OS for "maximize window"
+        Key("cas-x").execute()
+        is_full_screen = True
+
 class CommandRule(MappingRule):
     mapping = {
         # Code execution.
@@ -87,7 +100,7 @@ class CommandRule(MappingRule):
 
         # Edit
         "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/30") + Function(printNumber)+ Key("enter"),
-        "(full-screen | full screen)": Key("cs-x"),  # macro, combination of: "Toggle Full Screen Mode" and "Hide All Tool Windows"
+        "(full-screen | full screen)": Function(toggleFullScreen),  # macro, combination of: "Toggle Full Screen Mode" and "Hide All Tool Windows"
         "(Hide | hide | hi) bottom": Key("s-escape"),  # "hide active tool window"
         "(Hide | hide | hi) side": Key("cas-c"),  # "hide side tool windows"
         "comment [line | that | it]": Key("c-slash"),
