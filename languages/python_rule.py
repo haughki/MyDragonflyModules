@@ -9,6 +9,7 @@ class PythonRule(MappingRule):
             "(shells | else) if":                   Key("e,l,i,f,space,colon,left"),
             specs.SymbolSpecs.IF:                   Key("i,f,space,colon,left"),
             specs.SymbolSpecs.ELSE:                 Text("else:") + Key("enter"),
+            specs.SymbolSpecs.IF_ELSE:              Key("i,f,space,colon,enter,s-tab,e,l,s,e,colon,up,left"),
             specs.SymbolSpecs.DEFINE_METHOD:        Text("def ():") + Key("left:3"),
             "define self":                          Text("def (self):") + Key("left:7"),
             specs.SymbolSpecs.FOR_LOOP:             Text("for i in range(0, ):") + Key("left:2"),

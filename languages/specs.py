@@ -15,6 +15,7 @@ class TokenSet(object):
 class SymbolSpecs(object):
     IF = "if then"
     ELSE = "(shells | else)"
+    IF_ELSE = IF + " " + ELSE
     DEFINE_METHOD = "[(public | protected | private)] [static] [final] [void] method [pascal | snake] [<text>]"  # public static void myMethod()
 
     SWITCH = "switch statement"

@@ -28,12 +28,14 @@ is_full_screen = False
 def toggleFullScreen():
     global is_full_screen
     if is_full_screen:
+        # Key("cs-f12").execute()    # "Enter Distraction Free Mode"
         Key("cas-x").execute()    # "hide all tool windows"
-        Key("w-down").execute()   # Windows OS for "restore window" -- doing this because IntelliJ's full screen mode is broken -- doesn't properly restore window after full-screen mode
+        Key("w-down").execute()    # Windows OS for "restore window" -- doing this because IntelliJ's full screen mode is broken -- doesn't properly restore window after full-screen mode
         is_full_screen = False
     else:
-        Key("w-up").execute()    # Windows OS for "maximize window"
-        Key("cas-x").execute()
+        Key("w-up").execute()      # Windows OS for "maximize window"
+        # Key("cs-f12").execute()    # "Enter Distraction Free Mode"
+        Key("cas-x").execute()    # "hide all tool windows"
         is_full_screen = True
 
 class CommandRule(MappingRule):

@@ -171,6 +171,7 @@ class GmailMappings(MappingRule):
         "[move] [to] check me out": Function(selectAndMove, dest="check me out"),
         "[move] [to] friends": Function(selectAndMove, dest="friends"),
         "[move] [to] miscellaneous": Function(selectAndMove, dest="miscellaneous"),
+        "[move] [to] MVNS": Function(selectAndMove, dest="Karsa/MVNS"),
         "[move] [to] mom": Function(selectAndMove, dest="mom"),
         "[move] [to] notes [to self]": Function(selectAndMove, dest="notes to self"),
         "[move] [to] trips": Function(selectAndMove, dest="trips"),

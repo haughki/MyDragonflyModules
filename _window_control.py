@@ -1,4 +1,5 @@
-﻿#
+﻿
+#
 # This file is a command-module for Dragonfly.
 # (c) Copyright 2008 by Christo Butcher
 # Licensed under the LGPL, see <http://www.gnu.org/licenses/>
@@ -57,26 +58,36 @@ rule_log = logging.getLogger("rule")
 
 config = Config("Window control")
 config.lang                = Section("Language section")
-config.lang.name_win       = Item("name (window | win) <name>",
-                                  doc="Command to give the foreground window a name; must contain the <name> extra.")
+# Giving windows arbitrary names never seem to work properly for me. Naming a window would associate an arbitrary name
+# with an in memory window object. But, in certain situations, the underlying window object for a given window could change
+# and would not refresh, so that the name for the window would have an old, outdated window object.
+# config.lang.name_win       = Item("name (window | win) <name>",
+#                                   doc="Command to give the foreground window a name; must contain the <name> extra.")
 config.lang.focus_win      = Item("(jump | focus) <win_selector>",
                                   doc="Command to bring a named window to the foreground.")
 config.lang.focus_title    = Item("(jump | focus) title <text>",
                                   doc="Command to bring a window with the given title to the foreground.")
-config.lang.translate_win  = Item("place <win_selector> <position> [on <mon_selector>]",
+#config.lang.translate_win  = Item("place <win_selector> <position> [on <mon_selector>]",
+config.lang.translate_win  = Item("place <win_selector> (<position> [on <mon_selector>] | on <mon_selector>)",
                                   doc="Command to translate a window.")
+config.lang.nudge_win      = Item("nudge <win_selector> <direction> [<nudge_multiplier>]",
+                                  doc="Command to nudge a window in a direction.")
 config.lang.resize_win     = Item("place <win_selector> [from] <position> [to] <position> [on <mon_selector>]",
                                   doc="Command to move and resize a window.")
 config.lang.stretch_win    = Item("stretch <win_selector> [to] <position>",
                                   doc="Command to stretch a window.")
 config.lang.place_win_fraction = Item("place <win_selector> <position> <screen_fraction>",
                                   doc="Command to place a window according to a screen fraction.")
-config.lang.win_selector   = Item("window | win | [window] <win_names> [<title_fragment>]",
+
+#config.lang.win_selector   = Item("window | win | [window] <win_names> [<title_fragment>]",
+config.lang.win_selector   = Item("[(this | current | window)] | <win_names> [<title_fragment>]",
                                   doc="Partial command for specifying a window; must contain the <win_names> extra.")
 config.lang.mon_selector   = Item("(this | current) monitor | [monitor] <mon_names>",
                                   doc="Partial command for specifying a monitor; must contain the <mon_names> extra.")
-config.lang.left           = Item("left", doc="Word for left side of monitor.")
-config.lang.right          = Item("right", doc="Word for right side of monitor.")
+config.lang.left           = Item("left", doc="Word for direction left or left side of monitor.")
+config.lang.right          = Item("right", doc="Word for direction right or right side of monitor.")
+config.lang.up             = Item("up", doc="Word for direction up.")
+config.lang.down             = Item("down", doc="Word for direction down.")
 config.lang.top            = Item("top", doc="Word for top side of monitor.")
 config.lang.bottom         = Item("bottom", doc="Word for bottom side of monitor.")
 config.lang.screen_fractions = Item({
@@ -85,6 +96,7 @@ config.lang.screen_fractions = Item({
                                      "quarter":  0.25,
                                     },
                                     doc="Fractions of the screen")
+
 config.settings            = Section("Settings section")
 config.settings.grid       = Item(10, doc="The number of grid divisions a monitor is divided up into when placing windows.")
 config.settings.defaults   = Item({
@@ -246,20 +258,23 @@ winctrl_grammar.add_rule(FocusWinRule())
 
 #---------------------------------------------------------------------------
 # Exported window naming rule.
+# Giving windows arbitrary names never seem to work properly for me. Naming a window would associate an arbitrary name
+# with an in memory window object. But, in certain situations, the underlying window object for a given window could change
+# and would not refresh, so that the name for the window would have an old, outdated window object.
 
-class NameWinRule(CompoundRule):
-
-    spec = config.lang.name_win
-    extras = [Dictation("name")]
-
-    def _process_recognition(self, node, extras):
-        name = str(extras["name"])
-        window = Window.get_foreground()
-        window.name = name
-        win_names[name] = window
-        self._log.debug("%s: named foreground window '%s'." % (self, window))
-
-winctrl_grammar.add_rule(NameWinRule())
+# class NameWinRule(CompoundRule):
+#
+#     spec = config.lang.name_win
+#     extras = [Dictation("name")]
+#
+#     def _process_recognition(self, node, extras):
+#         name = str(extras["name"])
+#         window = Window.get_foreground()
+#         window.name = name
+#         win_names[name] = window
+#         self._log.debug("%s: named foreground window '%s'." % (self, window))
+#
+# winctrl_grammar.add_rule(NameWinRule())
 
 
 #---------------------------------------------------------------------------
@@ -359,21 +374,125 @@ class TranslateRule(CompoundRule):
         m_dx = monitor.dx - pos.dx
         m_y1 = monitor.y1 + pos.dy / 2
         m_dy = monitor.dy - pos.dy
+        # print pos.dx
+        # print pos.dy
+        # print m_x1
+        # print m_dx
+        # print m_y1
+        # print m_dy
+        # print monitor.x1
+        # print monitor.dx
+        # print monitor.y1
+        # print monitor.dy
+
 
         # Get spoken position and calculate how far to move.
+        # A command can either specify a horizontal destination (left or right) or not. If it doesn't, default to "left".
+        horizontal_value = -1
+        if "position" not in extras:
+            horizontal_value = 0.0    # horz_left
         horizontal = node.get_child_by_name("horz")
+        if horizontal:
+            horizontal_value = horizontal.value()
+        if horizontal_value != -1:
+            dx = m_x1 + horizontal_value * m_dx - pos.center.x
+        else:
+            dx = 0
+
         vertical = node.get_child_by_name("vert")
-        if horizontal: dx = m_x1 + horizontal.value() * m_dx - pos.center.x
-        else:          dx = 0
-        if vertical:   dy = m_y1 + vertical.value() * m_dy - pos.center.y
-        else:          dy = 0
+        if vertical:
+            dy = m_y1 + vertical.value() * m_dy - pos.center.y
+        else:
+            dy = 0
 
         # Translate and move window.
+        # dx and dy represent the distance values to move the window from its current position to its new position.
+        # So, for example, -10, 20 would move the window 10 pixels left and 20 pixels up.
+        # print "*******"
+        # print str(dx) + ", " + str(dy)
         pos.translate(dx, dy)
-        window.move(pos, animate="spline")
+        # window.move(pos, animate="spline")
+        window.move(pos)
 
 winctrl_grammar.add_rule(TranslateRule())
 
+
+#---------------------------------------------------------------------------
+
+nudge_increment = 20
+direction_left    = Compound(config.lang.left,   name="direction_left", value=("x", -nudge_increment))
+direction_right   = Compound(config.lang.right,  name="direction_right", value=("x", nudge_increment))
+direction_up    = Compound(config.lang.up,    name="direction_up", value=("y", -nudge_increment))
+direction_down  = Compound(config.lang.down, name="direction_down", value=("y", nudge_increment))
+
+nudge_basic    = Alternative([direction_left, direction_right, direction_up, direction_down],  name="nudge_basic")
+
+direction_up_left = Sequence([direction_up, direction_left])
+direction_up_right = Sequence([direction_up, direction_right])
+direction_down_left = Sequence([direction_down, direction_left])
+direction_down_right = Sequence([direction_down, direction_right])
+nudge_diagonal = Alternative([direction_up_left, direction_up_right, direction_down_left, direction_down_right], name="nudge_diagonal")
+
+#nudge_multi     = Alternative([],   name="nudge_multi")
+
+#---------------------------------------------------------------------------
+
+direction_element = Compound(
+    spec="   <nudge_basic>"
+         " | <nudge_diagonal>",
+    extras=[nudge_basic, nudge_diagonal],
+)
+direction_rule = Rule(
+    name="direction_rule",
+    element=direction_element,
+    exported=False,
+)
+direction = RuleRef(direction_rule, name="direction")
+
+nudge_multiplier = IntegerRef("nudge_multiplier", 1, 20)
+
+def calculateNewPosition(direction_and_value, multiplier):
+    new_position = [0, 0]
+    if type(direction_and_value) is list:   # E.g., "nudge down right" --> [('y', 20), ('x', 20)]
+        for direct in direction_and_value:
+            val = direct[1] * multiplier
+            if direct[0] == "x":
+                new_position[0] += val
+            else:
+                new_position[1] += val
+    else:  # we have a tuple with just one set of coordinates. For example: "nudge up" --> ('y', -20)
+        val = direction_and_value[1] * multiplier
+        if direction_and_value[0] == "x":
+            new_position[0] = val
+        else:
+            new_position[1] = val
+    return tuple(new_position)
+
+class NudgeRule(CompoundRule):
+
+    spec = config.lang.nudge_win
+    extras = [
+        win_selector,                  # Window selector element
+        direction,
+        nudge_multiplier
+    ]
+
+    def _process_recognition(self, node, extras):
+        # Determine which window to place on which monitor.
+        window = extras["win_selector"]
+        a_direction = extras["direction"]
+        multiplier = 1
+        if "nudge_multiplier" in extras:
+            multiplier = extras["nudge_multiplier"]
+
+        pos = window.get_position()
+        print "direction: " + str(a_direction)
+        print calculateNewPosition(a_direction, multiplier)
+        new_position = calculateNewPosition(a_direction, multiplier)
+        pos.translate(new_position[0], new_position[1])
+        window.move(pos)
+
+winctrl_grammar.add_rule(NudgeRule())
 
 #---------------------------------------------------------------------------
 
