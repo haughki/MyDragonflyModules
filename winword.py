@@ -15,6 +15,8 @@ class CommandRule(MappingRule):
         
         # Edit
         "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("f5/30, s-tab, up:2, down:2, tab") + Function(printNumber) + Key("enter, escape"),
+        "(shoreline | show) line numbers": Key("cas-l"),
+        "hide line numbers": Key("cas-k"),
     }
     extras = [
         Integer("t", 1, 50),

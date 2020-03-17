@@ -89,7 +89,7 @@ class CommandRule(MappingRule):
         "find [in | and] files": Key("cs-f"),
         "find usages": Key("a-f7"),
 
-        # Code.
+        # Code
         "show intentions": Key("a-enter"),
         "accept choice": Key("c-enter"),
         "implement method": Key("c-i"),
@@ -99,6 +99,7 @@ class CommandRule(MappingRule):
         "context complete": Key("cs-space"),
         "syntax complete": Key("cs-enter"),
         "gets complete": Key("space, equal, space/10, cs-space"),
+
 
         # Edit
         "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/30") + Function(printNumber)+ Key("enter"),
@@ -111,19 +112,19 @@ class CommandRule(MappingRule):
         "move line up": Key("c-up"),
         "move line down": Key("c-down"),
 
-        # Window handling.
+        # Window handling
         # "preev file": Key("c-tab"),
         "next tab [<t>]": Key("a-right/5:%(t)d"),
         "(preev | previous) tab [<t>]": Key("a-left/5:%(t)d"),
         "close tab": Key("c-w"),
 
-        # Version control.
+        # Version control
         "show diff": Key("c-d"),
         "(get | git) pull": Key("c-t"),
         "(get | git) push": Key("cs-k"),
         "(get | git) commit": Key("c-k"),
 
-        # Refactoring.
+        # Refactoring
         "(refactor|re-factor) (this|choose)": Key("cas-t"),
         "[(refactor|re-factor)] rename": Key("s-f6"),
         "[(refactor|re-factor)] change signature": Key("c-f6"),

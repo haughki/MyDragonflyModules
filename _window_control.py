@@ -486,8 +486,8 @@ class NudgeRule(CompoundRule):
             multiplier = extras["nudge_multiplier"]
 
         pos = window.get_position()
-        print "direction: " + str(a_direction)
-        print calculateNewPosition(a_direction, multiplier)
+        # print "direction: " + str(a_direction)
+        # print calculateNewPosition(a_direction, multiplier)
         new_position = calculateNewPosition(a_direction, multiplier)
         pos.translate(new_position[0], new_position[1])
         window.move(pos)
