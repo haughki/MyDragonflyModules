@@ -33,8 +33,8 @@ def utilsReloader():
 def reloadAll():
     print "Reloading everything in the Macrosystem directory..."
     user_directory_files = [f for f in os.listdir(MACROSYSTEM_DIRECTORY) if f.endswith('.py')]
-    for file in user_directory_files:
-        utils.touch(MACROSYSTEM_DIRECTORY + "\\" + file)
+    for the_file in user_directory_files:
+        utils.touch(MACROSYSTEM_DIRECTORY + "\\" + the_file)
     utils.toggleMicrophone()
 
 class ReloadRule(MappingRule):
@@ -43,6 +43,7 @@ class ReloadRule(MappingRule):
         "reload character": Function(characterReloader),
         "reload utilities": Function(utilsReloader),
         "reload all [(modules | grammars)]": Function(reloadAll),
+        "toggle (Mike | microphone)": Function(utils.toggleMicrophone),
     }
 
 reload_grammar = Grammar("reloading grammar")

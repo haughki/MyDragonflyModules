@@ -59,8 +59,8 @@ rule_log = logging.getLogger("rule")
 config = Config("Window control")
 config.lang                = Section("Language section")
 # Giving windows arbitrary names never seem to work properly for me. Naming a window would associate an arbitrary name
-# with an in memory window object. But, in certain situations, the underlying window object for a given window could change
-# and would not refresh, so that the name for the window would have an old, outdated window object.
+# with an in memory window object. But, in certain situations, the underlying window object for a given window could change,
+# but the cached object would not 'refresh' (not automatically), so that the name for the window would have an old, outdated window object.
 # config.lang.name_win       = Item("name (window | win) <name>",
 #                                   doc="Command to give the foreground window a name; must contain the <name> extra.")
 config.lang.focus_win      = Item("(jump | focus) <win_selector>",
@@ -87,7 +87,7 @@ config.lang.mon_selector   = Item("(this | current) monitor | [monitor] <mon_nam
 config.lang.left           = Item("left", doc="Word for direction left or left side of monitor.")
 config.lang.right          = Item("right", doc="Word for direction right or right side of monitor.")
 config.lang.up             = Item("up", doc="Word for direction up.")
-config.lang.down             = Item("down", doc="Word for direction down.")
+config.lang.down           = Item("down", doc="Word for direction down.")
 config.lang.top            = Item("top", doc="Word for top side of monitor.")
 config.lang.bottom         = Item("bottom", doc="Word for bottom side of monitor.")
 config.lang.screen_fractions = Item({
@@ -100,11 +100,11 @@ config.lang.screen_fractions = Item({
 config.settings            = Section("Settings section")
 config.settings.grid       = Item(10, doc="The number of grid divisions a monitor is divided up into when placing windows.")
 config.settings.defaults   = Item({
-                                    "NatLink": ("natspeak", "messages from Natlink"),
-                                    "reminder": ("outlook", "reminder"),
-                                    "idea": ("idea", None),
-                                    "studio": ("devenv", None),
-                                   }, doc="Default window names.  Maps spoken-forms to (executable, title) pairs.")
+                                    "NatLink": {"exe_name": "natspeak", "title_hint": "messages from Natlink"},
+                                    "idea": {"exe_name": "", "title_hint": ""},
+                                    "studio": {"exe_name": "devenv", "title_hint": ""},
+                                    "chrome": {"exe_name": "", "title_hint": "Google Chrome"},
+                                   }, doc="Default window names. Maps spoken-forms to {executable name, title, executable path} dict.")
 #config.generate_config_file()
 config.load()
 
@@ -141,7 +141,11 @@ for key in default_names.keys():
 def get_app_window(app_name, title_fragment=None):
     if title_fragment:
         title_fragment = title_fragment.lower()
-    exe_name, title_hint = default_names[app_name]
+    return find_window(app_name, title_fragment, **default_names[app_name])  # The last parameter here unpacks the dictionary into named parameters based on the dictionary keys.
+
+
+def find_window(app_name, title_fragment, exe_name, title_hint):
+    #exe_name, title_hint = default_names[app_name]
     if not exe_name:
         exe_name = app_name
     exe_name = exe_name.lower()
@@ -155,9 +159,9 @@ def get_app_window(app_name, title_fragment=None):
     # print "title frag: " + title_fragment
     # print "title hint: " + title_hint
 
-    windows = Window.get_all_windows()
+    all_windows = Window.get_all_windows()
     # windows.sort(key=lambda x: x.executable
-    for window in windows:
+    for window in all_windows:
         if not utils.windowIsValid(window):
             continue
 
@@ -589,7 +593,7 @@ class PlaceFractionRule(CompoundRule):
     def _process_recognition(self, node, extras):
         # Determine which window to place.
         window = extras["win_selector"]
-        pos = window.get_position()
+        #pos = window.get_position()
         monitor = window.get_containing_monitor().rectangle
 
         # Determine screen fraction.
