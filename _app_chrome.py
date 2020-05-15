@@ -152,7 +152,8 @@ class GmailMappings(MappingRule):
         "move": Key("v"),
         "move to <text>": select_line_open_move + Text("%(text)s") + Key("enter"),
 
-        "[go to] label soon [as] possible": Key("g,l/20") + Text("aa_todo/asap") + Key("enter"),
+        #"[go to] label ASAP": Key("g,l/20") + Text("aa_todo/asap") + Key("enter"),
+        "[go to] label asap": Key("g,l/20") + Text("aa_todo/asap") + Key("enter"),
         "[go to] label check [back] soon": Key("g,l/20") + Text("aa_todo/check back soon") + Key("enter"),
         "[go to] label respond": Key("g,l/20") + Text("aa_todo/respond") + Key("enter"),
         "[go to] label someday": Key("g,l/20") + Text("aa_todo/someday") + Key("enter"),
@@ -168,8 +169,11 @@ class GmailMappings(MappingRule):
 
         "move [to] inbox": Function(selectAndMove, dest="inbox"),
         "[move] [to] receipts": Function(selectAndMove, dest="aa_receipts"),
+        "[move] [to] donations": Function(selectAndMove, dest="aa_receipts/donations"),
         "[move] [to] check me out": Function(selectAndMove, dest="check me out"),
         "[move] [to] friends": Function(selectAndMove, dest="friends"),
+        "[move] [to] job search": Function(selectAndMove, dest="aa_job search"),
+        "[move] [to] Karsa": Function(selectAndMove, dest="Karsa"),
         "[move] [to] miscellaneous": Function(selectAndMove, dest="miscellaneous"),
         "[move] [to] MVNS": Function(selectAndMove, dest="Karsa/MVNS"),
         "[move] [to] mom": Function(selectAndMove, dest="mom"),
@@ -248,14 +252,33 @@ class OpenGmailLineRule(CompoundRule):
 #             print "Wrong number of words in command: " + words
 #
 
+class TickTickMappings(MappingRule):
 
-#gmail_context = AppContext(executable="chrome", title="Gmail")
+    mapping = {
+        # "new task": Key("tab:down/25, n/25, tab:up"),
+        # "save task": Key("c-s"),
+        "delete task": Key("c-del"),
+        "(complete | done) task": Key("tab:down/25, m/25, tab:up"),
+    }
 
-context = AppContext(executable="chrome")
-chrome_grammar = Grammar("Google Chrome", context=context)
+    extras = [
+        Dictation("text"),
+        Integer("n", 1, 50),
+    ]
+
+    defaults = {
+        "n": 1,
+    }
+
+
+chrome_context = AppContext(executable="chrome")
+# gmail_context = AppContext(executable="chrome", title="- Gmail")
+# ticktick_context = AppContext(executable="chrome", title="- TickTick")
+chrome_grammar = Grammar("Google Chrome", context=chrome_context)
 chrome_grammar.add_rule(GlobalChromeMappings())
 chrome_grammar.add_rule(GmailMappings())
 chrome_grammar.add_rule(OpenGmailLineRule())
+chrome_grammar.add_rule(TickTickMappings())
 # chrome_grammar.add_rule(NavigateCalendarWeeks())
 chrome_grammar.load()
 
