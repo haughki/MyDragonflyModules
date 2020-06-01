@@ -45,7 +45,7 @@ except ImportError:
     pass
 
 from dragonfly import *
-
+from supporting import utils
 
 #---------------------------------------------------------------------------
 # Set up this module's configuration.
@@ -352,5 +352,4 @@ grammar.load()
 # Unload function which will be called by natlink at unload time.
 def unload():
     global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    grammar = utils.unloadHelper(grammar, __name__)

@@ -1,12 +1,13 @@
 import webbrowser
-
 from dragonfly import *
+
+from supporting import utils
 
 def openSite(site):
     webbrowser.open(site)
 
 
-class Example(MappingRule):
+class WebsitesRule(MappingRule):
     mapping = {
         "web Google drive": Function(openSite, site="https://drive.google.com/drive/my-drive"),
         "web [Google] map": Function(openSite, site="maps.google.com"),
@@ -17,15 +18,12 @@ class Example(MappingRule):
     defaults = {"text":None}
 
 
-example_grammar = Grammar("example grammar")
-example_grammar.add_rule(Example())
+websites_grammar = Grammar("Open certain websites")
+websites_grammar.add_rule(WebsitesRule())
 
 
-example_grammar.load()
+websites_grammar.load()
 
 def unload():
-    global example_grammar
-    if example_grammar:
-        print "unloading " + __name__ + "..."
-        example_grammar.unload()
-    example_grammar = None
+    global websites_grammar
+    websites_grammar = utils.unloadHelper(websites_grammar, __name__)

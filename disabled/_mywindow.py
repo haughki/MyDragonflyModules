@@ -28,13 +28,13 @@ class FocusMimics(MappingRule):
 
 
 # Create a grammar which contains and loads the command rule.
-grammar = Grammar("my windows grammar")
-grammar.add_rule(FocusMimics())
+focus_grammar = Grammar("my windows grammar")
+focus_grammar.add_rule(FocusMimics())
 
-grammar.load()
+focus_grammar.load()
 
 
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global focus_grammar
+    if focus_grammar: focus_grammar.unload()
+    focus_grammar = None

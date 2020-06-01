@@ -1,5 +1,6 @@
 import logging
 from dragonfly import log, CompoundRule, Grammar
+from supporting import utils
 
 log.setup_log()
 # log.setup_tracing()
@@ -19,11 +20,10 @@ class LoggingRule(CompoundRule):
 
 #Create a grammar which contains and loads the command rule.
 logging_rule = LoggingRule()
-grammar = Grammar("example grammar")
-grammar.add_rule(logging_rule)
-grammar.load()
+logging_grammar = Grammar("Is logging enabled?")
+logging_grammar.add_rule(logging_rule)
+logging_grammar.load()
 
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global logging_grammar
+    logging_grammar = utils.unloadHelper(logging_grammar, __name__)

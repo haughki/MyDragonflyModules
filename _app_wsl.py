@@ -10,17 +10,9 @@ from supporting import utils
 class WslMapping(MappingRule):
 
     mapping = {
-        "Denny triage": Text("atsrc") + Key("enter"),
-        "Denny knowledge": Text("indk") + Key("enter"),
-        "Denny source": Text("indsrc") + Key("enter"),
-        "Denny test": Text("indtest") + Key("enter"),
-        "Indeni": Text("ind") + Key("enter"),
-
         "project[s]": Text("proj") + Key("enter"),
         "Windows temp": Text("dtemp") + Key("enter"),
         "hawk user": Text("hawk") + Key("enter"),
-
-        "start code [knowledge]": Text("code $ind/wsl-indeni-knowledge.code-workspace") + Key("enter"),
     }
 
     extras = [

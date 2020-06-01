@@ -23,7 +23,7 @@ settings.defaults = {
         "mobile": {"exe_name": "mobaxterm", "title_hint": ""},
         "Windows get": {"exe_name": "mintty", "title_hint": ""},
         "studio": {"exe_name": "devenv", "title_hint": ""},
-        "note": {"exe_name": "notepad++", "title_hint": "notepad++"},
+        "note": {"exe_name": "notepad", "title_hint": "Notepad"},
         "atom": {"exe_name": "", "title_hint": ""},
         "Indeni": {"exe_name": "virtualbox", "title_hint": "indeni server"},
 }

@@ -82,6 +82,7 @@ class CommandRule(MappingRule):
 
         # Search.
         "replace": Key("c-r"),
+        "replace all": Key("a-a"),
         "show find": Key("c-f"),
         "find <text>": Key("c-f/25") + Text("%(text)s"),
         "find next": Key("f3"),

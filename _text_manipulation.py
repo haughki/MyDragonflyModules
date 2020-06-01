@@ -46,7 +46,7 @@ config.load()
 # ===========================================================================
 # Create this module's main grammar object.
 
-grammar = Grammar("text manipulation")
+text_manipulation_grammar = Grammar("text manipulation")
 
 
 class UpperRule(CompoundRule):
@@ -55,7 +55,7 @@ class UpperRule(CompoundRule):
     def _process_recognition(self, node, extras):
         copy_modify_paste(lambda s: s.upper())
 
-grammar.add_rule(UpperRule())
+text_manipulation_grammar.add_rule(UpperRule())
 
 
 class LowerRule(CompoundRule):
@@ -64,7 +64,7 @@ class LowerRule(CompoundRule):
     def _process_recognition(self, node, extras):
         copy_modify_paste(lambda s: s.lower())
 
-grammar.add_rule(LowerRule())
+text_manipulation_grammar.add_rule(LowerRule())
 
 
 # ---------------------------------------------------------------------------
@@ -83,11 +83,9 @@ def copy_modify_paste(modifying_function):
     Key("c-v").execute()
 
 
-grammar.load()
+text_manipulation_grammar.load()
 
 
 def unload():
-    global grammar
-    if grammar:
-        grammar.unload()
-    grammar = None
+    global text_manipulation_grammar
+    text_manipulation_grammar = utils.unloadHelper(text_manipulation_grammar, __name__)

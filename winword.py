@@ -39,7 +39,4 @@ winword_grammar.load()
 # Unload function which will be called by natlink at unload time.
 def unload():
     global winword_grammar
-    if winword_grammar:
-        print "unloading " + __name__ + "..."
-        winword_grammar.unload()
-    winword_grammar = None
+    winword_grammar = utils.unloadHelper(winword_grammar, __name__)

@@ -60,7 +60,7 @@ import os, os.path
 from dragonfly import (Grammar, CompoundRule, DictList, DictListRef,
                        MappingRule, Mimic, Key, FocusWindow,
                        Window, Config, Section, Item)
-
+from supporting import utils
 
 #---------------------------------------------------------------------------
 # Set up this module's configuration.
@@ -110,7 +110,7 @@ class ConfigManagerGrammar(Grammar):
         # Refresh the mapping of config names -> config files.
         config_map.set(new_config_map)
 
-grammar = ConfigManagerGrammar()
+config_manager_grammar = ConfigManagerGrammar()
 
 
 #---------------------------------------------------------------------------
@@ -126,7 +126,7 @@ class ListConfigsRule(CompoundRule):
         for config in configs:
             print "  - %s" % config
 
-grammar.add_rule(ListConfigsRule())
+config_manager_grammar.add_rule(ListConfigsRule())
 
 
 #---------------------------------------------------------------------------
@@ -147,7 +147,7 @@ class EditConfigRule(CompoundRule):
                 return
         os.startfile(path)
 
-grammar.add_rule(EditConfigRule())
+config_manager_grammar.add_rule(EditConfigRule())
 
 
 #---------------------------------------------------------------------------
@@ -164,7 +164,7 @@ class ShowVersionRule(CompoundRule):
         engine = engines.get_engine()
         print "Current language: %r" % engine.language
 
-grammar.add_rule(ShowVersionRule())
+config_manager_grammar.add_rule(ShowVersionRule())
 
 
 #---------------------------------------------------------------------------
@@ -184,7 +184,7 @@ class UpdateDragonflyRule(CompoundRule):
         load_entry_point('setuptools', 'console_scripts', 'easy_install')(["--verbose", "--upgrade", "dragonfly"])
 #        load_entry_point('setuptools', 'console_scripts', 'easy_install')(["--dry-run", "--upgrade", "dragonfly"])
 
-grammar.add_rule(UpdateDragonflyRule())
+config_manager_grammar.add_rule(UpdateDragonflyRule())
 
 
 #---------------------------------------------------------------------------
@@ -196,14 +196,13 @@ class StaticRule(MappingRule):
                                             + Key("a-r"),
               }
 
-grammar.add_rule(StaticRule())
+config_manager_grammar.add_rule(StaticRule())
 
 
 #---------------------------------------------------------------------------
 # Load this module's grammar.
 
-grammar.load()
+config_manager_grammar.load()
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global config_manager_grammar
+    config_manager_grammar = utils.unloadHelper(config_manager_grammar, __name__)

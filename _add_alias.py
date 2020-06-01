@@ -39,15 +39,12 @@ class AddAliasRule(MappingRule):
     extras = [Dictation("dictation")]
 
 
-example_grammar = Grammar("add alias grammar")
-example_grammar.add_rule(AddAliasRule())
+add_alias_grammar = Grammar("add alias grammar")
+add_alias_grammar.add_rule(AddAliasRule())
 
 
-example_grammar.load()
+add_alias_grammar.load()
 
 def unload():
-    global example_grammar
-    if example_grammar:
-        print "unloading " + __name__ + "..."
-        example_grammar.unload()
-    example_grammar = None
+    global add_alias_grammar
+    add_alias_grammar = utils.unloadHelper(add_alias_grammar, __name__)

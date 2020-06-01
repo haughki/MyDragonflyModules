@@ -2,7 +2,7 @@ from dragonfly import (Grammar, MappingRule, Integer, Key, Text, Mimic, Dictatio
 
 from supporting import utils
 
-release = Key("alt:up, shift:up, ctrl:up")
+release = Key("alt:up, shift:up, ctrl:up, win:up")
 
 class MultiMoreKeyMap(MappingRule):
     mapping = {
@@ -14,7 +14,8 @@ class MultiMoreKeyMap(MappingRule):
         "mimic <text>": release + Mimic(extra="text"),
         "pop": Key("apps"), # right click
         "list Windows": Mimic("list", "all", "Windows"),
-        "focus chrome too": Mimic("focus", "chrome") + Pause("25") + Mimic("focus", "chrome"), 
+        "focus chrome too": Mimic("focus", "chrome") + Pause("25") + Mimic("focus", "chrome"),
+        "text bullet": Text("- "),
 
         ### programming
         "short object": Text("obj"),

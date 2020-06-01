@@ -300,7 +300,4 @@ multiedit_grammar.load()                    # Load the grammar.
 
 def unload():
     global multiedit_grammar
-    if multiedit_grammar:
-        print "unloading " + __name__ + "..."
-        multiedit_grammar.unload()
-    multiedit_grammar = None
+    multiedit_grammar = utils.unloadHelper(multiedit_grammar, __name__)

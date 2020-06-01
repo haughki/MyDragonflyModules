@@ -1,4 +1,6 @@
 from dragonfly import MappingRule, Text, Grammar
+from supporting import utils
+
 
 
 class Aliases(MappingRule):
@@ -6,15 +8,13 @@ class Aliases(MappingRule):
         "Rumpelstiltskin": Text("placeholder alias"),
     }
 
-example_grammar = Grammar("alias grammar")
-example_grammar.add_rule(Aliases())
+aliases_grammar = Grammar("The actual aliases grammar")
+aliases_grammar.add_rule(Aliases())
 
 
-example_grammar.load()
+aliases_grammar.load()
 
 def unload():
-    global example_grammar
-    if example_grammar:
-        print "unloading " + __name__ + "..."
-        example_grammar.unload()
-    example_grammar = None
+    global aliases_grammar
+    aliases_grammar = utils.unloadHelper(aliases_grammar, __name__)
+    

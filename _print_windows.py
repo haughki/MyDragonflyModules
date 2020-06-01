@@ -23,13 +23,12 @@ class PrintWindowsRule(CompoundRule):
 # window.classname
 
 
-grammar = Grammar("print windows according to Python")
-grammar.add_rule(PrintWindowsRule())
+print_windows_grammar = Grammar("print windows according to Python")
+print_windows_grammar.add_rule(PrintWindowsRule())
 
-grammar.load()
+print_windows_grammar.load()
 
 
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global print_windows_grammar
+    print_windows_grammar = utils.unloadHelper(print_windows_grammar, __name__)

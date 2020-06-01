@@ -1,6 +1,7 @@
 from dragonfly import *
 
 from languages import python_rule, java_rule, yaml_rule
+from supporting import utils
 
 the_python_rule = python_rule.PythonRule()
 the_java_rule = java_rule.JavaRule()
@@ -41,7 +42,4 @@ switcher_grammar.load()
 
 def unload():
     global switcher_grammar
-    if switcher_grammar:
-        print "unloading " + __name__ + "..."
-        switcher_grammar.unload()
-    switcher_grammar = None
+    switcher_grammar = utils.unloadHelper(switcher_grammar, __name__)

@@ -17,5 +17,4 @@ class PutStringCommandsRule(MappingRule):
         "put phone": Text("415 297 6170"),
         "put Google phone": Text("415 548 1460"),
         "put user": Text("haughki"),
-        # "put Dragon info": Text("NatLink 4.1mike\nDNS 13\nPython 2.7\nWindows 7"),
         }

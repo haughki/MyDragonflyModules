@@ -39,11 +39,7 @@ cmd.map = {
         "tope [<n>]": Key("pgup:%(n)d"),
         "drop [<n>]": Key("pgdown:%(n)d"),
         "(port | Lefty | word left) [<n>]": Key("c-left:%(n)d"),
-#        "word left [<n>]": Key("c-left:%(n)d"),
-#        "Lefty [<n>]": Key("c-left:%(n)d"),
         "(yope | word right | righty) [<n>]": Key("c-right:%(n)d"),
-#        "word right [<n>]": Key("c-right:%(n)d"),
-#        "righty [<n>]": Key("c-right:%(n)d"),
         "home [<n>]": Key("home:%(n)d"),
         "kick [<n>]": Key("end:%(n)d"),
         "top": Key("c-home"),
@@ -184,7 +180,8 @@ cmd.map = {
 
         ### copy/paste
         "pace": release + Key("c-v"), # paste
-        "shell pace": release + Key("cs-v"), # paste
+        "shell pace": release + Key("cs-v"), # paste into WSL
+        "pure pace": release + Key("win:down") + Key("v") + Key("win:up"), # paste without formatting
         "clone [<n>]": release + Key("c-c, c-v:%(n)d"), # copy/paste
         "copy": release + Key("c-c"), # copy
         "shell copy": release + Key("cs-c"), # copy
@@ -211,9 +208,9 @@ cmd.map = {
         "file save": Key("c-s"),
         "file open": Key("c-o"),
         "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
-        "(you tells | utils)": Text("utils"),
-        "new Evernote": Key("ca-n"),
         "it'slock": Key("capslock"),
+
+        ### custom vocabulary
 }
 
 #---------------------------------------------------------------------------

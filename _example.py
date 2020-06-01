@@ -2,6 +2,7 @@ import os, webbrowser
 
 from dragonfly import *
 from dragonfly.actions.action_base import BoundAction
+from dragonfly.engines import get_engine
 
 from supporting import utils, character
 
@@ -30,7 +31,4 @@ example_grammar.load()
 
 def unload():
     global example_grammar
-    if example_grammar:
-        print "unloading " + __name__ + "..."
-        example_grammar.unload()
-    example_grammar = None
+    example_grammar = utils.unloadHelper(example_grammar, __name__)

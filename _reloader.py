@@ -43,7 +43,6 @@ class ReloadRule(MappingRule):
         "reload character": Function(characterReloader),
         "reload utilities": Function(utilsReloader),
         "reload all [(modules | grammars)]": Function(reloadAll),
-        "toggle (Mike | microphone)": Function(utils.toggleMicrophone),
     }
 
 reload_grammar = Grammar("reloading grammar")
@@ -52,7 +51,4 @@ reload_grammar.load()
 
 def unload():
     global reload_grammar
-    if reload_grammar:
-        print "unloading " + __name__ + "..."
-        reload_grammar.unload()
-    reload_grammar = None
+    reload_grammar = utils.unloadHelper(reload_grammar, __name__)
