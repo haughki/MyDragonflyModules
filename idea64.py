@@ -101,7 +101,6 @@ class CommandRule(MappingRule):
         "syntax complete": Key("cs-enter"),
         "gets complete": Key("space, equal, space/10, cs-space"),
 
-
         # Edit
         "[shoreline | show] line <w> [<x>] [<y>] [<z>]": Key("c-g/30") + Function(printNumber)+ Key("enter"),
         "(full-screen | full screen)": Function(toggleFullScreen),  # macro, combination of: "Toggle Full Screen Mode" and "Hide All Tool Windows"

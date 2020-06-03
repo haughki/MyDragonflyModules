@@ -64,20 +64,20 @@ config.lang                = Section("Language section")
 # config.lang.name_win       = Item("name (window | win) <name>",
 #                                   doc="Command to give the foreground window a name; must contain the <name> extra.")
 config.lang.focus_win      = Item("(jump | focus) <win_selector>",
-                                  doc="Command to bring a named window to the foreground. 'focus chrome'")
+                                  doc="Bring a named window to the foreground. 'focus chrome'")
 config.lang.focus_title    = Item("(jump | focus) title <text>",
                                   doc="Bring a window with a given title (or title fraction) to the foreground. 'focus chrome google maps'")
 #config.lang.translate_win  = Item("place <win_selector> <position> [on <mon_selector>]",
 config.lang.translate_win  = Item("place <win_selector> (<position> [on <mon_selector>] | on <mon_selector>)",
-                                  doc="Command to move a window to a monitor or to a location on a monitor. 'place chrome on 2' or 'place chrome top on 2'")
+                                  doc="Move a window to a monitor or to a location on a monitor. 'place chrome on 2' or 'place chrome top on 2'")
 config.lang.nudge_win      = Item("nudge <win_selector> <direction> [<nudge_multiplier>]",
-                                  doc="Command to nudge a window in a direction. 'nudge chrome right 6'")
+                                  doc="Nudge a window in a direction. 'nudge chrome right 6'")
 config.lang.resize_win     = Item("place <win_selector> [from] <position> [to] <position> [on <mon_selector>]",
-                                  doc="Command to move and resize a window. 'place chrome top right on 2'")
+                                  doc="Move and resize a window. 'place chrome top right on 2'")
 config.lang.stretch_win    = Item("stretch <win_selector> [to] <position>",
-                                  doc="Command to stretch a window in a direction. 'stretch chrome left'")
+                                  doc="Stretch a window in a direction. 'stretch chrome left'")
 config.lang.place_win_fraction = Item("place <win_selector> <position> <screen_fraction>",
-                                  doc="Command to place a window according to a screen fraction. 'place chrome top third'")
+                                      doc="Place a window according to a screen fraction. 'place chrome top third'")
 
 #config.lang.win_selector   = Item("window | win | [window] <win_names> [<title_fragment>]",
 config.lang.win_selector   = Item("[(this | current | window)] | <win_names> [<title_fragment>]",
@@ -367,47 +367,98 @@ class TranslateRule(CompoundRule):
     def _process_recognition(self, node, extras):
         # Determine which window to place on which monitor.
         window = extras["win_selector"]
+
+        # "monitor" is the destination monitor.
         if "mon_selector" in extras:
             monitor = extras["mon_selector"].rectangle
         else:
             monitor = window.get_containing_monitor().rectangle
 
         # Calculate available area within monitor.
-        pos = window.get_position()
-        m_x1 = monitor.x1 + pos.dx / 2
-        m_dx = monitor.dx - pos.dx
+        # x1, y1 is a (top?) left corner point. Not sure what the 1 is about.
+        # dx, dy are dimensions of a rectangle.
+        pos = window.get_position()       # Absolute position, across all monitors, of the window where it started before the move.
+        m_x1 = monitor.x1 + pos.dx / 2    # The horizontal origin of the destination monitor, plus half the width of the original window.
+        m_dx = monitor.dx - pos.dx        # The width of the destination monitor minus the width of the original window.
         m_y1 = monitor.y1 + pos.dy / 2
         m_dy = monitor.dy - pos.dy
-        # print pos.dx
-        # print pos.dy
-        # print m_x1
-        # print m_dx
-        # print m_y1
-        # print m_dy
-        # print monitor.x1
-        # print monitor.dx
-        # print monitor.y1
-        # print monitor.dy
+        # print "pos.dx:" + str(pos.dx)
+        # print "pos.dy:" + str(pos.dy)
+        # print "mon.x1:" + str(monitor.x1)
+        # print "mon.dx:" + str(monitor.dx)
+        # print "mon.y1:" + str(monitor.y1)
+        # print "mon.dy:" + str(monitor.dy)
+        #
+        # print "m__.x1:" + str(m_x1)
+        # print "m__.dx:" + str(m_dx)
+        # print "m__.y1:" + str(m_y1)
+        # print "m__.dy:" + str(m_dy)
 
 
         # Get spoken position and calculate how far to move.
-        # A command can either specify a horizontal destination (left or right) or not. If it doesn't, default to "left".
-        horizontal_value = -1
-        if "position" not in extras:
-            horizontal_value = 0.0    # horz_left
+        # A command can specify a horizontal and/or vertical destination (left/right, top/bottom) or not.
+        # If it doesn't, specify a horizontal, calculate the destination horizontal to be the same as the
+        # start horizontal; that is, the window should be in the same position it was on the starting
+        # monitor. THIS ASSUMES THE SIZE OF ALL MONITORS IS EQUAL.
         horizontal = node.get_child_by_name("horz")
+        # print "horizontal: " + str(horizontal)
+
         if horizontal:
-            horizontal_value = horizontal.value()
-        if horizontal_value != -1:
-            dx = m_x1 + horizontal_value * m_dx - pos.center.x
+            # print "pos.center.x: " + str(pos.center.x)
+            dx = m_x1 + (horizontal.value() * m_dx) - pos.center.x
+            # print "horizontal_value: " + str(horizontal.value())
         else:
+            # THE FOLLOWING CODE ASSUMES THE SIZE OF ALL MONITORS IS EQUAL.
+            # If I don't specify a horizontal destination (left/right), then I want to move the window to exactly the same horizontal
+            # on the new monitor -- the same horizontal it had the old monitor. This is just what I wanted -- it seemed to make the
+            # most sense to me, and I couldn't understand why the existing code was defaulting to moving the window to the left-hand
+            # side of the screen, even when I didn't specify "left". It turns out there's a reason :-)
+            #
+            # At this point in the code, we know the absolute (across all monitors) x,y starting point and original dimensions of the
+            # window we are moving. We also know the absolute x,y corner and dimensions of the monitor we are moving to. BUT, we don't
+            # know anything about _which_ monitor we started on, nor do we know anything (dimensions, etc.) about that monitor.
+            # Without this information, it seems to be impossible (?) to "robustly" calculate the destination horizontal we want. By
+            # "robustly", I mean to calculate the horizontal for all possible combinations of monitors of different sizes. For example,
+            # if monitor one was 800x600, and monitor two was 1920 x 1200 (or possibly vice versa, or three monitors, all of different
+            # sizes, etc.), it doesn't seem possible to calculate the horizontal that I want; that is, the same horizontal as a window
+            # had before the move.
+            #
+            # I think that's why the original author chose to default to left. I decided that since both my monitors are the same size,
+            # that I would just assume that, and write the code that I wanted. If at some point I had a laptop into the mix here, I
+            # should revert back to the old code which is simply: 'dx = m_x1 - pos.center.x' -- see commented out code at the bottom of
+            # the code block.
+
+            # print "pos.x1: " + str(pos.x1)
+            start_monitor = 1  # leftmost monitor
+            target_monitor = 1
+            if pos.x1 >= monitor.dx:
+                start_monitor = 2  # rightmost monitor
+
+            if monitor.x1 > 0:
+                target_monitor = 2
+
+            # print "start_monitor: " + str(start_monitor)
+            # print "target_monitor: " + str(target_monitor)
+
             dx = 0
+            if start_monitor == 1 and target_monitor == 2:
+                dx = monitor.dx
+            elif start_monitor == 2 and target_monitor == 1:
+                dx = -monitor.dx
+
+            # This is the original code that 'hard codes'the destination horizontal to 'left'. See comments above.
+            #dx = m_x1 - pos.center.x
+
 
         vertical = node.get_child_by_name("vert")
+        # print "vertical: " + str(vertical)
         if vertical:
             dy = m_y1 + vertical.value() * m_dy - pos.center.y
         else:
             dy = 0
+
+        # print "dx: " + str(dx)
+        # print "dy: " + str(dy)
 
         # Translate and move window.
         # dx and dy represent the distance values to move the window from its current position to its new position.

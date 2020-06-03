@@ -6,30 +6,40 @@ from dragonfly import CompoundRule, MappingRule, Grammar
 from dragonfly import get_engine
 from supporting import utils
 
+current_grammar = ""
 def _print_rule(grammar, rule):
     if rule.exported:
         _print_rule_details("", grammar, rule)
     else:
         # print "\t-------- NOT EXPORTED ---------"
-        _print_rule_details("\t-------- NOT EXPORTED ---------", grammar, rule)
+        _print_rule_details("NOT EXPORTED", grammar, rule)
 
 def _print_rule_details(msg, grammar, rule):
+    global current_grammar
 
     if isinstance(rule, MappingRule):
         for sp in rule.specs:
             #print "\t\t" + str(sp)
             pass
     elif isinstance(rule, CompoundRule):
-        print grammar
-        if msg:
-            print msg
-        print "\t" + str(rule)
-        print "\t\t" + str(rule.spec)
+        if current_grammar != grammar:
+            print grammar
+            current_grammar = grammar
+
+        print "\t" + str(rule.spec)
     else:
-        if msg:
-            print msg
-        print "\t" + str(rule)
-        print "\t------------------> UNKNOWN RULE TYPE"
+        pass
+        # if msg:
+        #     print "\t" + str(rule) + " --> " +  msg + " --> UNKNOWN RULE TYPE: " + str(type(rule))
+        # else:
+        #     print "\t" + str(rule) + " --> UNKNOWN RULE TYPE: " + str(type(rule))
+        #
+        # if hasattr(rule, "spec"):
+        #     print "\t\t" + str(rule.spec)
+        # elif hasattr(rule, "specs"):
+        #     print "\t\t" + str(rule.specs)
+        # else:
+        #     print "\t\tNO SPEC"
 
 
 

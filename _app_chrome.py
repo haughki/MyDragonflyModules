@@ -200,24 +200,25 @@ class GmailMappings(MappingRule):
         "n": 1,
     }
 
-class OpenGmailLineRule(CompoundRule):
-    """ Mimics the Dragon builtin command ("click <subject>") to open a Gmail line item.
-    Always "chooses 2" to bypass that step.
-    """
-    spec = "take <text>"
-    extras = [
-        Dictation("text"),
-    ]
-
-    def _process_recognition(self, node, extras):
-        dictation = str(extras["text"]).split()  # this is the target email subject
-        dictation.insert(0, "click")  # this adds the "click" command for Dragon
-
-        Mimic(*dictation).execute()  # expand the list to var args
-
-        #Pause("10").execute()  # doesn"t seem to need this...
-
-        Mimic("choose", "2").execute()
+# class OpenGmailLineRule(CompoundRule):
+#     """ Mimics the Dragon builtin command ("click <subject>") to open a Gmail line item.
+#     Always "chooses 2" to bypass that step.
+#     Requires the Dragon chrome plug-in.
+#     """
+#     spec = "take <text>"
+#     extras = [
+#         Dictation("text"),
+#     ]
+#
+#     def _process_recognition(self, node, extras):
+#         dictation = str(extras["text"]).split()  # this is the target email subject
+#         dictation.insert(0, "click")  # this adds the "click" command for Dragon
+#
+#         Mimic(*dictation).execute()  # expand the list to var args
+#
+#         #Pause("10").execute()  # doesn"t seem to need this...
+#
+#         Mimic("choose", "2").execute()
 
 
 # the following is too brittle because the open command
@@ -277,7 +278,7 @@ chrome_context = AppContext(executable="chrome")
 chrome_grammar = Grammar("Google Chrome", context=chrome_context)
 chrome_grammar.add_rule(GlobalChromeMappings())
 chrome_grammar.add_rule(GmailMappings())
-chrome_grammar.add_rule(OpenGmailLineRule())
+# chrome_grammar.add_rule(OpenGmailLineRule())  # Requires Dragon Chrome extension, which I'm not using: disabling
 chrome_grammar.add_rule(TickTickMappings())
 # chrome_grammar.add_rule(NavigateCalendarWeeks())
 chrome_grammar.load()

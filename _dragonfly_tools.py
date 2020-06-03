@@ -130,61 +130,61 @@ config_manager_grammar.add_rule(ListConfigsRule())
 
 
 #---------------------------------------------------------------------------
-
-class EditConfigRule(CompoundRule):
-
-    spec = config.lang.edit_config
-    extras = [DictListRef("config", config_map)]
-
-    def _process_recognition(self, node, extras):
-        config_instance = extras["config"]
-        path = config_instance.config_path
-        if not os.path.isfile(path):
-            try:
-                config_instance.generate_config_file(path)
-            except Exception, e:
-                self._log.warning("Failed to create new config file %r: %s" % (path, e), exc_info=True)
-                return
-        os.startfile(path)
-
-config_manager_grammar.add_rule(EditConfigRule())
-
-
-#---------------------------------------------------------------------------
-
-class ShowVersionRule(CompoundRule):
-
-    spec = config.lang.show_dragonfly_version
-
-    def _process_recognition(self, node, extras):
-        dragonfly_dist = pkg_resources.get_distribution("dragonfly")
-        print "Current Dragonfly version:", dragonfly_dist.version
-        from dragonfly import engines
-        #import dragonfly.engines.engine
-        engine = engines.get_engine()
-        print "Current language: %r" % engine.language
-
-config_manager_grammar.add_rule(ShowVersionRule())
+### I never use this. Disabling.
+# class EditConfigRule(CompoundRule):
+#
+#     spec = config.lang.edit_config
+#     extras = [DictListRef("config", config_map)]
+#
+#     def _process_recognition(self, node, extras):
+#         config_instance = extras["config"]
+#         path = config_instance.config_path
+#         if not os.path.isfile(path):
+#             try:
+#                 config_instance.generate_config_file(path)
+#             except Exception, e:
+#                 self._log.warning("Failed to create new config file %r: %s" % (path, e), exc_info=True)
+#                 return
+#         os.startfile(path)
+#
+# config_manager_grammar.add_rule(EditConfigRule())
 
 
 #---------------------------------------------------------------------------
+### Not sure if this ever worked. Disabling.
+# class ShowVersionRule(CompoundRule):
+#
+#     spec = config.lang.show_dragonfly_version
+#
+#     def _process_recognition(self, node, extras):
+#         dragonfly_dist = pkg_resources.get_distribution("dragonfly")
+#         print "Current Dragonfly version:", dragonfly_dist.version
+#         from dragonfly import engines
+#         #import dragonfly.engines.engine
+#         engine = engines.get_engine()
+#         print "Current language: %r" % engine.language
+#
+# config_manager_grammar.add_rule(ShowVersionRule())
 
-class UpdateDragonflyRule(CompoundRule):
 
-    spec = config.lang.update_dragonfly
-
-    def _process_recognition(self, node, extras):
-        from pkg_resources import load_entry_point
-        import sys
-        class Stream(object):
-            stream = sys.stdout
-            def write(self, data): self.stream.write(data)
-            def flush(self): pass
-        sys.argv = [""]; sys.stdout = Stream()
-        load_entry_point('setuptools', 'console_scripts', 'easy_install')(["--verbose", "--upgrade", "dragonfly"])
-#        load_entry_point('setuptools', 'console_scripts', 'easy_install')(["--dry-run", "--upgrade", "dragonfly"])
-
-config_manager_grammar.add_rule(UpdateDragonflyRule())
+#---------------------------------------------------------------------------
+### Not sure if this ever worked. Disabling.
+# class UpdateDragonflyRule(CompoundRule):
+#
+#     spec = config.lang.update_dragonfly
+#
+#     def _process_recognition(self, node, extras):
+#         from pkg_resources import load_entry_point
+#         import sys
+#         class Stream(object):
+#             stream = sys.stdout
+#             def write(self, data): self.stream.write(data)
+#             def flush(self): pass
+#         sys.argv = [""]; sys.stdout = Stream()
+#         load_entry_point('setuptools', 'console_scripts', 'easy_install')(["--verbose", "--upgrade", "dragonfly"])
+# #        load_entry_point('setuptools', 'console_scripts', 'easy_install')(["--dry-run", "--upgrade", "dragonfly"])
+#
+# config_manager_grammar.add_rule(UpdateDragonflyRule())
 
 
 #---------------------------------------------------------------------------

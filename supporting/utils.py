@@ -81,6 +81,9 @@ def touch(fname, times=None):
     finally:
         fhandle.close()
 
+def toggleMicrophone():
+    Key("npadd/10,npadd").execute()
+
 def buildNumber(w, x=None, y=None, z=None):
     """ Each input variable is a number 0...9, so that w=1, x=4, y=2 would produce 142 """
     number = str(w)
