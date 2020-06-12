@@ -72,7 +72,7 @@ class CommandRule(MappingRule):
         "collapse": Key("c-npsub"),
 
         # Project settings.
-        "[go to | show] project [window]": Key("a-1"),
+        "(go to | toggle | hide | close | open | show) (project [window] | side (panel | bar))": Key("a-1"),
         "[go to | show] module settings": Key("f4"),
         "[go to | show] [project] settings": Key("cas-s"),
         "[go to | show] Global settings": Key("ca-s"),

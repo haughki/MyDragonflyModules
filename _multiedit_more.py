@@ -13,9 +13,12 @@ class MultiMoreKeyMap(MappingRule):
         "show [all] apps | show [all] Windows": release + Key("alt:down, tab"),
         "mimic <text>": release + Mimic(extra="text"),
         "pop": Key("apps"), # right click
-        "list Windows": Mimic("list", "all", "Windows"),
         "focus chrome too": Mimic("focus", "chrome") + Pause("25") + Mimic("focus", "chrome"),
         "text bullet": Text("- "),
+
+        # Dragon NaturallySpeaking mimics
+        "list Windows": Mimic("list", "all", "Windows"),
+        "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
 
         ### programming
         "short object": Text("obj"),

@@ -25,7 +25,6 @@ class VsCodeMapping(MappingRule):
         # misc
         "run app": Key("ca-n"),
 
-
         #"[go to | show] project window": Key("a-1"),
 
         # Search.
@@ -57,7 +56,7 @@ class VsCodeMapping(MappingRule):
         "(preev | previous) tab [<t>]": Key("c-pageup:%(t)d"),
         "close tab": Key("c-w"),
         "(full-screen | full screen)": Key("cs-x"),
-        "close side panel": Key("c-b"),
+        "(toggle | hide | close | open | show) (project [window] | side (panel | bar))": Key("c-b"),
         "[switch | go] side (panel | bar)": Key("c-0"),
         "rename [current] file": Key("c-0") + Key("f2"),
         "side (panel | bar) rename": Key("f2"),

@@ -187,7 +187,6 @@ cmd.map = {
         "shell copy": release + Key("cs-c"), # copy
         "cut": release + Key("c-x"), # cut
         "(select all | tarp)": release + Key("c-a"), # select all
-        "copy all": release + Key("c-a, c-c"), # copy all
 
         "(mash | sky | coo | cool)": Key("shift:down"),
         "mark": Key("shift:down"),
@@ -196,8 +195,8 @@ cmd.map = {
 
         ### other
         "control slap": Key("c-enter"),
-        "(bolder|boulder)": Key("c-b"),
-        "italics": Key("c-i"),
+        "(bolder|boulder) [that]": Key("c-b"),
+        "italics [that]": Key("c-i"),
         "undo [<n>]": Key("c-z:%(n)d"),
         "preev window": Key("a-tab/10"),
         "preev file": Key("c-tab"),
@@ -207,7 +206,6 @@ cmd.map = {
         "new (thing | file)": Key("c-n"),
         "file save": Key("c-s"),
         "file open": Key("c-o"),
-        "(web search | search web) <text>": Mimic("search", "the", "web", "for", extra="text"),
         "it'slock": Key("capslock"),
 
         ### custom vocabulary
