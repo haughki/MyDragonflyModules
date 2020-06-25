@@ -14,7 +14,6 @@ class MultiMoreKeyMap(MappingRule):
         "mimic <text>": release + Mimic(extra="text"),
         "pop": Key("apps"), # right click
         "focus chrome too": Mimic("focus", "chrome") + Pause("25") + Mimic("focus", "chrome"),
-        "text bullet": Text("- "),
 
         # Dragon NaturallySpeaking mimics
         "list Windows": Mimic("list", "all", "Windows"),

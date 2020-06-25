@@ -26,4 +26,5 @@ settings.defaults = {
         "note": {"exe_name": "notepad", "title_hint": "Notepad"},
         "atom": {"exe_name": "", "title_hint": ""},
         "Indeni": {"exe_name": "virtualbox", "title_hint": "indeni server"},
+        "wind term": {"exe_name": "WindowsTerminal.exe", "title_hint": ""},
 }

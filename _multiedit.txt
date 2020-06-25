@@ -209,6 +209,8 @@ cmd.map = {
         "it'slock": Key("capslock"),
 
         ### custom vocabulary
+        "text bullet": Text("- "),
+
 }
 
 #---------------------------------------------------------------------------
