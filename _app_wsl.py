@@ -32,8 +32,10 @@ class WslMapping(MappingRule):
     }
 
 
-context = AppContext(executable='ubuntu')
-wsl_grammar = Grammar('Ubuntu', context=context)
+ubu_context = AppContext(executable='ubuntu')
+win_term_context = AppContext(executable='WindowsTerminal')
+multi_context = ubu_context | win_term_context
+wsl_grammar = Grammar('Ubuntu', context=multi_context)
 wsl_grammar.add_rule(WslMapping())
 wsl_grammar.load()
 

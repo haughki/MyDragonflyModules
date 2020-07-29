@@ -130,7 +130,8 @@ class BashCommonMapping(MappingRule):
 ubu_context = AppContext(executable='ubuntu')
 moba_context = AppContext(executable='mobaxterm')
 mintty_context = AppContext(executable='mintty')  # git bash, git for Windows
-multi_context = ubu_context | moba_context | mintty_context
+win_term_context = AppContext(executable='WindowsTerminal')
+multi_context = ubu_context | moba_context | mintty_context | win_term_context
 bash_common_grammar = Grammar('BashCommon', context=multi_context)
 bash_common_grammar.add_rule(BashCommonMapping())
 bash_common_grammar.load()
