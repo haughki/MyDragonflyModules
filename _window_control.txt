@@ -27,4 +27,5 @@ settings.defaults = {
         "atom": {"exe_name": "", "title_hint": ""},
         "Indeni": {"exe_name": "virtualbox", "title_hint": "indeni server"},
         "wind term": {"exe_name": "WindowsTerminal.exe", "title_hint": ""},
+        "anki": {"exe_name": "anki.exe", "title_hint": ""},
 }

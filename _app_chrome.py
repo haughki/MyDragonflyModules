@@ -173,6 +173,7 @@ class GmailMappings(MappingRule):
         "move [to] inbox": Function(selectAndMove, dest="inbox"),
         "[move] [to] receipts": Function(selectAndMove, dest="aa_receipts"),
         "[move] [to] donations": Function(selectAndMove, dest="aa_receipts/donations"),
+        "[move] [to] expenses": Function(selectAndMove, dest="aa_receipts/expenses"),
         "[move] [to] check me out": Function(selectAndMove, dest="check me out"),
         "[move] [to] friends": Function(selectAndMove, dest="friends"),
         "[move] [to] job search": Function(selectAndMove, dest="aa_job search"),

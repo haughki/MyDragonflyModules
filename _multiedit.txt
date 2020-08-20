@@ -209,7 +209,8 @@ cmd.map = {
         "it'slock": Key("capslock"),
 
         ### custom vocabulary
-        "(tex bullet | text bullet)": Text("- "),
+        "(bull | T-bull | tex bullet | text bullet)": Text("- "),
+        "(slapdash)": Key("enter, hyphen, space"),
 
 }
 
