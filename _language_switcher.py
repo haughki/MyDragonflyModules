@@ -34,12 +34,16 @@ idea_context = AppContext(executable="idea64")
 code_context = AppContext(executable="code")
 idea_or_code_context = idea_context | code_context
 switcher_grammar = Grammar("switcher grammar", context=idea_or_code_context)
+language_grammar = Grammar("language grammar", context=idea_or_code_context)
 switcher_grammar.add_rule(SetLanguageRule())
-switcher_grammar.add_rule(the_python_rule)
-switcher_grammar.add_rule(the_java_rule)
-switcher_grammar.add_rule(the_yaml_rule)
+language_grammar.add_rule(the_python_rule)
+language_grammar.add_rule(the_java_rule)
+language_grammar.add_rule(the_yaml_rule)
 switcher_grammar.load()
+language_grammar.load()
 
 def unload():
     global switcher_grammar
-    switcher_grammar = utils.unloadHelper(switcher_grammar, __name__)
+    global language_grammar
+    switcher_grammar = utils.unloadHelper(switcher_grammar, __name__ + ": switcher_grammar")
+    language_grammar = utils.unloadHelper(language_grammar, __name__ + ": language_grammar")
