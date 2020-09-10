@@ -61,7 +61,13 @@ except ImportError:
 
 from dragonfly.actions.action_base import BoundAction
 from dragonfly import *
-from supporting import utils, putstringcommands, character
+from supporting import utils, character
+
+# putstringcommands is not included in the pushed source, because it contains personal data.
+try:
+    from supporting import putstringcommands
+except ImportError:
+    pass
 
 #---------------------------------------------------------------------------
 # Here we globally defined the release action which releases all modifier-keys used within this grammar.  It is defined here
@@ -224,8 +230,12 @@ class LookRule(MappingRule):
 alternatives = []
 alternatives.append(RuleRef(rule=KeystrokeRule()))
 alternatives.append(RuleRef(rule=LookRule()))
-if putstringcommands.PutStringCommandsRule:
-    alternatives.append(RuleRef(rule=putstringcommands.PutStringCommandsRule()))
+
+try:  # putstringcommands is not included in the pushed source, because it contains personal data.
+    if putstringcommands.PutStringCommandsRule:
+        alternatives.append(RuleRef(rule=putstringcommands.PutStringCommandsRule()))
+except NameError:
+    pass
 
 if FormatRule:
     alternatives.append(RuleRef(rule=FormatRule()))
