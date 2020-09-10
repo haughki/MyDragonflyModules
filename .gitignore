@@ -1,3 +1,4 @@
 *.pyd
 *.pyc
 _aliases.py
+supporting/putstringcommands.py
