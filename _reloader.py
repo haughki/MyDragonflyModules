@@ -5,6 +5,7 @@ from reimport import reimport
 
 from languages import python_rule, java_rule, yaml_rule, specs
 from supporting import utils, character
+#from ccr import _continuous_rec_import
 
 MACROSYSTEM_DIRECTORY = "C:\\NatLinkUserDirectory"
 
@@ -30,6 +31,13 @@ def utilsReloader():
     reimport(utils)
     utils.toggleMicrophone()
 
+# reloading for CCR is going to be really complicated. Punt for now.
+# def ccrReloader():
+#     print "Reloading CCR..."
+#     reimport(_continuous_rec_import)
+#     utils.touch(MACROSYSTEM_DIRECTORY + "\\_continuous_recognition_skeleton.py")
+#     utils.toggleMicrophone()
+
 def reloadAll():
     print "Reloading everything in the Macrosystem directory..."
     user_directory_files = [f for f in os.listdir(MACROSYSTEM_DIRECTORY) if f.endswith('.py')]
@@ -42,6 +50,7 @@ class ReloadRule(MappingRule):
         "reload languages": Function(languageReloader),
         "reload character": Function(characterReloader),
         "reload utilities": Function(utilsReloader),
+#        "reload continuous": Function(ccrReloader),
         "reload all [(modules | grammars)]": Function(reloadAll),
     }
 

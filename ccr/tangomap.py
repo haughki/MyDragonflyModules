@@ -1,4 +1,4 @@
-from dragonfly import *
+from dragonfly import MappingRule, Function
 
 def printTango(): print "tango"
 def printUniform(): print "uniform"
