@@ -1,17 +1,6 @@
 
 
-
-
-
 ### SO FAR, I CANNOT GET THIS TO WORK
-
-
-
-
-
-
-
-
 
 from dragonfly import (Integer, Key, Text, Dictation)
 

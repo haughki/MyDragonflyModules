@@ -5,7 +5,8 @@ from dragonfly import Alternative, Repetition, CompoundRule, MappingRule, RuleRe
 from supporting import utils
 
 # This import relies on the __all__ in __init__.py
-from ccr import *
+# UNCOMMENT TO USE
+# from ccr import *
 
 
 alternatives = []
@@ -13,6 +14,10 @@ alternatives = []
 # then instantiate those and append to alternatives to make them CCR. The nested loop here
 # is awful -- must be a better way (maybe import 'ccr' directly and load the modules manually
 # without even importing them (need to add each to sys.modules??): https://stackoverflow.com/questions/67631/how-to-import-a-module-given-the-full-path
+
+# This was intended to work with _continuous_recognition_skeleton__init__.py (as just '__init__py' in /ccr),
+# so that you could just drop a rule into /ccr, and this module would automatically
+# pick it up. Seemed hacky and overkill for what I really need.
 for this_module_members in inspect.getmembers(sys.modules[__name__]):
     #print(mod)
     #print("loc_mem type: " + str(type(loc_mem[1])))
@@ -22,10 +27,10 @@ for this_module_members in inspect.getmembers(sys.modules[__name__]):
             if inspect.isclass(memb[1]):
                 #print(memb)
                 clazz = memb[1]
-                print("clazz: " + str(clazz))
+                # print("clazz: " + str(clazz))
                 #print(clazz.__bases__)
                 if issubclass(clazz, MappingRule) and memb[0] != "MappingRule":  # Don't try to instantiate/add MappingRule
-                    print("clazz again: " + str(clazz))
+                    # print("clazz again: " + str(clazz))
                     alternatives.append(RuleRef(rule=clazz()))
 
 # This is how to build up alternatives manually:

@@ -1,0 +1,6 @@
+from dragonfly import Function
+def printJunior(): print "junior"
+
+cmd.map = {
+    "print junior": Function(printJunior),
+}
