@@ -1,14 +1,12 @@
-# import pydevd_pycharm
-# pydevd_pycharm.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
+import pydevd_pycharm
+pydevd_pycharm.settrace('localhost', port=8282, stdoutToServer=True, stderrToServer=True)
 
-from dragonfly import Alternative, Repetition, CompoundRule, RuleRef, Grammar
+from dragonfly import Alternative, Repetition, CompoundRule, RuleRef, Grammar, ActionBase
 from supporting import utils
 
 from ccr import kilomap, tangomap, compound_test
 
 
-
-# This is how to build up alternatives manually:
 alternatives = [
     RuleRef(rule=tangomap.TangoMap()),
     RuleRef(rule=kilomap.KiloMap()),
@@ -35,6 +33,7 @@ class ChainRule(CompoundRule):
 
         for action in extras["sequence"]:
             print "action: " + str(action)
+            #if action is type(ActionBase):
             action.execute()
 
 
