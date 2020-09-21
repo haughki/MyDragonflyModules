@@ -5,10 +5,17 @@ from reimport import reimport
 
 from languages import python_rule, java_rule, yaml_rule, specs
 from supporting import utils, character
-from ccr import kilomap, tangomap, compound_test
+from ccr import editing_commands, text_formatting, scan_line, window_control
+
+# putstringcommands is not included in the pushed source, because it contains personal data.
+try:
+    from ccr import putstringcommands
+except ImportError:
+    pass
+
+
 
 MACROSYSTEM_DIRECTORY = "C:\\NatLinkUserDirectory"
-
 
 def languageReloader():
     print "Reloading languages..."
@@ -31,10 +38,15 @@ def utilsReloader():
     reimport(utils)
     utils.toggleMicrophone()
 
-# reloading for CCR is going to be really complicated. Punt for now.
 def ccrReloader():
     print "Reloading CCR..."
-    reimport(kilomap, tangomap, compound_test)
+    reimport(editing_commands, text_formatting, scan_line, window_control)
+    try:  # putstringcommands is not included in the pushed source, because it contains personal data.
+        if putstringcommands:
+            reimport(putstringcommands)
+    except NameError:
+        pass
+
     utils.touch(MACROSYSTEM_DIRECTORY + "\\_global_continuous_recognition.py")
     utils.toggleMicrophone()
 

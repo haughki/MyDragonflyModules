@@ -1,9 +1,12 @@
 from dragonfly import CompoundRule, Integer, Dictation, Function
 from dragonfly.actions.action_base import BoundAction
 
-def foo():
-    print "foo fighting machine"
-
+""" Test rule for adding a CompoundRule to the 'global continuous recognition system'.
+    This rule overrides value() to produce a BoundAction, very similar to the way
+    MappingRules work (see MappingRule.value()). In this way, the CCR rule can execute
+    the _process_recognition() method as an Action, the same way it does for items in
+    a MappingRule.
+    """
 class CompoundTestCCR(CompoundRule):
     spec = "compound testing <text>"
     extras = [

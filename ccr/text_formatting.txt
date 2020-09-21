@@ -1,0 +1,57 @@
+from supporting import utils
+
+#---------------------------------------------------------------------------
+# Here we define various functions for formatting text.
+# Each of these functions must have a docstring which defines its
+#  spoken-form.  This docstring must include the "<dictation>" extra.
+#  See below for various examples.
+
+# Format: some_words
+def format_snake(dictation):
+    """ (score | snake) <dictation> """
+    return utils.snake(str(dictation))
+
+# Format: some_words()
+def format_score_function(dictation):
+    """ (score | snake) funk <dictation> """
+    return utils.snake_function(str(dictation))
+
+# Format: SOME_WORDS
+def format_upper_score(dictation):
+    """ (score | snake) up <dictation> """
+    return utils.upper_snake(str(dictation))
+
+# Format: some-words
+def format_kebab(dictation):
+    """ kebab <dictation> """
+    return utils.kebab(str(dictation))
+
+# Format: somewords
+def format_one_word(dictation):
+    """ squash <dictation> """
+    return utils.one_word(str(dictation))
+
+# Format: SOMEWORDS
+def format_upper_word(dictation):
+    """ squash up <dictation> """
+    return utils.upper_one_word(str(dictation))
+
+# Format: SomeWords
+def format_pascal(dictation):
+    """ Pascal <dictation> """
+    return utils.pascal(str(dictation))
+
+# Format: SomeWords()
+def format_pascal_function(dictation):
+    """ Pascal funk <dictation> """
+    return utils.pascal_function(str(dictation))
+
+# Format: someWords
+def format_camel(dictation):
+    """ camel <dictation> """
+    return utils.camel(str(dictation))
+
+# Format: someWords()
+def format_camel_function(dictation):
+    """ camel funk <dictation> """
+    return utils.camel_function(str(dictation))

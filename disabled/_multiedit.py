@@ -65,7 +65,7 @@ from supporting import utils, character
 
 # putstringcommands is not included in the pushed source, because it contains personal data.
 try:
-    from supporting import putstringcommands
+    from ccr import putstringcommands
 except ImportError:
     pass
 

@@ -1,0 +1,31 @@
+# tries to match windows using "focus" <app_name> [<title_fragment>].  The dict below correlates the spoken app_name key
+# with an (<exe name>, <window title hint>).  The hint is hard-coded, whereas the title_fragment is dictation, dictation
+# which let's you choose, in real-time, between multiple windows with the same process name. If your app_name command
+# is the same as the exe_name, you can leave out the exe_name.
+
+# To see data about the current available windows (including the actual names to use here), try "print windows".
+settings.defaults = {
+        "NatLink": {"exe_name": "natspeak", "title_hint": "messages from Natlink"},
+        "idea": {"exe_name": "", "title_hint": ""},
+        "chrome": {"exe_name": "", "title_hint": "Google Chrome"},
+        "evernote": {"exe_name": "evernote", "title_hint": "evernote"},
+        "task manager": {"exe_name": "taskmgr", "title_hint": "Windows Task Manager"},
+        "word": {"exe_name": "winword", "title_hint": ""},
+        "command": {"exe_name": "cmd", "title_hint": "command prompt"},
+        "explore": {"exe_name": "explorer", "title_hint": ""},
+        "fire": {"exe_name": "firefox", "title_hint": "Firefox"},
+        "virtual": {"exe_name": "virtualbox", "title_hint": "ubuntu-desktop"},
+        "Ubuntu": {"exe_name": "ubuntu", "title_hint": ""},
+        "ooboo": {"exe_name": "ubuntu", "title_hint": ""},
+        "slack": {"exe_name": "", "title_hint": ""},
+        "dragonpad": {"exe_name": "natspeak", "title_hint": "dragonpad"},
+        "code": {"exe_name": "", "title_hint": ""},
+        "mobile": {"exe_name": "mobaxterm", "title_hint": ""},
+        "Windows get": {"exe_name": "mintty", "title_hint": ""},
+        "studio": {"exe_name": "devenv", "title_hint": ""},
+        "note": {"exe_name": "notepad", "title_hint": "Notepad"},
+        "atom": {"exe_name": "", "title_hint": ""},
+        "Indeni": {"exe_name": "virtualbox", "title_hint": "indeni server"},
+        "wind term": {"exe_name": "WindowsTerminal.exe", "title_hint": ""},
+        "anki": {"exe_name": "anki.exe", "title_hint": ""},
+}
