@@ -7,7 +7,7 @@
 settings.defaults = {
         "NatLink": {"exe_name": "natspeak", "title_hint": "messages from Natlink"},
         "idea": {"exe_name": "", "title_hint": ""},
-        "chrome": {"exe_name": "", "title_hint": "Google Chrome"},
+        "chrome": {"exe_name": "", "title_hint": "Google Chrome"},   # Special hack to exclude Workona hidden tabs window from focus
         "evernote": {"exe_name": "evernote", "title_hint": "evernote"},
         "task manager": {"exe_name": "taskmgr", "title_hint": "Windows Task Manager"},
         "word": {"exe_name": "winword", "title_hint": ""},
@@ -28,4 +28,5 @@ settings.defaults = {
         "Indeni": {"exe_name": "virtualbox", "title_hint": "indeni server"},
         "wind term": {"exe_name": "WindowsTerminal.exe", "title_hint": ""},
         "anki": {"exe_name": "anki.exe", "title_hint": ""},
+        "pad": {"exe_name": "wordpad.exe", "title_hint": ""},
 }

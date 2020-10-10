@@ -229,8 +229,8 @@ class MultiEditRule(MappingRule):
         "wipe [<n>]": Key("end, home:2, s-down:%(n)d, del"), # del lines down
         "wipe up [<n>]": release + Key("end, home:2, s-up:%(n)d, s-home, del"), # del lines up
         "clear line": Key("end, home:2, s-end, del"), # del everything on the line except the newline
-        "strip": release + Key("s-end, del"), # del from cursor to line end
-        "grab": release + Key("s-end, c-c"), # copy from cursor to line end
+        "strip [end]": release + Key("s-end, del"), # del from cursor to line end
+        "grab [end]": release + Key("s-end, c-c"), # copy from cursor to line end
         "cut end": release + Key("s-end, c-x"), # cut from cursor to line end
         "strip head": release + Key("s-home, del"), # del from cursor to line home
         "grab head": release + Key("s-home, c-c"), # copy from cursor to line home
@@ -269,7 +269,7 @@ class MultiEditRule(MappingRule):
         "(bolder|boulder) [that]": Key("c-b"),
         "italics [that]": Key("c-i"),
         "undo [<n>]": Key("c-z:%(n)d"),
-        "preev window": Key("a-tab/10"),
+        "preev (window | win)": Key("a-tab/10"),
         "preev file": Key("c-tab"),
         "say <text>": release + Text("%(text)s"),
         "close tab [<n>]": Key("c-w/20:%(n)d"),

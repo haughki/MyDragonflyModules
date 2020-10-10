@@ -172,6 +172,8 @@ def find_window(app_name, title_fragment, exe_name, title_hint):
 
         # there will always be an exe name because of check above
         if window.executable.lower().find(exe_name) != -1:
+            if exe_name == "chrome" and window.title.lower().find("hidden tabs - workona") != -1:  # custom rule to never focus workona hidden tabs
+                continue
             if not title_fragment and not title_hint:
                 best_match = window
                 break
@@ -207,11 +209,11 @@ class WinSelectorRule(CompoundRule):
     def value(self, node):
         if node.has_child_with_name("win_names"):
             app_name = node.get_child_by_name("win_names").value()
-            # print "app_name: " + str(app_name)
+            print "app_name: " + str(app_name)
             title_fragment = ""
             if node.has_child_with_name("title_fragment"):
                 title_fragment = str(node.get_child_by_name("title_fragment").value())
-                # print "title_fragment: " + title_fragment
+                print "title_fragment: " + title_fragment
             return get_app_window(app_name, title_fragment)
         return Window.get_foreground()
 
