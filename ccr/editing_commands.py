@@ -66,7 +66,7 @@ from supporting import character
 """ Converts a lowercase char to uppercase. The 'letters_ref' is defined in the 'extras' of the mapping rule.
     The 'ref' makes it possible to pass the dictated value (e.g., "Alpha") to this Function action."""
 def convert_to_upper(letters_ref):  # Note, the parameter name here has to match the value of the 'name' member of the ListRef.
-    Key(letters_ref).execute()
+    Key(character.CHARACTER_MAP[letters_ref].upper()).execute()
 
 letters = List("letters_list", [
     character.A, character.B, character.C, character.D, character.E, character.F, character.G, character.H, character.I, character.J, character.K, character.L, character.M, character.N, character.O, character.P, character.Q, character.R, character.S, character.T, character.U, character.V, character.W, character.X, character.Y, character.Z
