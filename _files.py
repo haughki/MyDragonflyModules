@@ -9,6 +9,7 @@ def openFile(command):
 class OpenFilesRule(MappingRule):
     mapping = {
         "file voice working": Function(openFile, command=r'notepad "C:\Users\hawk\Desktop\voice_working.txt"'),
+        "file daily tasks": Function(openFile, command=r'"C:\Program Files\Windows NT\Accessories\wordpad.exe" "D:\Google Drive\working\daily tasks.rtf"'),
     }
     extras = [Dictation("text"),
               ]
