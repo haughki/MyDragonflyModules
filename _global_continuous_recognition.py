@@ -4,13 +4,7 @@
 from dragonfly import Alternative, Repetition, CompoundRule, RuleRef, Grammar
 from supporting import utils
 
-from ccr import rule_ccr, editing_commands, text_formatting, scan_line, putstringcommands, window_control
-
-# putstringcommands is not included in the pushed source, because it contains personal data.
-try:
-    pass
-except ImportError:
-    pass
+from ccr import editing_commands, text_formatting, scan_line, window_control
 
 
 alternatives = [
@@ -27,9 +21,11 @@ alternatives = [
 ]
 
 try:  # putstringcommands is not included in the pushed source, because it contains personal data.
+    from ccr import putstringcommands
+
     if putstringcommands.PutStringCommandsRule:
         alternatives.append(RuleRef(rule=putstringcommands.PutStringCommandsRule()))
-except NameError:
+except (ImportError, NameError) as e:
     pass
 
 single_action = Alternative(alternatives)

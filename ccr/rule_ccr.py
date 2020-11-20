@@ -9,7 +9,7 @@ from dragonfly.actions.action_base import BoundAction
     """
 class CCRCompoundRule(CompoundRule):
 
-    def __init__(self, name=None, spec=None, extras=None, defaults=None, exported=None, context=None):
+    def __init__(self, name=None, spec=None, extras=None, defaults=None, exported=False, context=None):
 
         CompoundRule.__init__(self, name=name, spec=spec, extras=extras, defaults=defaults, exported=exported, context=context)
 
