@@ -100,7 +100,7 @@ class MultiEditRule(MappingRule):
         #### Dragon
         "Snork": Key("npadd/10,npadd"),  # turn mic on and off
         "(Mike | mic) off": Key("npadd"),  # turn mic off
-        "sleep": Key("npdiv"),
+        "sleep (mic | Mike)": Key("npdiv"),
 
         #### Cursor manipulation
         "cup [<n>]": Key("up:%(n)d"),
@@ -228,7 +228,7 @@ class MultiEditRule(MappingRule):
         ### Lines
         "wipe [<n>]": Key("end, home:2, s-down:%(n)d, del"), # del lines down
         "wipe up [<n>]": release + Key("end, home:2, s-up:%(n)d, s-home, del"), # del lines up
-        "clear line": Key("end, home:2, s-end, del"), # del everything on the line except the newline
+        "line clear": Key("end, home:2, s-end, del"), # del everything on the line except the newline
         "strip [end]": release + Key("s-end, del"), # del from cursor to line end
         "grab [end]": release + Key("s-end, c-c"), # copy from cursor to line end
         "cut end": release + Key("s-end, c-x"), # cut from cursor to line end

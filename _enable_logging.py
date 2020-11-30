@@ -5,6 +5,12 @@ from supporting import utils
 log.setup_log()
 # log.setup_tracing()
 
+""" A grammar to ensure that the logging framework always gets initialized -- running log.setup_log() above does this.
+    Dragonfly doesn't "get loaded" by NatLink; NatLink loads any user-defined macro files, and those macro files can, 
+    in turn, "load" Dragonfly by explicitly importing dragonfly modules. So, if, e.g., you want Dragonfly logging enabled, 
+    some macro file needs to either directly or indirectly import log.py and run log.py's setup_log() function, which 
+    initializes Dragonfly's logging system.
+"""
 class LoggingRule(CompoundRule):
     spec = "is logging enabled"                  # Spoken form of command.
 
